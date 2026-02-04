@@ -3,270 +3,236 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DENEME KAFE | QR Menü</title>
-
-  <!-- Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>DENEME KAFE - QR Menü</title>
 
   <style>
     :root {
-      --bg1: #fff7ed;
-      --bg2: #ffedd5;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --accent: #f97316;
-      --accent2: #ec4899;
-      --green: #22c55e;
-      --border: rgba(0,0,0,0.08);
-      --shadow: 0 20px 50px rgba(0,0,0,0.12);
+      --bg1: #07080c;
+      --bg2: #0b0f14;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.10);
+      --text: #f8fafc;
+      --muted: #a5b4fc;
+      --muted2: #94a3b8;
+      --accent: #ffb703;
+      --accent2: #fb7185;
+      --accent3: #22c55e;
+      --shadow: rgba(0,0,0,0.5);
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
     }
 
     body {
-      background: linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: radial-gradient(circle at top, rgba(255,183,3,0.12), transparent 60%),
+                  radial-gradient(circle at bottom, rgba(251,113,133,0.12), transparent 60%),
+                  linear-gradient(180deg, var(--bg1), var(--bg2));
       color: var(--text);
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* HEADER HERO */
     header {
-      padding: 24px 18px 40px 18px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      padding: 18px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
-    header::before {
-      content: "";
-      position: absolute;
-      top: -120px;
-      left: -120px;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background: rgba(249, 115, 22, 0.25);
-      filter: blur(25px);
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
     }
 
-    header::after {
-      content: "";
-      position: absolute;
-      bottom: -140px;
-      right: -140px;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      background: rgba(236, 72, 153, 0.22);
-      filter: blur(25px);
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .brand p {
+      font-size: 12px;
+      color: var(--muted2);
     }
 
     .lang-switch {
-      position: absolute;
-      top: 16px;
-      left: 16px;
       display: flex;
-      gap: 8px;
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(0,0,0,0.08);
+      gap: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
       padding: 6px;
       border-radius: 999px;
-      backdrop-filter: blur(10px);
-      z-index: 10;
     }
 
     .lang-switch button {
       border: none;
       background: transparent;
-      padding: 8px 14px;
+      color: var(--muted2);
+      font-size: 12px;
+      padding: 7px 12px;
       border-radius: 999px;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 12px;
-      color: var(--muted);
       transition: 0.2s;
+      font-weight: 700;
     }
 
     .lang-switch button.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: white;
+      background: var(--accent);
+      color: #111;
     }
 
-    .hero-title {
-      font-family: "Playfair Display", serif;
-      font-size: 34px;
-      font-weight: 700;
-      margin-top: 40px;
-      position: relative;
-      z-index: 2;
+    .hero {
+      margin-top: 12px;
+      text-align: center;
+      padding: 18px 10px 10px;
     }
 
-    .hero-subtitle {
-      margin-top: 10px;
-      font-size: 14px;
-      color: var(--muted);
-      position: relative;
-      z-index: 2;
+    .hero img {
+      width: 88px;
+      height: 88px;
+      border-radius: 22px;
+      object-fit: cover;
+      border: 2px solid rgba(255,183,3,0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom: 10px;
     }
 
-    /* LOGO AREA */
-    .logo-box {
-      width: 110px;
-      height: 110px;
-      background: rgba(255,255,255,0.85);
-      border: 2px dashed rgba(249,115,22,0.4);
-      border-radius: 28px;
-      margin: 22px auto 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(0,0,0,0.35);
-      font-weight: 600;
+    .hero h2 {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .hero span {
       font-size: 12px;
-      backdrop-filter: blur(10px);
-      position: relative;
-      z-index: 2;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+      color: var(--muted2);
+    }
+
+    .filters {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-area {
+      width: 100%;
+      max-width: 520px;
+    }
+
+    .search-area input {
+      width: 100%;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .search-area input::placeholder {
+      color: rgba(148,163,184,0.7);
+    }
+
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 700px;
+    }
+
+    .categories button {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted2);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .categories button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,183,3,0.35);
+    }
+
+    .categories button.active {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #111;
+      border: none;
+      font-weight: 900;
     }
 
     .container {
       max-width: 1100px;
       margin: auto;
-      padding: 0 18px 30px 18px;
+      padding: 18px;
     }
 
-    /* SEARCH */
-    .search-area {
-      margin-top: -20px;
-      display: flex;
-      justify-content: center;
-      position: relative;
-      z-index: 3;
-    }
-
-    .search-area input {
-      width: 100%;
-      max-width: 560px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-      outline: none;
-      font-size: 14px;
-    }
-
-    .search-area input::placeholder {
-      color: rgba(107,114,128,0.8);
-    }
-
-    /* CATEGORY */
-    .categories {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .categories button {
-      padding: 11px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: rgba(255,255,255,0.75);
-      color: var(--muted);
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-      transition: 0.2s;
-      backdrop-filter: blur(10px);
-    }
-
-    .categories button.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: white;
-      border: none;
-      box-shadow: 0 10px 25px rgba(249,115,22,0.25);
-    }
-
-    /* MENU TITLE */
     .section-title {
-      margin-top: 28px;
+      margin-top: 22px;
       margin-bottom: 14px;
-      font-weight: 700;
-      font-size: 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 2px;
+      text-transform: uppercase;
       text-align: center;
-      color: rgba(31,41,55,0.9);
     }
 
-    .section-title span {
-      background: rgba(255,255,255,0.7);
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.06);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-    }
-
-    /* GRID */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
     }
 
-    /* CARD */
     .card {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid rgba(0,0,0,0.06);
-      border-radius: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
       overflow: hidden;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
       transition: 0.25s;
       cursor: pointer;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      position: relative;
     }
 
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+      transform: translateY(-4px) scale(1.01);
+      border-color: rgba(255,183,3,0.4);
     }
 
     .card-img {
-      height: 170px;
+      height: 150px;
       background-size: cover;
       background-position: center;
-      position: relative;
-    }
-
-    .img-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.50));
-    }
-
-    .tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(255,255,255,0.92);
-      padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #111;
-      border: 1px solid rgba(0,0,0,0.08);
+      filter: contrast(1.1) saturate(1.2);
     }
 
     .card-content {
-      padding: 14px 14px 16px 14px;
+      padding: 14px;
     }
 
     .card-top {
@@ -278,106 +244,214 @@
 
     .card h3 {
       font-size: 15px;
-      font-weight: 700;
+      font-weight: 900;
       margin-bottom: 6px;
     }
 
     .desc {
       font-size: 12px;
-      color: var(--muted);
-      line-height: 1.4;
-      margin-bottom: 12px;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.45;
+      margin-bottom: 10px;
     }
 
     .price {
+      font-weight: 900;
+      color: var(--accent);
       font-size: 14px;
-      font-weight: 800;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       white-space: nowrap;
     }
 
-    .mini-info {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 6px;
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,183,3,0.14);
+      border: 1px solid rgba(255,183,3,0.20);
+      color: var(--accent);
+      font-weight: 800;
     }
 
-    .mini-pill {
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(249,115,22,0.10);
-      border: 1px solid rgba(249,115,22,0.20);
-      color: rgba(249,115,22,0.95);
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-box {
+      max-width: 700px;
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.7);
+      animation: popup 0.2s ease;
+    }
+
+    @keyframes popup {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      filter: contrast(1.1) saturate(1.3);
+    }
+
+    .modal-content {
+      padding: 16px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+
+    .modal-price {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.8);
+      margin-top: 8px;
+    }
+
+    .modal-details {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .detail-box {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .detail-box b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .detail-box span {
+      font-size: 12px;
+      color: rgba(255,255,255,0.95);
       font-weight: 700;
     }
 
-    /* WHATSAPP BUTTON */
+    .close-btn {
+      border: none;
+      background: rgba(255,255,255,0.10);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+      transition: 0.2s;
+    }
+
+    .close-btn:hover {
+      background: rgba(251,113,133,0.3);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 22px;
+      text-align: center;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
     .whatsapp {
       position: fixed;
-      bottom: 18px;
-      right: 18px;
+      bottom: 16px;
+      right: 16px;
       background: #25D366;
       color: white;
-      padding: 14px 18px;
+      padding: 14px 16px;
       border-radius: 999px;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 13px;
       text-decoration: none;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.55);
       transition: 0.2s;
-      z-index: 999;
+      z-index: 99;
     }
 
     .whatsapp:hover {
-      transform: scale(1.07);
-    }
-
-    /* FOOTER */
-    footer {
-      margin-top: 40px;
-      padding: 24px;
-      text-align: center;
-      color: rgba(107,114,128,0.8);
-      font-size: 12px;
+      transform: scale(1.05);
     }
   </style>
 </head>
+
 <body>
 
 <header>
-  <!-- LANGUAGE SWITCH -->
-  <div class="lang-switch">
-    <button id="btnTR" class="active">TR</button>
-    <button id="btnEN">EN</button>
+  <div class="topbar">
+    <div class="brand">
+      <h1 id="titleText">DENEME KAFE</h1>
+      <p id="subtitleText">Premium QR Menü • Tatlı / Tuzlu / İçecek</p>
+    </div>
+
+    <div class="lang-switch">
+      <button id="btnTR" class="active">TR</button>
+      <button id="btnEN">EN</button>
+    </div>
   </div>
 
-  <h1 class="hero-title" id="titleText">DENEME KAFE</h1>
-  <p class="hero-subtitle" id="subtitleText">Tatlı • Tuzlu • Kahve • Soğuk İçecekler</p>
+  <div class="hero">
+    <!-- BURAYA LOGO KOY -->
+    <img src="logo.png" alt="Deneme Kafe Logo">
+    <h2 id="heroTitle">Lezzetli Menü</h2>
+    <span id="heroDesc">Ürünlere tıklayarak detayları görebilirsiniz ✨</span>
 
-  <!-- LOGO PLACE -->
-  <div class="logo-box">
-    LOGO
+    <div class="filters">
+      <div class="search-area">
+        <input type="text" id="searchInput" placeholder="Ürün ara... (örn: latte, burger)" />
+      </div>
+
+      <div class="categories" id="categoryButtons"></div>
+    </div>
   </div>
 </header>
 
 <div class="container">
-
-  <div class="search-area">
-    <input type="text" id="searchInput" placeholder="Ürün ara... (örn: latte, burger)" />
-  </div>
-
-  <div class="categories" id="categoryButtons"></div>
-
-  <div class="section-title" id="sectionTitle">
-    <span>Menü</span>
-  </div>
-
+  <div class="section-title" id="sectionTitle">MENÜ</div>
   <div class="grid" id="menuGrid"></div>
-
 </div>
 
 <a class="whatsapp" href="https://wa.me/905555555555" target="_blank" id="whatsappBtn">
@@ -388,6 +462,46 @@
   <span id="footerText">© 2026 DENEME KAFE | QR Menü</span>
 </footer>
 
+<!-- MODAL -->
+<div class="modal" id="productModal">
+  <div class="modal-box">
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle">Ürün</h2>
+          <div class="tag" id="modalTag">Popüler</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+          <div class="modal-price" id="modalPrice">0₺</div>
+          <button class="close-btn" onclick="closeModal()">X</button>
+        </div>
+      </div>
+
+      <p class="modal-desc" id="modalDesc"></p>
+
+      <div class="modal-details">
+        <div class="detail-box">
+          <b id="detail1Title">İçerik</b>
+          <span id="detail1Text"></span>
+        </div>
+        <div class="detail-box">
+          <b id="detail2Title">Kalori</b>
+          <span id="detail2Text"></span>
+        </div>
+        <div class="detail-box">
+          <b id="detail3Title">Alerjen</b>
+          <span id="detail3Text"></span>
+        </div>
+        <div class="detail-box">
+          <b id="detail4Title">Öneri</b>
+          <span id="detail4Text"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   let currentLang = "tr";
   let currentCategory = "all";
@@ -395,134 +509,180 @@
   const translations = {
     tr: {
       title: "DENEME KAFE",
-      subtitle: "Tatlı • Tuzlu • Kahve • Soğuk İçecekler",
-      menuTitle: "Menü",
+      subtitle: "Premium QR Menü • Tatlı / Tuzlu / İçecek",
+      heroTitle: "Lezzetli Menü",
+      heroDesc: "Ürünlere tıklayarak detayları görebilirsiniz ✨",
+      menuTitle: "MENÜ",
       searchPlaceholder: "Ürün ara... (örn: latte, burger)",
       all: "Tümü",
       salty: "Tuzlu",
       sweet: "Tatlı",
-      drinks: "İçecekler",
+      drinks: "İçecek",
       whatsapp: "WhatsApp Sipariş",
-      footer: "© 2026 DENEME KAFE | QR Menü"
+      footer: "© 2026 DENEME KAFE | QR Menü",
+      content: "İçerik",
+      calories: "Kalori",
+      allergen: "Alerjen",
+      suggest: "Öneri"
     },
     en: {
       title: "DENEME CAFE",
-      subtitle: "Desserts • Savory • Coffee • Cold Drinks",
-      menuTitle: "Menu",
+      subtitle: "Premium QR Menu • Sweet / Savory / Drinks",
+      heroTitle: "Delicious Menu",
+      heroDesc: "Tap on products to see details ✨",
+      menuTitle: "MENU",
       searchPlaceholder: "Search item... (ex: latte, burger)",
       all: "All",
       salty: "Savory",
       sweet: "Desserts",
       drinks: "Drinks",
       whatsapp: "Order via WhatsApp",
-      footer: "© 2026 DENEME CAFE | QR Menu"
+      footer: "© 2026 DENEME CAFE | QR Menu",
+      content: "Ingredients",
+      calories: "Calories",
+      allergen: "Allergens",
+      suggest: "Suggestion"
     }
   };
 
   const menuItems = [
-    // SAVORY
     {
       category: "salty",
-      tr: { name: "Cheddar Burger", desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
-      en: { name: "Cheddar Burger", desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce." },
       price: "220₺",
-      tagTR: "🔥 Popüler",
-      tagEN: "🔥 Popular",
-      infoTR: ["Bol Peynir", "Doyurucu"],
-      infoEN: ["Cheesy", "Filling"],
-      img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=60"
+      img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=70",
+      tagTR: "Popüler",
+      tagEN: "Popular",
+      tr: {
+        name: "Cheddar Burger",
+        desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos.",
+        content: "Dana eti, cheddar, soğan, marul, özel sos",
+        calories: "720 kcal",
+        allergen: "Gluten, Süt",
+        suggest: "Patates kızartması ile mükemmel gider."
+      },
+      en: {
+        name: "Cheddar Burger",
+        desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce.",
+        content: "Beef, cheddar, onion, lettuce, special sauce",
+        calories: "720 kcal",
+        allergen: "Gluten, Dairy",
+        suggest: "Perfect with fries."
+      }
     },
     {
       category: "salty",
-      tr: { name: "Chicken Wrap", desc: "Izgara tavuk, yeşillik ve özel sos ile hazırlanır." },
-      en: { name: "Chicken Wrap", desc: "Made with grilled chicken, greens and signature sauce." },
-      price: "170₺",
-      tagTR: "⭐ Şef Önerisi",
-      tagEN: "⭐ Chef's Choice",
-      infoTR: ["Hafif", "Lezzetli"],
-      infoEN: ["Light", "Tasty"],
-      img: "https://images.unsplash.com/photo-1604908177522-429cd0a9f5b2?auto=format&fit=crop&w=900&q=60"
-    },
-    {
-      category: "salty",
-      tr: { name: "Köri Soslu Makarna", desc: "Kremalı köri sos, tavuk parçaları ve parmesan." },
-      en: { name: "Curry Chicken Pasta", desc: "Creamy curry sauce, chicken bites and parmesan." },
       price: "190₺",
-      tagTR: "🆕 Yeni",
-      tagEN: "🆕 New",
-      infoTR: ["Kremalı", "Sıcak"],
-      infoEN: ["Creamy", "Hot"],
-      img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=60"
+      img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=70",
+      tagTR: "Yeni",
+      tagEN: "New",
+      tr: {
+        name: "Köri Soslu Makarna",
+        desc: "Kremalı köri sos, tavuk parçaları ve parmesan.",
+        content: "Penne makarna, tavuk, köri, krema, parmesan",
+        calories: "640 kcal",
+        allergen: "Gluten, Süt",
+        suggest: "Yanına buzlu limonata önerilir."
+      },
+      en: {
+        name: "Curry Chicken Pasta",
+        desc: "Creamy curry sauce, chicken bites and parmesan.",
+        content: "Penne pasta, chicken, curry, cream, parmesan",
+        calories: "640 kcal",
+        allergen: "Gluten, Dairy",
+        suggest: "Try with iced lemonade."
+      }
     },
-
-    // SWEET
     {
       category: "sweet",
-      tr: { name: "San Sebastian Cheesecake", desc: "Karamelize üst katman, yumuşacık iç doku." },
-      en: { name: "San Sebastian Cheesecake", desc: "Caramelized top with a soft creamy texture." },
       price: "150₺",
-      tagTR: "🍰 En Çok Satan",
-      tagEN: "🍰 Best Seller",
-      infoTR: ["Tatlı", "Premium"],
-      infoEN: ["Sweet", "Premium"],
-      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=900&q=60"
+      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=70",
+      tagTR: "En Çok Satan",
+      tagEN: "Best Seller",
+      tr: {
+        name: "San Sebastian Cheesecake",
+        desc: "Karamelize üst katman, kremsi iç doku.",
+        content: "Krema peynir, yumurta, un, vanilya",
+        calories: "510 kcal",
+        allergen: "Süt, Yumurta, Gluten",
+        suggest: "Yanına espresso alırsan efsane olur."
+      },
+      en: {
+        name: "San Sebastian Cheesecake",
+        desc: "Caramelized top layer with creamy center.",
+        content: "Cream cheese, egg, flour, vanilla",
+        calories: "510 kcal",
+        allergen: "Dairy, Egg, Gluten",
+        suggest: "Perfect with espresso."
+      }
     },
     {
       category: "sweet",
-      tr: { name: "Çikolatalı Brownie", desc: "Sıcak brownie, vanilyalı dondurma ile servis edilir." },
-      en: { name: "Chocolate Brownie", desc: "Warm brownie served with vanilla ice cream." },
       price: "140₺",
-      tagTR: "🍫 Çikolata",
-      tagEN: "🍫 Chocolate",
-      infoTR: ["Sıcak", "Yoğun Kakao"],
-      infoEN: ["Hot", "Rich Cocoa"],
-      img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=900&q=60"
+      img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=1200&q=70",
+      tagTR: "Tatlı",
+      tagEN: "Dessert",
+      tr: {
+        name: "Çikolatalı Brownie",
+        desc: "Sıcak brownie, vanilyalı dondurma ile servis edilir.",
+        content: "Kakao, bitter çikolata, un, dondurma",
+        calories: "580 kcal",
+        allergen: "Gluten, Süt",
+        suggest: "Sıcakken yemelisin 😍"
+      },
+      en: {
+        name: "Chocolate Brownie",
+        desc: "Warm brownie served with vanilla ice cream.",
+        content: "Cocoa, dark chocolate, flour, ice cream",
+        calories: "580 kcal",
+        allergen: "Gluten, Dairy",
+        suggest: "Best served warm 😍"
+      }
     },
-    {
-      category: "sweet",
-      tr: { name: "Tiramisu", desc: "Kahve aromalı mascarpone kreması ve kakao dokunuşu." },
-      en: { name: "Tiramisu", desc: "Coffee mascarpone cream with cocoa touch." },
-      price: "155₺",
-      tagTR: "☕ Klasik",
-      tagEN: "☕ Classic",
-      infoTR: ["Kahveli", "Yumuşak"],
-      infoEN: ["Coffee", "Soft"],
-      img: "https://images.unsplash.com/photo-1608219959308-7b1d12f954ed?auto=format&fit=crop&w=900&q=60"
-    },
-
-    // DRINKS
     {
       category: "drinks",
-      tr: { name: "Iced Latte", desc: "Espresso, süt ve buz ile ferahlatıcı lezzet." },
-      en: { name: "Iced Latte", desc: "Espresso, milk and ice - refreshing taste." },
       price: "120₺",
-      tagTR: "🧊 Soğuk",
-      tagEN: "🧊 Cold",
-      infoTR: ["Kahve", "Serinletici"],
-      infoEN: ["Coffee", "Refreshing"],
-      img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=60"
+      img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1200&q=70",
+      tagTR: "Soğuk",
+      tagEN: "Cold",
+      tr: {
+        name: "Iced Latte",
+        desc: "Espresso, süt ve buz ile ferahlatıcı lezzet.",
+        content: "Espresso, süt, buz",
+        calories: "190 kcal",
+        allergen: "Süt",
+        suggest: "Tatlılarla çok iyi gider."
+      },
+      en: {
+        name: "Iced Latte",
+        desc: "Espresso, milk and ice - refreshing taste.",
+        content: "Espresso, milk, ice",
+        calories: "190 kcal",
+        allergen: "Dairy",
+        suggest: "Perfect with desserts."
+      }
     },
     {
       category: "drinks",
-      tr: { name: "Matcha Latte", desc: "Japon matcha çayı, süt ve hafif tatlı aroma." },
-      en: { name: "Matcha Latte", desc: "Japanese matcha tea, milk and a soft sweet aroma." },
-      price: "135₺",
-      tagTR: "🍵 Premium",
-      tagEN: "🍵 Premium",
-      infoTR: ["Sağlıklı", "Trend"],
-      infoEN: ["Healthy", "Trending"],
-      img: "https://images.unsplash.com/photo-1542444459-db63c2f8a7c3?auto=format&fit=crop&w=900&q=60"
-    },
-    {
-      category: "drinks",
-      tr: { name: "Fresh Lemonade", desc: "Taze limon, nane ve doğal şeker." },
-      en: { name: "Fresh Lemonade", desc: "Fresh lemon, mint and natural sugar." },
       price: "95₺",
-      tagTR: "🍋 Serinletici",
-      tagEN: "🍋 Refreshing",
-      infoTR: ["Doğal", "Soğuk"],
-      infoEN: ["Natural", "Cold"],
-      img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=900&q=60"
+      img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=1200&q=70",
+      tagTR: "Serinletici",
+      tagEN: "Refreshing",
+      tr: {
+        name: "Fresh Lemonade",
+        desc: "Taze limon, nane ve doğal şeker.",
+        content: "Limon, nane, şeker, buz",
+        calories: "140 kcal",
+        allergen: "Yok",
+        suggest: "Sıcak günlerde efsane!"
+      },
+      en: {
+        name: "Fresh Lemonade",
+        desc: "Fresh lemon, mint and natural sugar.",
+        content: "Lemon, mint, sugar, ice",
+        calories: "140 kcal",
+        allergen: "None",
+        suggest: "Amazing for hot days!"
+      }
     }
   ];
 
@@ -561,26 +721,23 @@
     const filtered = menuItems.filter(item => {
       const langData = item[currentLang];
       const matchesCategory = currentCategory === "all" || item.category === currentCategory;
-      const matchesSearch = langData.name.toLowerCase().includes(searchValue) || langData.desc.toLowerCase().includes(searchValue);
+      const matchesSearch =
+        langData.name.toLowerCase().includes(searchValue) ||
+        langData.desc.toLowerCase().includes(searchValue);
+
       return matchesCategory && matchesSearch;
     });
 
     filtered.forEach(item => {
       const langData = item[currentLang];
 
-      const infoPills = (currentLang === "tr" ? item.infoTR : item.infoEN)
-        .map(x => `<span class="mini-pill">${x}</span>`)
-        .join("");
-
       const card = document.createElement("div");
       card.className = "card";
 
-      card.innerHTML = `
-        <div class="card-img" style="background-image:url('${item.img}')">
-          <div class="img-overlay"></div>
-          <div class="tag">${currentLang === "tr" ? item.tagTR : item.tagEN}</div>
-        </div>
+      card.onclick = () => openModal(item);
 
+      card.innerHTML = `
+        <div class="card-img" style="background-image:url('${item.img}')"></div>
         <div class="card-content">
           <div class="card-top">
             <div>
@@ -589,16 +746,43 @@
             </div>
             <div class="price">${item.price}</div>
           </div>
-
-          <div class="mini-info">
-            ${infoPills}
-          </div>
+          <span class="tag">${currentLang === "tr" ? item.tagTR : item.tagEN}</span>
         </div>
       `;
 
       grid.appendChild(card);
     });
   }
+
+  function openModal(item) {
+    const langData = item[currentLang];
+
+    document.getElementById("modalImg").style.backgroundImage = `url('${item.img}')`;
+    document.getElementById("modalTitle").innerText = langData.name;
+    document.getElementById("modalPrice").innerText = item.price;
+    document.getElementById("modalDesc").innerText = langData.desc;
+    document.getElementById("modalTag").innerText = currentLang === "tr" ? item.tagTR : item.tagEN;
+
+    document.getElementById("detail1Title").innerText = translations[currentLang].content;
+    document.getElementById("detail2Title").innerText = translations[currentLang].calories;
+    document.getElementById("detail3Title").innerText = translations[currentLang].allergen;
+    document.getElementById("detail4Title").innerText = translations[currentLang].suggest;
+
+    document.getElementById("detail1Text").innerText = langData.content;
+    document.getElementById("detail2Text").innerText = langData.calories;
+    document.getElementById("detail3Text").innerText = langData.allergen;
+    document.getElementById("detail4Text").innerText = langData.suggest;
+
+    document.getElementById("productModal").classList.add("active");
+  }
+
+  function closeModal() {
+    document.getElementById("productModal").classList.remove("active");
+  }
+
+  document.getElementById("productModal").addEventListener("click", (e) => {
+    if(e.target.id === "productModal") closeModal();
+  });
 
   function setLanguage(lang) {
     currentLang = lang;
@@ -608,7 +792,9 @@
 
     document.getElementById("titleText").innerText = translations[lang].title;
     document.getElementById("subtitleText").innerText = translations[lang].subtitle;
-    document.getElementById("sectionTitle").innerHTML = `<span>${translations[lang].menuTitle}</span>`;
+    document.getElementById("heroTitle").innerText = translations[lang].heroTitle;
+    document.getElementById("heroDesc").innerText = translations[lang].heroDesc;
+    document.getElementById("sectionTitle").innerText = translations[lang].menuTitle;
     document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
     document.getElementById("whatsappBtn").innerText = translations[lang].whatsapp;
     document.getElementById("footerText").innerText = translations[lang].footer;
@@ -619,7 +805,6 @@
 
   document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
   document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
-
   document.getElementById("searchInput").addEventListener("input", renderMenu);
 
   setLanguage("tr");
