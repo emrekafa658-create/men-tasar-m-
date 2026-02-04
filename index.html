@@ -10,7 +10,6 @@
       --bg1: #050607;
       --bg2: #0a0d10;
       --card: rgba(255,255,255,0.06);
-      --card2: rgba(255,255,255,0.04);
       --border: rgba(255,255,255,0.08);
       --text: #f8fafc;
       --muted: rgba(248,250,252,0.65);
@@ -18,6 +17,7 @@
       --accent: #ffb703;
       --accent2: #fb5607;
       --green: #22c55e;
+      --red: #ef4444;
 
       --shadow: 0 15px 40px rgba(0,0,0,0.6);
       --radius: 18px;
@@ -39,7 +39,6 @@
       overflow-x: hidden;
     }
 
-    /* HEADER */
     header {
       position: sticky;
       top: 0;
@@ -73,7 +72,7 @@
     .brand h1 {
       font-size: 17px;
       letter-spacing: 0.6px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .brand p {
@@ -82,7 +81,6 @@
       font-weight: 500;
     }
 
-    /* LANGUAGE SWITCH */
     .lang-switch {
       display: flex;
       gap: 6px;
@@ -101,7 +99,7 @@
       background: transparent;
       color: var(--muted);
       transition: 0.25s;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .lang-switch button.active {
@@ -110,13 +108,11 @@
       box-shadow: 0 8px 18px rgba(255,183,3,0.25);
     }
 
-    /* HERO AREA */
     .hero {
       max-width: 1100px;
       margin: auto;
       padding: 28px 18px 10px;
       text-align: center;
-      position: relative;
     }
 
     .hero .logo-area {
@@ -160,7 +156,6 @@
       line-height: 1.6;
     }
 
-    /* SEARCH */
     .search-area {
       margin-top: 18px;
       display: flex;
@@ -191,7 +186,6 @@
       color: rgba(248,250,252,0.45);
     }
 
-    /* CATEGORY */
     .categories {
       display: flex;
       justify-content: center;
@@ -209,7 +203,7 @@
       color: var(--muted);
       cursor: pointer;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 800;
       transition: 0.25s;
       backdrop-filter: blur(12px);
     }
@@ -227,11 +221,128 @@
       box-shadow: 0 12px 30px rgba(255,183,3,0.18);
     }
 
-    /* GRID */
+    /* CAMPAIGN SECTION */
+    .campaigns {
+      max-width: 1100px;
+      margin: auto;
+      padding: 10px 18px 0px;
+    }
+
+    .campaign-title {
+      margin-top: 20px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: rgba(248,250,252,0.55);
+      font-weight: 900;
+      text-align: left;
+    }
+
+    .campaign-slider {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .campaign-slider::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .campaign-slider::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.12);
+      border-radius: 999px;
+    }
+
+    .campaign-card {
+      min-width: 280px;
+      max-width: 280px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.55);
+      scroll-snap-align: start;
+      transition: 0.25s;
+      position: relative;
+    }
+
+    .campaign-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(255,183,3,0.4);
+    }
+
+    .campaign-img {
+      height: 150px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .campaign-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.75));
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: linear-gradient(135deg, #ef4444, #fb5607);
+      color: white;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 7px 12px;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+
+    .campaign-content {
+      padding: 14px;
+    }
+
+    .campaign-content h3 {
+      font-size: 15px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .campaign-desc {
+      font-size: 12px;
+      color: rgba(248,250,252,0.70);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .campaign-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: rgba(248,250,252,0.45);
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .new-price {
+      font-weight: 900;
+      font-size: 15px;
+      color: var(--accent);
+    }
+
     .container {
       max-width: 1100px;
       margin: auto;
-      padding: 22px 18px 60px;
+      padding: 18px 18px 60px;
     }
 
     .section-title {
@@ -241,7 +352,7 @@
       letter-spacing: 1.4px;
       text-transform: uppercase;
       color: rgba(248,250,252,0.55);
-      font-weight: 800;
+      font-weight: 900;
     }
 
     .grid {
@@ -250,7 +361,6 @@
       gap: 16px;
     }
 
-    /* PRODUCT CARD */
     .card {
       border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
@@ -259,7 +369,6 @@
       cursor: pointer;
       transition: 0.25s;
       box-shadow: 0 12px 35px rgba(0,0,0,0.45);
-      position: relative;
     }
 
     .card:hover {
@@ -321,7 +430,7 @@
       background: rgba(255,183,3,0.12);
       border: 1px solid rgba(255,183,3,0.25);
       color: var(--accent);
-      font-weight: 800;
+      font-weight: 900;
     }
 
     /* MODAL */
@@ -404,7 +513,7 @@
       border: 1px solid rgba(255,255,255,0.08);
       color: rgba(248,250,252,0.9);
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .info-box span {
@@ -454,7 +563,6 @@
       transform: scale(1.02);
     }
 
-    /* FLOATING WHATSAPP */
     .whatsapp {
       position: fixed;
       bottom: 18px;
@@ -481,20 +589,13 @@
       border-top: 1px solid rgba(255,255,255,0.08);
       color: rgba(248,250,252,0.55);
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* MOBILE FIX */
     @media(max-width: 520px) {
-      .hero h2 {
-        font-size: 22px;
-      }
-      .card-img {
-        height: 150px;
-      }
-      .modal-img {
-        height: 220px;
-      }
+      .hero h2 { font-size: 22px; }
+      .card-img { height: 150px; }
+      .modal-img { height: 220px; }
     }
   </style>
 </head>
@@ -520,7 +621,7 @@
     <img src="logo.png" alt="Deneme Kafe Logo" onerror="this.style.display='none';">
     <h2><span id="heroTitle">DENEME KAFE</span></h2>
     <p id="heroDesc">
-      En özel tatlılar, sıcak tuzlu lezzetler ve ferah içecekler tek menüde. 
+      En özel tatlılar, sıcak tuzlu lezzetler ve ferah içecekler tek menüde.
       Ürüne tıklayarak detayları görebilirsiniz.
     </p>
   </div>
@@ -530,6 +631,12 @@
   </div>
 
   <div class="categories" id="categoryButtons"></div>
+</div>
+
+<!-- CAMPAIGNS -->
+<div class="campaigns">
+  <div class="campaign-title" id="campaignTitle">🔥 Kampanyalar</div>
+  <div class="campaign-slider" id="campaignSlider"></div>
 </div>
 
 <div class="container">
@@ -545,7 +652,6 @@
   <span id="footerText">© 2026 DENEME KAFE | QR Menü</span>
 </footer>
 
-
 <!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
@@ -555,15 +661,15 @@
       <p id="modalDesc">Açıklama</p>
 
       <div class="modal-info">
-        <div class="info-box">
+        <div class="info-box" id="modalPriceBox">
           Fiyat
           <span id="modalPrice">0₺</span>
         </div>
-        <div class="info-box">
+        <div class="info-box" id="modalTimeBox">
           Hazırlanma Süresi
           <span id="modalTime">5-10 dk</span>
         </div>
-        <div class="info-box">
+        <div class="info-box" id="modalCalBox">
           Kalori
           <span id="modalCal">250 kcal</span>
         </div>
@@ -597,9 +703,11 @@
       footer: "© 2026 DENEME KAFE | QR Menü",
       close: "Kapat",
       order: "WhatsApp'tan Sipariş Ver",
+      campaigns: "🔥 Kampanyalar",
       price: "Fiyat",
       time: "Hazırlanma Süresi",
-      cal: "Kalori"
+      cal: "Kalori",
+      discounted: "İndirimli"
     },
     en: {
       title: "DENEME CAFE",
@@ -615,9 +723,11 @@
       footer: "© 2026 DENEME CAFE | QR Menu",
       close: "Close",
       order: "Order via WhatsApp",
+      campaigns: "🔥 Campaign Deals",
       price: "Price",
       time: "Preparation Time",
-      cal: "Calories"
+      cal: "Calories",
+      discounted: "Discount"
     }
   };
 
@@ -647,19 +757,6 @@
       img: "https://images.unsplash.com/photo-1604908177522-429cd0a9f5b2?auto=format&fit=crop&w=1000&q=80"
     },
     {
-      category: "salty",
-      tr: { name: "Köri Soslu Makarna", desc: "Kremalı köri sos, tavuk parçaları ve parmesan." },
-      en: { name: "Curry Chicken Pasta", desc: "Creamy curry sauce, chicken bites and parmesan." },
-      price: "190₺",
-      timeTR: "12-18 dk",
-      timeEN: "12-18 min",
-      cal: "700 kcal",
-      tagTR: "Yeni",
-      tagEN: "New",
-      img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1000&q=80"
-    },
-
-    {
       category: "sweet",
       tr: { name: "San Sebastian Cheesecake", desc: "Karamelize üst katman, kremsi iç doku." },
       en: { name: "San Sebastian Cheesecake", desc: "Caramelized top layer with creamy center." },
@@ -684,19 +781,6 @@
       img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=1000&q=80"
     },
     {
-      category: "sweet",
-      tr: { name: "Tiramisu", desc: "Mascarpone kreması ve kahve aroması ile." },
-      en: { name: "Tiramisu", desc: "Mascarpone cream with rich coffee flavor." },
-      price: "155₺",
-      timeTR: "Hazır",
-      timeEN: "Ready",
-      cal: "430 kcal",
-      tagTR: "Klasik",
-      tagEN: "Classic",
-      img: "https://images.unsplash.com/photo-1608219959308-7b1d12f954ed?auto=format&fit=crop&w=1000&q=80"
-    },
-
-    {
       category: "drinks",
       tr: { name: "Iced Latte", desc: "Espresso, süt ve buz ile ferahlatıcı lezzet." },
       en: { name: "Iced Latte", desc: "Espresso, milk and ice - refreshing taste." },
@@ -707,18 +791,6 @@
       tagTR: "Soğuk",
       tagEN: "Cold",
       img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1000&q=80"
-    },
-    {
-      category: "drinks",
-      tr: { name: "Matcha Latte", desc: "Japon matcha çayı, süt ve hafif tatlı aroma." },
-      en: { name: "Matcha Latte", desc: "Japanese matcha tea, milk and soft sweet aroma." },
-      price: "135₺",
-      timeTR: "3-5 dk",
-      timeEN: "3-5 min",
-      cal: "210 kcal",
-      tagTR: "Premium",
-      tagEN: "Premium",
-      img: "https://images.unsplash.com/photo-1542444459-db63c2f8a7c3?auto=format&fit=crop&w=1000&q=80"
     },
     {
       category: "drinks",
@@ -733,6 +805,81 @@
       img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=1000&q=80"
     }
   ];
+
+  /* CAMPAIGN ITEMS */
+  const campaignItems = [
+    {
+      category: "sweet",
+      tr: { name: "Tiramisu Kampanya", desc: "Bugüne özel indirimli tiramisu fırsatı!" },
+      en: { name: "Tiramisu Deal", desc: "Special discount for today only!" },
+      oldPrice: "155₺",
+      price: "129₺",
+      timeTR: "Hazır",
+      timeEN: "Ready",
+      cal: "430 kcal",
+      img: "https://images.unsplash.com/photo-1608219959308-7b1d12f954ed?auto=format&fit=crop&w=1000&q=80",
+      discountTextTR: "%20 İndirim",
+      discountTextEN: "20% OFF"
+    },
+    {
+      category: "drinks",
+      tr: { name: "Matcha Latte Kampanya", desc: "Premium matcha latte şimdi indirimli!" },
+      en: { name: "Matcha Latte Deal", desc: "Premium matcha latte discounted now!" },
+      oldPrice: "135₺",
+      price: "110₺",
+      timeTR: "3-5 dk",
+      timeEN: "3-5 min",
+      cal: "210 kcal",
+      img: "https://images.unsplash.com/photo-1542444459-db63c2f8a7c3?auto=format&fit=crop&w=1000&q=80",
+      discountTextTR: "%18 İndirim",
+      discountTextEN: "18% OFF"
+    }
+  ];
+
+  function renderCampaigns() {
+    const slider = document.getElementById("campaignSlider");
+    slider.innerHTML = "";
+
+    campaignItems.forEach(item => {
+      const langData = item[currentLang];
+
+      const card = document.createElement("div");
+      card.className = "campaign-card";
+
+      card.onclick = () => openCampaignModal(item);
+
+      card.innerHTML = `
+        <div class="campaign-img" style="background-image:url('${item.img}')">
+          <div class="discount-badge">${currentLang === "tr" ? item.discountTextTR : item.discountTextEN}</div>
+        </div>
+        <div class="campaign-content">
+          <h3>${langData.name}</h3>
+          <p class="campaign-desc">${langData.desc}</p>
+          <div class="campaign-price">
+            <span class="old-price">${item.oldPrice}</span>
+            <span class="new-price">${item.price}</span>
+          </div>
+        </div>
+      `;
+
+      slider.appendChild(card);
+    });
+  }
+
+  function openCampaignModal(item) {
+    selectedItem = item;
+    const modal = document.getElementById("modal");
+
+    document.getElementById("modalImg").style.backgroundImage = `url('${item.img}')`;
+    document.getElementById("modalTitle").innerText = item[currentLang].name;
+    document.getElementById("modalDesc").innerText = item[currentLang].desc;
+
+    document.getElementById("modalPrice").innerText = item.price;
+    document.getElementById("modalTime").innerText = currentLang === "tr" ? item.timeTR : item.timeEN;
+    document.getElementById("modalCal").innerText = item.cal;
+
+    modal.classList.add("active");
+  }
 
   function renderCategories() {
     const catDiv = document.getElementById("categoryButtons");
@@ -813,6 +960,7 @@
     document.getElementById("heroTitle").innerText = translations[lang].title;
     document.getElementById("heroDesc").innerText = translations[lang].heroDesc;
     document.getElementById("sectionTitle").innerText = translations[lang].menuTitle;
+    document.getElementById("campaignTitle").innerText = translations[lang].campaigns;
     document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
     document.getElementById("whatsappBtn").innerText = translations[lang].whatsapp;
     document.getElementById("footerText").innerText = translations[lang].footer;
@@ -820,7 +968,12 @@
     document.getElementById("closeBtn").innerText = translations[lang].close;
     document.getElementById("orderBtn").innerText = translations[lang].order;
 
+    document.getElementById("modalPriceBox").childNodes[0].textContent = translations[lang].price;
+    document.getElementById("modalTimeBox").childNodes[0].textContent = translations[lang].time;
+    document.getElementById("modalCalBox").childNodes[0].textContent = translations[lang].cal;
+
     renderCategories();
+    renderCampaigns();
     renderMenu();
   }
 
@@ -857,19 +1010,15 @@
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   }
 
-  // Close modal by clicking outside
   document.getElementById("modal").addEventListener("click", (e) => {
     if (e.target.id === "modal") closeModal();
   });
 
-  // SEARCH
   document.getElementById("searchInput").addEventListener("input", renderMenu);
 
-  // LANG BUTTONS
   document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
   document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
 
-  // HEADER HIDE ON SCROLL
   let lastScroll = 0;
   const header = document.querySelector("header");
 
@@ -885,7 +1034,6 @@
     lastScroll = currentScroll;
   });
 
-  // START
   setLanguage("tr");
 </script>
 
