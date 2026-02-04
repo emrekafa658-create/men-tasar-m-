@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Menu</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #111827;
+      --card2: #0f172a;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #f59e0b;
+      --accent2: #22c55e;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, #05070a, #0b0f14);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      padding: 6px;
+      border-radius: 12px;
+    }
+
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .lang-switch button.active {
+      background: var(--accent);
+      color: #111;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .search-area {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-area input {
+      flex: 1;
+      min-width: 200px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-area input::placeholder {
+      color: rgba(148,163,184,0.7);
+    }
+
+    .categories {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .categories button {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      transition: 0.2s;
+    }
+
+    .categories button.active {
+      background: var(--accent2);
+      color: #07100a;
+      font-weight: bold;
+      border: none;
+    }
+
+    .section-title {
+      margin-top: 26px;
+      margin-bottom: 12px;
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(245,158,11,0.5);
+    }
+
+    .card-img {
+      height: 140px;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.2);
+    }
+
+    .card-content {
+      padding: 14px;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 10px;
+    }
+
+    .card h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: var(--accent);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(245,158,11,0.15);
+      border: 1px solid rgba(245,158,11,0.25);
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .whatsapp {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      background: #25D366;
+      color: white;
+      padding: 14px 16px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 13px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: 0.2s;
+      z-index: 99;
+    }
+
+    .whatsapp:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <h1 id="titleText">Luna Café Menu</h1>
+      <p id="subtitleText">Scan & Order - Fresh Taste Everyday</p>
+    </div>
+
+    <div class="lang-switch">
+      <button id="btnTR" class="active">TR</button>
+      <button id="btnEN">EN</button>
+    </div>
+  </div>
+
+  <div class="search-area">
+    <input type="text" id="searchInput" placeholder="Ürün ara... (örn: latte, burger)" />
+  </div>
+
+  <div class="categories" id="categoryButtons"></div>
+</header>
+
+<div class="container">
+  <div class="section-title" id="sectionTitle">Menü</div>
+  <div class="grid" id="menuGrid"></div>
+</div>
+
+<a class="whatsapp" href="https://wa.me/905555555555" target="_blank" id="whatsappBtn">
+  WhatsApp Sipariş
+</a>
+
+<footer>
+  <span id="footerText">© 2026 Luna Café | QR Menu</span>
+</footer>
+
+<script>
+  let currentLang = "tr";
+  let currentCategory = "all";
+
+  const translations = {
+    tr: {
+      title: "Luna Café Menü",
+      subtitle: "QR Menü - Hızlı Sipariş & Modern Deneyim",
+      menuTitle: "Menü",
+      searchPlaceholder: "Ürün ara... (örn: latte, burger)",
+      all: "Tümü",
+      salty: "Tuzlu",
+      sweet: "Tatlı",
+      drinks: "İçecekler",
+      whatsapp: "WhatsApp Sipariş",
+      footer: "© 2026 Luna Café | QR Menü"
+    },
+    en: {
+      title: "Luna Café Menu",
+      subtitle: "QR Menu - Fast Order & Premium Experience",
+      menuTitle: "Menu",
+      searchPlaceholder: "Search item... (ex: latte, burger)",
+      all: "All",
+      salty: "Savory",
+      sweet: "Desserts",
+      drinks: "Drinks",
+      whatsapp: "Order via WhatsApp",
+      footer: "© 2026 Luna Café | QR Menu"
+    }
+  };
+
+  const menuItems = [
+    {
+      category: "salty",
+      tr: { name: "Cheddar Burger", desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
+      en: { name: "Cheddar Burger", desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce." },
+      price: "220₺",
+      tagTR: "Popüler",
+      tagEN: "Popular",
+      img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "salty",
+      tr: { name: "Tavuklu Wrap", desc: "Izgara tavuk, yeşillik, özel sos ve lavaş." },
+      en: { name: "Chicken Wrap", desc: "Grilled chicken, greens, signature sauce and tortilla." },
+      price: "170₺",
+      tagTR: "Şef Önerisi",
+      tagEN: "Chef's Choice",
+      img: "https://images.unsplash.com/photo-1604908177522-429cd0a9f5b2?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "salty",
+      tr: { name: "Köri Soslu Makarna", desc: "Kremalı köri sos, tavuk parçaları ve parmesan." },
+      en: { name: "Curry Chicken Pasta", desc: "Creamy curry sauce, chicken bites and parmesan." },
+      price: "190₺",
+      tagTR: "Yeni",
+      tagEN: "New",
+      img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "sweet",
+      tr: { name: "San Sebastian Cheesecake", desc: "Karamelize üst katman, kremsi iç doku." },
+      en: { name: "San Sebastian Cheesecake", desc: "Caramelized top layer with creamy center." },
+      price: "150₺",
+      tagTR: "En Çok Satan",
+      tagEN: "Best Seller",
+      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "sweet",
+      tr: { name: "Çikolatalı Brownie", desc: "Sıcak brownie, vanilyalı dondurma ile servis edilir." },
+      en: { name: "Chocolate Brownie", desc: "Warm brownie served with vanilla ice cream." },
+      price: "140₺",
+      tagTR: "Tatlı",
+      tagEN: "Dessert",
+      img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "sweet",
+      tr: { name: "Tiramisu", desc: "Kahve aromalı mascarpone kreması, kakao dokunuşu." },
+      en: { name: "Tiramisu", desc: "Coffee-flavored mascarpone cream with cocoa touch." },
+      price: "155₺",
+      tagTR: "Klasik",
+      tagEN: "Classic",
+      img: "https://images.unsplash.com/photo-1608219959308-7b1d12f954ed?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "drinks",
+      tr: { name: "Iced Latte", desc: "Espresso, süt ve buz ile ferahlatıcı lezzet." },
+      en: { name: "Iced Latte", desc: "Espresso, milk and ice - refreshing taste." },
+      price: "120₺",
+      tagTR: "Soğuk",
+      tagEN: "Cold",
+      img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "drinks",
+      tr: { name: "Matcha Latte", desc: "Japon matcha çayı, süt ve hafif tatlı aroma." },
+      en: { name: "Matcha Latte", desc: "Japanese matcha tea, milk and a soft sweet aroma." },
+      price: "135₺",
+      tagTR: "Premium",
+      tagEN: "Premium",
+      img: "https://images.unsplash.com/photo-1542444459-db63c2f8a7c3?auto=format&fit=crop&w=900&q=60"
+    },
+    {
+      category: "drinks",
+      tr: { name: "Fresh Lemonade", desc: "Taze limon, nane ve doğal şeker." },
+      en: { name: "Fresh Lemonade", desc: "Fresh lemon, mint and natural sugar." },
+      price: "95₺",
+      tagTR: "Serinletici",
+      tagEN: "Refreshing",
+      img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=900&q=60"
+    }
+  ];
+
+  function renderCategories() {
+    const catDiv = document.getElementById("categoryButtons");
+    catDiv.innerHTML = "";
+
+    const cats = [
+      { key: "all", label: translations[currentLang].all },
+      { key: "salty", label: translations[currentLang].salty },
+      { key: "sweet", label: translations[currentLang].sweet },
+      { key: "drinks", label: translations[currentLang].drinks }
+    ];
+
+    cats.forEach(cat => {
+      const btn = document.createElement("button");
+      btn.innerText = cat.label;
+      btn.classList.toggle("active", currentCategory === cat.key);
+
+      btn.onclick = () => {
+        currentCategory = cat.key;
+        renderCategories();
+        renderMenu();
+      };
+
+      catDiv.appendChild(btn);
+    });
+  }
+
+  function renderMenu() {
+    const grid = document.getElementById("menuGrid");
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+
+    grid.innerHTML = "";
+
+    const filtered = menuItems.filter(item => {
+      const langData = item[currentLang];
+      const matchesCategory = currentCategory === "all" || item.category === currentCategory;
+      const matchesSearch = langData.name.toLowerCase().includes(searchValue) || langData.desc.toLowerCase().includes(searchValue);
+      return matchesCategory && matchesSearch;
+    });
+
+    filtered.forEach(item => {
+      const langData = item[currentLang];
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <div class="card-img" style="background-image:url('${item.img}')"></div>
+        <div class="card-content">
+          <div class="card-top">
+            <div>
+              <h3>${langData.name}</h3>
+              <p class="desc">${langData.desc}</p>
+            </div>
+            <div class="price">${item.price}</div>
+          </div>
+          <span class="tag">${currentLang === "tr" ? item.tagTR : item.tagEN}</span>
+        </div>
+      `;
+
+      grid.appendChild(card);
+    });
+  }
+
+  function setLanguage(lang) {
+    currentLang = lang;
+
+    document.getElementById("btnTR").classList.toggle("active", lang === "tr");
+    document.getElementById("btnEN").classList.toggle("active", lang === "en");
+
+    document.getElementById("titleText").innerText = translations[lang].title;
+    document.getElementById("subtitleText").innerText = translations[lang].subtitle;
+    document.getElementById("sectionTitle").innerText = translations[lang].menuTitle;
+    document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
+    document.getElementById("whatsappBtn").innerText = translations[lang].whatsapp;
+    document.getElementById("footerText").innerText = translations[lang].footer;
+
+    renderCategories();
+    renderMenu();
+  }
+
+  document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
+  document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
+
+  document.getElementById("searchInput").addEventListener("input", renderMenu);
+
+  setLanguage("tr");
+</script>
+
+</body>
+</html>
