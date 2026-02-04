@@ -6,1141 +6,1113 @@
   <title>DENEME KAFE | QR Menü</title>
 
   <style>
-    :root {
-      --bg1: #070A0F;
-      --bg2: #0E1220;
+    :root{
+      --bg1:#07070c;
+      --bg2:#0d1117;
       --card: rgba(255,255,255,0.06);
-      --card2: rgba(255,255,255,0.04);
+      --card2: rgba(255,255,255,0.09);
       --border: rgba(255,255,255,0.10);
-
-      --text: #F8FAFC;
+      --text: #f8fafc;
       --muted: rgba(248,250,252,0.65);
 
-      --accent: #ff4d6d;
-      --accent2: #ffb703;
-      --accent3: #38bdf8;
-      --green: #22c55e;
-      --danger: #ef4444;
+      /* renk teması (turuncu değil) */
+      --accent: #ff4fd8;  /* pembe */
+      --accent2: #3cffc3; /* mint */
+      --accent3: #7c5cff; /* mor */
+
+      --shadow: 0 12px 35px rgba(0,0,0,0.45);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", Arial, sans-serif;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    body {
-      background: radial-gradient(circle at top left, rgba(255,77,109,0.20), transparent 55%),
-                  radial-gradient(circle at top right, rgba(56,189,248,0.20), transparent 55%),
+    body{
+      background: radial-gradient(circle at top, rgba(124,92,255,0.25), transparent 55%),
+                  radial-gradient(circle at bottom, rgba(60,255,195,0.15), transparent 55%),
                   linear-gradient(180deg, var(--bg1), var(--bg2));
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* ==============================
-       TOP RIGHT LANGUAGE SWITCH
-    ============================== */
-    .top-right {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      z-index: 90;
-      display: flex;
-      gap: 8px;
+    a{ color:inherit; }
+
+    /* ===== TOP BAR ===== */
+    .top-fixed{
+      position: sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(16px);
       background: rgba(0,0,0,0.35);
-      border: 1px solid var(--border);
-      padding: 6px;
-      border-radius: 999px;
-      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
+      transition: transform 0.25s ease;
+    }
+    .top-fixed.hide{
+      transform: translateY(-100%);
     }
 
-    .top-right button {
-      border: none;
-      cursor: pointer;
-      padding: 8px 12px;
-      font-size: 12px;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--muted);
-      transition: 0.2s;
-      font-weight: 600;
-    }
-
-    .top-right button.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #111;
-    }
-
-    /* ==============================
-       HERO
-    ============================== */
-    .hero {
-      padding: 80px 16px 14px;
-      text-align: center;
+    .top-row{
       max-width: 1100px;
       margin: auto;
+      display:flex;
+      align-items:center;
+      justify-content: flex-end;
+      gap:10px;
     }
 
-    .logo-box {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 92px;
-      height: 92px;
-      border-radius: 22px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.10);
-      backdrop-filter: blur(10px);
-      overflow: hidden;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.55);
-      margin-bottom: 12px;
+    /* TR EN sağ üst */
+    .lang-switch{
+      display:flex;
+      gap:6px;
+      padding:6px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
     }
-
-    .logo-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hero h1 {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      margin-top: 8px;
+    .lang-switch button{
+      border:none;
+      cursor:pointer;
+      background: transparent;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.4;
+      padding: 7px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      transition: 0.2s;
+    }
+    .lang-switch button.active{
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      color:#0b0b12;
+      font-weight:bold;
     }
 
-    /* ==============================
-       SEARCH
-    ============================== */
-    .search-area {
-      max-width: 720px;
-      margin: 22px auto 0;
-      display: flex;
-      justify-content: center;
-      padding: 0 10px;
+    /* ===== HERO AREA ===== */
+    .hero{
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 14px 12px;
+      text-align:center;
     }
 
-    .search-area input {
-      width: 100%;
-      padding: 16px 16px;
+    .hero-logo{
+      width: 84px;
+      height: 84px;
+      border-radius: 22px;
+      object-fit: cover;
+      margin: 10px auto 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .hero h1{
+      font-size: 26px;
+      letter-spacing: 1px;
+      font-weight: 900;
+      background: linear-gradient(90deg, #ffffff, rgba(255,255,255,0.65));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .hero p{
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    /* Search */
+    .search-wrap{
+      display:flex;
+      justify-content:center;
+      margin-top: 10px;
+    }
+    .search-wrap input{
+      width: min(680px, 95%);
+      padding: 15px 16px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.35);
-      backdrop-filter: blur(12px);
-      outline: none;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      outline:none;
       color: var(--text);
       font-size: 14px;
       transition: 0.2s;
     }
-
-    .search-area input:focus {
-      border-color: rgba(255,77,109,0.65);
-      box-shadow: 0 0 0 4px rgba(255,77,109,0.12);
+    .search-wrap input:focus{
+      border-color: rgba(255,79,216,0.6);
+      box-shadow: 0 0 0 4px rgba(255,79,216,0.15);
     }
 
-    .search-area input::placeholder {
-      color: rgba(248,250,252,0.5);
-    }
-
-    /* ==============================
-       CATEGORY BUTTONS
-    ============================== */
-    .categories {
-      max-width: 900px;
-      margin: 18px auto 0;
-      padding: 0 10px;
-      display: flex;
+    /* Categories */
+    .categories{
+      max-width: 1100px;
+      margin: 14px auto 10px;
+      padding: 0 14px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
       gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
     }
-
-    .categories button {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.25);
-      color: rgba(248,250,252,0.7);
-      cursor: pointer;
-      padding: 10px 16px;
+    .categories button{
+      cursor:pointer;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: rgba(248,250,252,0.75);
+      padding: 10px 15px;
       border-radius: 999px;
       font-size: 13px;
       transition: 0.2s;
-      backdrop-filter: blur(10px);
-      font-weight: 700;
     }
-
-    .categories button:hover {
+    .categories button:hover{
       transform: translateY(-2px);
-      border-color: rgba(255,183,3,0.55);
     }
-
-    .categories button.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    .categories button.active{
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      color: #071016;
+      font-weight: bold;
       border: none;
-      color: #111;
     }
 
-    /* ==============================
-       SECTION TITLE
-    ============================== */
-    .section-title {
+    /* ===== SECTION TITLE ===== */
+    .section-title{
       max-width: 1100px;
-      margin: 26px auto 14px;
+      margin: 22px auto 12px;
       padding: 0 14px;
-      font-size: 13px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .section-title h2{
+      font-size: 14px;
+      color: rgba(248,250,252,0.7);
       letter-spacing: 1px;
       text-transform: uppercase;
-      color: rgba(248,250,252,0.55);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
-    /* ==============================
-       CAMPAIGN SLIDER
-    ============================== */
-    .slider-wrap {
-      max-width: 1100px;
-      margin: 10px auto 22px;
-      padding: 0 14px;
-    }
-
-    .slider {
-      display: flex;
-      gap: 14px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      padding-bottom: 10px;
-    }
-
-    .slider::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .slider::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.12);
-      border-radius: 999px;
-    }
-
-    .slide {
-      min-width: 320px;
-      max-width: 380px;
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.35);
-      backdrop-filter: blur(14px);
-      cursor: pointer;
-      transition: 0.25s;
-      position: relative;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.55);
-    }
-
-    .slide:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,183,3,0.5);
-    }
-
-    .slide img {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      filter: saturate(1.35) contrast(1.1);
-    }
-
-    .slide-info {
-      padding: 14px;
-    }
-
-    .slide-info h3 {
-      font-size: 15px;
-      font-weight: 900;
-      margin-bottom: 6px;
-    }
-
-    .slide-info p {
-      font-size: 12px;
-      color: rgba(248,250,252,0.65);
-      line-height: 1.35;
-      margin-bottom: 10px;
-    }
-
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      font-weight: 900;
-      font-size: 14px;
-    }
-
-    .old-price {
-      color: rgba(248,250,252,0.45);
-      text-decoration: line-through;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .new-price {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: #111;
-      font-weight: 900;
-    }
-
-    .badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: rgba(0,0,0,0.65);
-      border: 1px solid rgba(255,255,255,0.18);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 900;
-      color: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-    }
-
-    /* ==============================
-       MENU GRID
-    ============================== */
-    .container {
+    /* ===== SLIDER ===== */
+    .slider-wrap{
       max-width: 1100px;
       margin: auto;
-      padding: 0 14px 40px;
+      padding: 0 14px;
+    }
+    .slider{
+      display:flex;
+      gap: 14px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding-bottom: 10px;
+    }
+    .slider::-webkit-scrollbar{ height: 7px; }
+    .slider::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,0.10);
+      border-radius: 99px;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
+    .slide-card{
+      min-width: 290px;
+      flex: 0 0 auto;
       border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.35);
-      backdrop-filter: blur(14px);
-      cursor: pointer;
-      transition: 0.25s;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.55);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      cursor:pointer;
+      transition: 0.2s;
+      position: relative;
     }
-
-    .card:hover {
+    .slide-card:hover{
       transform: translateY(-4px);
-      border-color: rgba(56,189,248,0.55);
+      border-color: rgba(60,255,195,0.45);
     }
 
-    .card img {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      filter: saturate(1.45) contrast(1.1);
+    .slide-img{
+      height: 160px;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(1.15) contrast(1.1) saturate(1.35);
     }
 
-    .card-content {
-      padding: 14px;
+    .slide-content{
+      padding: 12px 14px 14px;
     }
 
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: start;
-    }
-
-    .card h3 {
-      font-size: 15px;
-      font-weight: 900;
+    .slide-content h3{
+      font-size: 16px;
       margin-bottom: 6px;
     }
 
-    .desc {
+    .slide-content p{
       font-size: 12px;
-      color: rgba(248,250,252,0.65);
+      color: var(--muted);
       line-height: 1.4;
       margin-bottom: 10px;
     }
 
-    .price {
-      font-size: 14px;
+    .slide-bottom{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .price{
       font-weight: 900;
       color: var(--accent2);
+      font-size: 14px;
       white-space: nowrap;
     }
 
-    .tag {
-      display: inline-block;
-      padding: 7px 12px;
-      border-radius: 999px;
+    .oldprice{
+      font-size: 12px;
+      color: rgba(248,250,252,0.45);
+      text-decoration: line-through;
+      margin-left: 8px;
+      font-weight: normal;
+    }
+
+    .badge{
       font-size: 11px;
-      font-weight: 900;
-      background: rgba(255,77,109,0.14);
-      border: 1px solid rgba(255,77,109,0.20);
-      color: rgba(255,77,109,0.95);
-    }
-
-    /* ==============================
-       WHATSAPP FLOATING BUTTON
-    ============================== */
-    .whatsapp {
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      background: #25D366;
-      color: white;
-      padding: 14px 18px;
+      padding: 7px 11px;
       border-radius: 999px;
-      font-weight: 900;
-      font-size: 13px;
-      text-decoration: none;
-      box-shadow: 0 14px 35px rgba(0,0,0,0.55);
-      transition: 0.2s;
-      z-index: 80;
+      border: 1px solid rgba(255,79,216,0.25);
+      background: rgba(255,79,216,0.14);
+      color: rgba(255,79,216,0.95);
+      font-weight: bold;
     }
 
-    .whatsapp:hover {
-      transform: scale(1.05);
-    }
-
-    /* ==============================
-       FOOTER
-    ============================== */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding: 22px 14px;
+    /* ===== MENU GRID ===== */
+    .container{
       max-width: 1100px;
-      margin: auto;
-      color: rgba(248,250,252,0.55);
-      font-size: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      margin:auto;
+      padding: 0 14px 40px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 14px;
-      flex-wrap: wrap;
     }
 
-    .admin-link {
-      cursor: pointer;
-      font-weight: 900;
-      color: rgba(255,183,3,0.95);
-      transition: 0.2s;
-    }
-
-    .admin-link:hover {
-      color: rgba(255,77,109,0.95);
-    }
-
-    /* ==============================
-       MODALS (DETAIL + ADMIN)
-    ============================== */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.70);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 120;
-      padding: 18px;
-    }
-
-    .overlay.show {
-      display: flex;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 680px;
-      max-height: 85vh;
-      overflow-y: auto;
-      background: rgba(0,0,0,0.60);
-      border: 1px solid rgba(255,255,255,0.12);
+    .card{
       border-radius: 22px;
-      backdrop-filter: blur(18px);
-      box-shadow: 0 18px 55px rgba(0,0,0,0.75);
-      position: relative;
-      animation: pop 0.2s ease;
-    }
-
-    @keyframes pop {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .modal-header {
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      position: sticky;
-      top: 0;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(16px);
-      z-index: 5;
-    }
-
-    .modal-header h2 {
-      font-size: 15px;
-      font-weight: 900;
-    }
-
-    .close-btn {
-      cursor: pointer;
-      border: none;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(248,250,252,0.9);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-weight: 900;
+      overflow:hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      cursor:pointer;
       transition: 0.2s;
     }
 
-    .close-btn:hover {
-      background: rgba(255,77,109,0.25);
-      border-color: rgba(255,77,109,0.4);
+    .card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(255,79,216,0.55);
     }
 
-    .modal-body {
-      padding: 16px;
+    .card-img{
+      height: 150px;
+      background-size: cover;
+      background-position:center;
+      filter: brightness(1.18) contrast(1.08) saturate(1.45);
     }
 
-    .detail-img {
-      width: 100%;
-      height: 230px;
-      border-radius: 18px;
-      object-fit: cover;
-      filter: saturate(1.45) contrast(1.1);
-      margin-bottom: 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .detail-price {
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--accent2);
-    }
-
-    .detail-meta {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .pill {
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 900;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: rgba(248,250,252,0.85);
-    }
-
-    /* ==============================
-       ADMIN FORM
-    ============================== */
-    .admin-box {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .admin-section {
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.04);
-      border-radius: 18px;
+    .card-content{
       padding: 14px;
     }
 
-    .admin-section h3 {
-      font-size: 13px;
+    .card-content h3{
+      font-size: 15px;
+      margin-bottom: 6px;
       font-weight: 900;
-      margin-bottom: 12px;
-      color: rgba(255,255,255,0.9);
     }
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .desc{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 10px;
+      min-height: 35px;
+    }
+
+    .card-bottom{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
       gap: 10px;
     }
 
-    .row-1 {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .tag{
+      font-size: 11px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(60,255,195,0.25);
+      background: rgba(60,255,195,0.12);
+      color: rgba(60,255,195,0.95);
+      font-weight: bold;
     }
 
-    .admin-section input,
-    .admin-section textarea,
-    .admin-section select {
+    /* WhatsApp */
+    .whatsapp{
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      background: #25D366;
+      color:white;
+      font-weight: 900;
+      font-size: 13px;
+      text-decoration:none;
+      padding: 14px 16px;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 90;
+      transition: 0.2s;
+    }
+    .whatsapp:hover{
+      transform: scale(1.05);
+    }
+
+    footer{
+      border-top: 1px solid var(--border);
+      padding: 18px 14px;
+      color: rgba(248,250,252,0.55);
+      font-size: 12px;
+      margin-top: 25px;
+    }
+
+    .footer-row{
+      max-width: 1100px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-link{
+      color: rgba(248,250,252,0.7);
+      text-decoration: underline;
+      cursor:pointer;
+      font-weight: bold;
+    }
+
+    /* ===== MODALS ===== */
+    .modal{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 14px;
+      z-index: 120;
+    }
+
+    .modal.show{
+      display:flex;
+    }
+
+    .modal-box{
+      width: min(900px, 100%);
+      max-height: 90vh;
+      overflow:auto;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(15,18,25,0.92);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.65);
+      position: relative;
+    }
+
+    .modal-box::-webkit-scrollbar{ width: 8px; }
+    .modal-box::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,0.12);
+      border-radius: 99px;
+    }
+
+    .modal-close{
+      position:absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      cursor:pointer;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight:bold;
+      z-index: 5;
+    }
+
+    /* product detail modal */
+    .product-modal-img{
       width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      filter: brightness(1.1) contrast(1.1) saturate(1.4);
+      cursor: zoom-in;
+    }
+
+    .product-modal-body{
+      padding: 16px;
+    }
+
+    .product-modal-body h2{
+      font-size: 20px;
+      margin-bottom: 8px;
+      font-weight: 900;
+    }
+
+    .product-modal-body p{
+      font-size: 13px;
+      color: rgba(248,250,252,0.75);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .info-row{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .info-chip{
+      font-size: 12px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: rgba(248,250,252,0.85);
+    }
+
+    .modal-price{
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--accent2);
+    }
+
+    /* full image viewer */
+    .img-viewer{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 12px;
+      z-index: 200;
+    }
+    .img-viewer.show{ display:flex; }
+
+    .img-viewer img{
+      max-width: 96vw;
+      max-height: 92vh;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.75);
+    }
+
+    /* ===== ADMIN PANEL ===== */
+    .admin-title{
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .admin-title h2{
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .admin-title span{
+      font-size: 12px;
+      color: rgba(248,250,252,0.65);
+    }
+
+    .admin-content{
+      padding: 16px;
+    }
+
+    .admin-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .panel{
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 14px;
+    }
+
+    .panel h3{
+      font-size: 14px;
+      margin-bottom: 10px;
+      font-weight: 900;
+    }
+
+    .field{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .field label{
+      font-size: 12px;
+      color: rgba(248,250,252,0.7);
+    }
+
+    .field input, .field textarea, .field select{
       padding: 12px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.35);
-      color: rgba(248,250,252,0.95);
-      outline: none;
+      background: rgba(0,0,0,0.25);
+      color: white;
+      outline:none;
       font-size: 13px;
     }
 
-    .admin-section textarea {
-      min-height: 80px;
+    .field textarea{
       resize: vertical;
+      min-height: 80px;
     }
 
-    .btn {
-      border: none;
-      cursor: pointer;
+    .btn{
+      border:none;
+      cursor:pointer;
       padding: 12px 14px;
       border-radius: 14px;
       font-weight: 900;
-      font-size: 13px;
       transition: 0.2s;
+      font-size: 13px;
     }
 
-    .btn-primary {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #111;
+    .btn-primary{
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      color: #071016;
     }
 
-    .btn-primary:hover {
-      transform: translateY(-2px);
+    .btn-danger{
+      background: rgba(255,70,70,0.14);
+      border: 1px solid rgba(255,70,70,0.3);
+      color: rgba(255,170,170,0.95);
     }
 
-    .btn-danger {
-      background: rgba(239,68,68,0.18);
-      border: 1px solid rgba(239,68,68,0.25);
-      color: rgba(239,68,68,0.95);
-    }
-
-    .btn-danger:hover {
-      background: rgba(239,68,68,0.28);
-    }
-
-    .btn-secondary {
+    .btn-secondary{
       background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.12);
       color: rgba(248,250,252,0.9);
     }
 
-    .btn-secondary:hover {
-      background: rgba(56,189,248,0.18);
-      border-color: rgba(56,189,248,0.3);
+    .btn:hover{
+      transform: translateY(-2px);
     }
 
-    .list-item {
-      padding: 12px;
+    .admin-list{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+      max-height: 260px;
+      overflow:auto;
+      padding-right: 6px;
+    }
+
+    .admin-list::-webkit-scrollbar{ width: 7px; }
+    .admin-list::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,0.12);
+      border-radius: 99px;
+    }
+
+    .admin-item{
       border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.25);
-      margin-bottom: 10px;
-      display: flex;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.22);
+      display:flex;
       justify-content: space-between;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
+      gap: 10px;
+      align-items:center;
     }
 
-    .list-item strong {
+    .admin-item strong{
       font-size: 13px;
+      display:block;
+      margin-bottom: 4px;
     }
 
-    .list-item small {
+    .admin-item small{
       color: rgba(248,250,252,0.55);
+      font-size: 11px;
+    }
+
+    .admin-actions{
+      display:flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+    }
+
+    .tiny{
+      padding: 9px 10px;
+      border-radius: 12px;
       font-size: 12px;
     }
 
-    .actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+    /* small helper text */
+    .note{
+      font-size: 12px;
+      color: rgba(248,250,252,0.6);
+      line-height: 1.5;
+      margin-top: 6px;
     }
 
-    @media(max-width: 720px){
-      .row { grid-template-columns: 1fr; }
-      .slide { min-width: 270px; }
-      .hero h1 { font-size: 26px; }
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- Language Switch -->
-  <div class="top-right">
-    <button id="btnTR" class="active">TR</button>
-    <button id="btnEN">EN</button>
+  <!-- TOP RIGHT LANGUAGE -->
+  <div class="top-fixed" id="topFixed">
+    <div class="top-row">
+      <div class="lang-switch">
+        <button id="btnTR" class="active">TR</button>
+        <button id="btnEN">EN</button>
+      </div>
+    </div>
   </div>
 
   <!-- HERO -->
   <div class="hero">
-    <div class="logo-box">
-      <img src="logo.png" alt="DENEME KAFE Logo" onerror="this.style.display='none'">
-    </div>
-
+    <img src="logo.png" class="hero-logo" alt="DENEME KAFE Logo">
     <h1 id="titleText">DENEME KAFE</h1>
-    <p id="subtitleText">Tatlı • Tuzlu • İçecek | QR Menü Deneyimi</p>
+    <p id="subtitleText">Lezzetli bir şey yemeden gitmek yasak 😄</p>
 
-    <div class="search-area">
-      <input type="text" id="searchInput" placeholder="Ürün ara... (örn: latte, burger)" />
+    <div class="search-wrap">
+      <input id="searchInput" type="text" placeholder="Ürün ara... (örn: latte, burger)">
     </div>
-
-    <div class="categories" id="categoryButtons"></div>
   </div>
 
+  <!-- CATEGORIES -->
+  <div class="categories" id="categoryButtons"></div>
+
   <!-- CAMPAIGN SLIDER -->
+  <div class="section-title">
+    <h2 id="campaignTitle">🔥 Kampanyalar</h2>
+  </div>
+
   <div class="slider-wrap">
-    <div class="section-title">
-      <span id="campaignTitle">🔥 Kampanyalar</span>
-      <span id="campaignHint">Kaydır & keşfet</span>
-    </div>
     <div class="slider" id="campaignSlider"></div>
   </div>
 
-  <!-- DAILY SUGGESTION -->
-  <div class="container">
-    <div class="section-title">
-      <span id="dailyTitle">⭐ Günün Önerisi</span>
-    </div>
-    <div class="grid" id="dailyGrid"></div>
+  <!-- TODAY'S SUGGESTION -->
+  <div class="section-title">
+    <h2 id="todayTitle">⭐ Günün Önerisi</h2>
   </div>
 
-  <!-- MENU -->
+  <div class="slider-wrap">
+    <div class="slider" id="todaySlider"></div>
+  </div>
+
+  <!-- MENU GRID -->
+  <div class="section-title">
+    <h2 id="menuTitle">Menü</h2>
+  </div>
+
   <div class="container">
-    <div class="section-title">
-      <span id="menuTitle">🍽 Menü</span>
-      <span id="menuCount"></span>
-    </div>
     <div class="grid" id="menuGrid"></div>
   </div>
 
-  <!-- WhatsApp -->
+  <!-- WHATSAPP BUTTON -->
   <a class="whatsapp" id="whatsappBtn" href="https://wa.me/905555555555" target="_blank">
     WhatsApp
   </a>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
-    <span class="admin-link" id="adminOpen">Admin Panel</span>
-    <span id="footerText">© 2026 DENEME KAFE | QR Menü</span>
+    <div class="footer-row">
+      <div>© 2026 DENEME KAFE | QR Menü</div>
+      <div class="admin-link" id="openAdminLink">Admin Panel</div>
+    </div>
   </footer>
 
-  <!-- DETAIL MODAL -->
-  <div class="overlay" id="detailOverlay">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 id="detailName">Ürün</h2>
-        <button class="close-btn" onclick="closeDetail()">X</button>
-      </div>
-      <div class="modal-body">
-        <img id="detailImg" class="detail-img" src="" alt="">
-        <p id="detailDesc" style="color: rgba(248,250,252,0.75); line-height:1.5; font-size:13px;"></p>
+  <!-- PRODUCT DETAIL MODAL -->
+  <div class="modal" id="productModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+      <img id="modalImg" class="product-modal-img" src="" alt="Product Image">
+      <div class="product-modal-body">
+        <h2 id="modalName">Ürün</h2>
+        <p id="modalDesc">Açıklama</p>
 
-        <div class="detail-row">
-          <div class="detail-price" id="detailPrice"></div>
-          <div id="detailTag" class="tag"></div>
+        <div class="info-row">
+          <div class="info-chip" id="modalPrep">⏱ Hazırlama: 10 dk</div>
+          <div class="info-chip" id="modalCal">🔥 Kalori: 350 kcal</div>
+          <div class="info-chip" id="modalCat">📌 Kategori</div>
         </div>
 
-        <div class="detail-meta" id="detailMeta"></div>
+        <div class="modal-price" id="modalPrice">₺0</div>
       </div>
     </div>
   </div>
 
+  <!-- IMAGE VIEWER -->
+  <div class="img-viewer" id="imgViewer" onclick="closeImgViewer()">
+    <img id="imgViewerImg" src="" alt="Full Image">
+  </div>
+
   <!-- ADMIN MODAL -->
-  <div class="overlay" id="adminOverlay">
-    <div class="modal">
-      <div class="modal-header">
-        <h2 id="adminTitle">Admin Panel</h2>
-        <button class="close-btn" onclick="closeAdmin()">X</button>
+  <div class="modal" id="adminModal">
+    <div class="modal-box">
+
+      <button class="modal-close" onclick="closeAdmin()">✕</button>
+
+      <div class="admin-title">
+        <div>
+          <h2>Admin Panel</h2>
+          <span>Ürün ekle / düzenle / sil • Kampanya oluştur</span>
+        </div>
+        <button class="btn btn-danger tiny" onclick="adminLogout()">Çıkış</button>
       </div>
 
-      <div class="modal-body">
-        <div id="adminLoginBox" class="admin-box">
-          <div class="admin-section">
-            <h3>🔒 Admin Girişi</h3>
-            <input type="password" id="adminPass" placeholder="Şifre gir (1234)">
-            <button class="btn btn-primary" onclick="adminLogin()">Giriş Yap</button>
+      <div class="admin-content">
+
+        <!-- LOGIN -->
+        <div id="adminLoginBox" class="panel">
+          <h3>Giriş</h3>
+          <div class="field">
+            <label>Admin Şifresi</label>
+            <input id="adminPassInput" type="password" placeholder="Şifre gir">
           </div>
+          <button class="btn btn-primary" onclick="adminLogin()">Giriş Yap</button>
+          <div class="note">Şifre şimdilik: <b>1234</b></div>
         </div>
 
-        <div id="adminPanelBox" class="admin-box" style="display:none;">
+        <!-- ADMIN AREA -->
+        <div id="adminArea" style="display:none;">
 
-          <div class="admin-section">
-            <h3>📌 Kategori Yönetimi</h3>
-            <div class="row">
-              <input type="text" id="newCategoryTR" placeholder="Kategori TR (örn: Kahvaltı)">
-              <input type="text" id="newCategoryEN" placeholder="Category EN (ex: Breakfast)">
+          <div class="admin-grid">
+
+            <!-- CATEGORY MANAGER -->
+            <div class="panel">
+              <h3>Kategori Yönetimi</h3>
+
+              <div class="field">
+                <label>Yeni Kategori Adı</label>
+                <input id="newCategoryName" placeholder="Örn: Kahvaltı">
+              </div>
+
+              <button class="btn btn-primary" onclick="addCategory()">Kategori Ekle</button>
+
+              <div class="admin-list" id="categoryList"></div>
             </div>
-            <button class="btn btn-primary" onclick="addCategory()">Kategori Ekle</button>
 
-            <div style="margin-top:12px;" id="categoryList"></div>
+            <!-- PRODUCT FORM -->
+            <div class="panel">
+              <h3 id="productFormTitle">Yeni Ürün Ekle</h3>
+
+              <div class="field">
+                <label>Ürün Adı (TR)</label>
+                <input id="pNameTR" placeholder="Örn: Tavuklu Wrap">
+              </div>
+
+              <div class="field">
+                <label>Ürün Adı (EN)</label>
+                <input id="pNameEN" placeholder="Example: Chicken Wrap">
+              </div>
+
+              <div class="field">
+                <label>Açıklama (TR)</label>
+                <textarea id="pDescTR" placeholder="Ürün açıklaması..."></textarea>
+              </div>
+
+              <div class="field">
+                <label>Açıklama (EN)</label>
+                <textarea id="pDescEN" placeholder="Product description..."></textarea>
+              </div>
+
+              <div class="field">
+                <label>Kategori</label>
+                <select id="pCategory"></select>
+              </div>
+
+              <div class="field">
+                <label>Fiyat</label>
+                <input id="pPrice" placeholder="Örn: 190₺">
+              </div>
+
+              <div class="field">
+                <label>Hazırlama Süresi (dk)</label>
+                <input id="pPrep" type="number" placeholder="Örn: 12">
+              </div>
+
+              <div class="field">
+                <label>Kalori (kcal)</label>
+                <input id="pCal" type="number" placeholder="Örn: 420">
+              </div>
+
+              <div class="field">
+                <label>Ürün Görseli (Dosya Seç)</label>
+                <input id="pImgFile" type="file" accept="image/*">
+              </div>
+
+              <div class="field">
+                <label>Kampanya Ürünü mü?</label>
+                <select id="pIsCampaign">
+                  <option value="no">Hayır</option>
+                  <option value="yes">Evet</option>
+                </select>
+              </div>
+
+              <div class="field" id="campaignPriceBox" style="display:none;">
+                <label>Kampanya Fiyatı</label>
+                <input id="pCampaignPrice" placeholder="Örn: 149₺">
+              </div>
+
+              <button class="btn btn-primary" onclick="saveProduct()">Kaydet</button>
+              <button class="btn btn-secondary" onclick="resetProductForm()" style="margin-top:8px;">Formu Temizle</button>
+
+              <div class="note">
+                Not: Ürün görseli dosyadan yüklenir. GitHub Pages için en iyi sistem budur.
+              </div>
+            </div>
+
+            <!-- PRODUCT LIST -->
+            <div class="panel">
+              <h3>Ürünler</h3>
+              <div class="admin-list" id="productList"></div>
+            </div>
+
           </div>
-
-          <div class="admin-section">
-            <h3>🍔 Ürün Ekle / Düzenle</h3>
-
-            <div class="row">
-              <input type="text" id="pNameTR" placeholder="Ürün Adı (TR)">
-              <input type="text" id="pNameEN" placeholder="Product Name (EN)">
-            </div>
-
-            <div class="row">
-              <textarea id="pDescTR" placeholder="Açıklama (TR)"></textarea>
-              <textarea id="pDescEN" placeholder="Description (EN)"></textarea>
-            </div>
-
-            <div class="row">
-              <input type="text" id="pPrice" placeholder="Fiyat (örn: 150₺)">
-              <select id="pCategory"></select>
-            </div>
-
-            <div class="row">
-              <input type="number" id="pCalories" placeholder="Kalori (örn: 420)">
-              <input type="text" id="pPrep" placeholder="Hazırlama Süresi (örn: 10 dk)">
-            </div>
-
-            <div class="row">
-              <select id="pTag">
-                <option value="">Etiket seç (opsiyonel)</option>
-                <option value="Popular">Popüler</option>
-                <option value="New">Yeni</option>
-                <option value="Chef">Şef Önerisi</option>
-                <option value="BestSeller">Çok Satan</option>
-              </select>
-
-              <select id="pDaily">
-                <option value="no">Günün önerisi değil</option>
-                <option value="yes">⭐ Günün önerisi</option>
-              </select>
-            </div>
-
-            <div class="row">
-              <select id="pCampaign">
-                <option value="no">Kampanyalı değil</option>
-                <option value="yes">🔥 Kampanyalı ürün</option>
-              </select>
-              <input type="text" id="pOldPrice" placeholder="Eski Fiyat (kampanya için)">
-            </div>
-
-            <div class="row-1">
-              <input type="file" id="pImageFile" accept="image/*">
-            </div>
-
-            <button class="btn btn-primary" onclick="saveProduct()">Kaydet</button>
-            <button class="btn btn-secondary" onclick="resetForm()">Formu Temizle</button>
-
-            <small style="display:block;margin-top:10px;color:rgba(248,250,252,0.55);">
-              Not: Görsel seçmezsen eski görsel korunur.
-            </small>
-          </div>
-
-          <div class="admin-section">
-            <h3>📦 Ürünler</h3>
-            <div id="productList"></div>
-          </div>
-
-          <button class="btn btn-danger" onclick="adminLogout()">Çıkış Yap</button>
 
         </div>
+
       </div>
+
     </div>
   </div>
 
 <script>
-/* ==========================================
+/* =========================
    TRANSLATIONS
-========================================== */
+========================= */
 let currentLang = "tr";
 let currentCategory = "all";
 
 const translations = {
   tr: {
-    subtitle: "Tatlı • Tuzlu • İçecek | QR Menü Deneyimi",
+    subtitle: "Lezzetli bir şey yemeden gitmek yasak 😄",
     search: "Ürün ara... (örn: latte, burger)",
     all: "Tümü",
-    campaign: "Kampanyalar",
-    menu: "🍽 Menü",
-    daily: "⭐ Günün Önerisi",
+    campaign: "Kampanya",
+    whatsapp: "WhatsApp",
     campaignsTitle: "🔥 Kampanyalar",
-    hint: "Kaydır & keşfet",
-    footer: "© 2026 DENEME KAFE | QR Menü",
-    whatsapp: "WhatsApp"
+    todayTitle: "⭐ Günün Önerisi",
+    menuTitle: "Menü",
+    prep: "Hazırlama",
+    cal: "Kalori"
   },
   en: {
-    subtitle: "Sweet • Savory • Drinks | QR Menu Experience",
+    subtitle: "You are not leaving without tasting something 😄",
     search: "Search item... (ex: latte, burger)",
     all: "All",
-    campaign: "Campaigns",
-    menu: "🍽 Menu",
-    daily: "⭐ Today's Pick",
-    campaignsTitle: "🔥 Campaigns",
-    hint: "Swipe & explore",
-    footer: "© 2026 DENEME KAFE | QR Menu",
-    whatsapp: "WhatsApp"
+    campaign: "Campaign",
+    whatsapp: "WhatsApp",
+    campaignsTitle: "🔥 Campaign Deals",
+    todayTitle: "⭐ Today's Pick",
+    menuTitle: "Menu",
+    prep: "Prep time",
+    cal: "Calories"
   }
 };
 
-/* ==========================================
-   STORAGE
-========================================== */
-function saveData(){
-  localStorage.setItem("denemeCafeProducts", JSON.stringify(products));
-  localStorage.setItem("denemeCafeCategories", JSON.stringify(categories));
-}
-
-function loadData(){
-  const p = localStorage.getItem("denemeCafeProducts");
-  const c = localStorage.getItem("denemeCafeCategories");
-
-  if(p) products = JSON.parse(p);
-  if(c) categories = JSON.parse(c);
-}
-
-/* ==========================================
-   DEFAULT CATEGORIES + PRODUCTS
-========================================== */
-let categories = [
-  { id: "salty", tr: "Tuzlu", en: "Savory" },
-  { id: "sweet", tr: "Tatlı", en: "Desserts" },
-  { id: "drinks", tr: "İçecekler", en: "Drinks" }
+/* =========================
+   DEFAULT DATA
+========================= */
+const defaultCategories = [
+  { id:"salty", tr:"Tuzlu", en:"Savory" },
+  { id:"sweet", tr:"Tatlı", en:"Dessert" },
+  { id:"drinks", tr:"İçecekler", en:"Drinks" }
 ];
 
-let products = [
+const defaultItems = [
   {
-    id: "p1",
+    id: crypto.randomUUID(),
     category: "salty",
-    price: "220₺",
-    calories: 640,
-    prep: "12 dk",
-    tag: "Popular",
-    daily: "yes",
-    campaign: "no",
-    oldPrice: "",
-    img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=70",
-    tr: { name: "Cheddar Burger", desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
-    en: { name: "Cheddar Burger", desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce." }
+    isCampaign: true,
+    campaignPrice: "169₺",
+    tr: { name:"Cheddar Burger", desc:"Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
+    en: { name:"Cheddar Burger", desc:"Beef patty, cheddar cheese, caramelized onion and signature sauce." },
+    price:"220₺",
+    prep: 15,
+    cal: 780,
+    img:"https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=70"
   },
   {
-    id: "p2",
+    id: crypto.randomUUID(),
     category: "sweet",
-    price: "150₺",
-    calories: 430,
-    prep: "8 dk",
-    tag: "BestSeller",
-    daily: "no",
-    campaign: "yes",
-    oldPrice: "190₺",
-    img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=70",
-    tr: { name: "San Sebastian Cheesecake", desc: "Karamelize üst katman, kremsi iç doku." },
-    en: { name: "San Sebastian Cheesecake", desc: "Caramelized top layer with creamy center." }
+    isCampaign: true,
+    campaignPrice: "119₺",
+    tr: { name:"San Sebastian", desc:"Karamelize üst katman, kremsi iç doku." },
+    en: { name:"San Sebastian", desc:"Caramelized top layer with creamy center." },
+    price:"150₺",
+    prep: 8,
+    cal: 540,
+    img:"https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=70"
   },
   {
-    id: "p3",
+    id: crypto.randomUUID(),
     category: "drinks",
-    price: "120₺",
-    calories: 210,
-    prep: "4 dk",
-    tag: "New",
-    daily: "no",
-    campaign: "yes",
-    oldPrice: "150₺",
-    img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1200&q=70",
-    tr: { name: "Iced Latte", desc: "Espresso, süt ve buz ile ferahlatıcı lezzet." },
-    en: { name: "Iced Latte", desc: "Espresso, milk and ice - refreshing taste." }
+    isCampaign: false,
+    campaignPrice: "",
+    tr: { name:"Iced Latte", desc:"Espresso, süt ve buz ile ferahlatıcı lezzet." },
+    en: { name:"Iced Latte", desc:"Espresso, milk and ice - refreshing taste." },
+    price:"120₺",
+    prep: 4,
+    cal: 180,
+    img:"https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1200&q=70"
   },
   {
-    id: "p4",
+    id: crypto.randomUUID(),
+    category: "salty",
+    isCampaign: false,
+    campaignPrice: "",
+    tr: { name:"Tavuklu Wrap", desc:"Izgara tavuk, yeşillik, özel sos ve lavaş." },
+    en: { name:"Chicken Wrap", desc:"Grilled chicken, greens, signature sauce and tortilla." },
+    price:"170₺",
+    prep: 10,
+    cal: 520,
+    img:"https://images.unsplash.com/photo-1604908177522-429cd0a9f5b2?auto=format&fit=crop&w=1200&q=70"
+  },
+  {
+    id: crypto.randomUUID(),
     category: "sweet",
-    price: "145₺",
-    calories: 520,
-    prep: "6 dk",
-    tag: "Chef",
-    daily: "yes",
-    campaign: "no",
-    oldPrice: "",
-    img: "https://images.unsplash.com/photo-1608219959308-7b1d12f954ed?auto=format&fit=crop&w=1200&q=70",
-    tr: { name: "Tiramisu", desc: "Mascarpone kreması, kahve aroması ve kakao dokunuşu." },
-    en: { name: "Tiramisu", desc: "Mascarpone cream, coffee aroma and cocoa touch." }
+    isCampaign: false,
+    campaignPrice: "",
+    tr: { name:"Brownie", desc:"Sıcak brownie, yanında vanilyalı dondurma." },
+    en: { name:"Brownie", desc:"Warm brownie served with vanilla ice cream." },
+    price:"140₺",
+    prep: 6,
+    cal: 620,
+    img:"https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=1200&q=70"
   }
 ];
 
-loadData();
+/* =========================
+   STORAGE
+========================= */
+function loadData(){
+  const cats = JSON.parse(localStorage.getItem("deneme_categories"));
+  const items = JSON.parse(localStorage.getItem("deneme_items"));
 
-/* ==========================================
-   UI RENDER HELPERS
-========================================== */
-function getCategoryLabel(catId){
-  if(catId === "all") return translations[currentLang].all;
-  if(catId === "campaign") return translations[currentLang].campaign;
-
-  const cat = categories.find(x => x.id === catId);
-  if(!cat) return catId;
-  return currentLang === "tr" ? cat.tr : cat.en;
+  return {
+    categories: cats && cats.length ? cats : defaultCategories,
+    items: items && items.length ? items : defaultItems
+  };
 }
 
-function getTagLabel(tag){
-  if(currentLang === "tr"){
-    if(tag === "Popular") return "Popüler";
-    if(tag === "New") return "Yeni";
-    if(tag === "Chef") return "Şef Önerisi";
-    if(tag === "BestSeller") return "Çok Satan";
-    return "";
-  } else {
-    if(tag === "Popular") return "Popular";
-    if(tag === "New") return "New";
-    if(tag === "Chef") return "Chef's Choice";
-    if(tag === "BestSeller") return "Best Seller";
-    return "";
-  }
+function saveData(){
+  localStorage.setItem("deneme_categories", JSON.stringify(categories));
+  localStorage.setItem("deneme_items", JSON.stringify(menuItems));
 }
 
+let { categories, items } = loadData();
+let menuItems = items;
+
+/* =========================
+   UI RENDER
+========================= */
 function renderCategories(){
-  const div = document.getElementById("categoryButtons");
-  div.innerHTML = "";
+  const catDiv = document.getElementById("categoryButtons");
+  catDiv.innerHTML = "";
 
-  const fixed = [
-    { id: "all", label: translations[currentLang].all },
-    { id: "campaign", label: "🔥 " + translations[currentLang].campaign }
-  ];
+  const btnAll = document.createElement("button");
+  btnAll.innerText = translations[currentLang].all;
+  btnAll.classList.toggle("active", currentCategory === "all");
+  btnAll.onclick = () => { currentCategory = "all"; renderCategories(); renderAll(); };
+  catDiv.appendChild(btnAll);
 
-  fixed.forEach(c => {
-    const btn = document.createElement("button");
-    btn.innerText = c.label;
-    btn.classList.toggle("active", currentCategory === c.id);
-    btn.onclick = () => {
-      currentCategory = c.id;
-      renderAll();
-    };
-    div.appendChild(btn);
-  });
+  const btnCampaign = document.createElement("button");
+  btnCampaign.innerText = translations[currentLang].campaign;
+  btnCampaign.classList.toggle("active", currentCategory === "campaign");
+  btnCampaign.onclick = () => { currentCategory = "campaign"; renderCategories(); renderAll(); };
+  catDiv.appendChild(btnCampaign);
 
-  categories.forEach(cat => {
+  categories.forEach(cat=>{
     const btn = document.createElement("button");
     btn.innerText = currentLang === "tr" ? cat.tr : cat.en;
     btn.classList.toggle("active", currentCategory === cat.id);
-
-    btn.onclick = () => {
-      currentCategory = cat.id;
-      renderAll();
-    };
-
-    div.appendChild(btn);
+    btn.onclick = () => { currentCategory = cat.id; renderCategories(); renderAll(); };
+    catDiv.appendChild(btn);
   });
 }
 
-function getFilteredProducts(){
-  const search = document.getElementById("searchInput").value.toLowerCase();
+function getFilteredItems(){
+  const searchValue = document.getElementById("searchInput").value.toLowerCase();
 
-  return products.filter(p => {
-    const lang = p[currentLang];
-    const matchesSearch =
-      lang.name.toLowerCase().includes(search) ||
-      lang.desc.toLowerCase().includes(search);
+  return menuItems.filter(item=>{
+    const langData = item[currentLang];
+    const matchSearch = langData.name.toLowerCase().includes(searchValue) || langData.desc.toLowerCase().includes(searchValue);
 
-    const matchesCategory =
-      currentCategory === "all" ||
-      (currentCategory === "campaign" ? p.campaign === "yes" : p.category === currentCategory);
+    if(currentCategory === "all"){
+      return matchSearch;
+    }
 
-    return matchesSearch && matchesCategory;
+    if(currentCategory === "campaign"){
+      return item.isCampaign && matchSearch;
+    }
+
+    // category filter
+    if(item.isCampaign && currentCategory !== "all"){
+      // kampanyalar sadece tümü ve kampanya içinde gözüksün
+      return false;
+    }
+
+    return item.category === currentCategory && matchSearch;
   });
 }
 
-function renderMenu(){
+function renderGrid(){
   const grid = document.getElementById("menuGrid");
   grid.innerHTML = "";
 
-  const filtered = getFilteredProducts();
+  const filtered = getFilteredItems();
 
-  document.getElementById("menuCount").innerText =
-    filtered.length + " ürün";
-
-  filtered.forEach(item => {
+  filtered.forEach(item=>{
     const langData = item[currentLang];
 
     const card = document.createElement("div");
     card.className = "card";
-
-    const tagText = getTagLabel(item.tag);
+    card.onclick = ()=> openProductModal(item.id);
 
     card.innerHTML = `
-      <img src="${item.img}" alt="${langData.name}">
+      <div class="card-img" style="background-image:url('${item.img}')"></div>
       <div class="card-content">
-        <div class="card-top">
-          <div>
-            <h3>${langData.name}</h3>
-            <p class="desc">${langData.desc}</p>
+        <h3>${langData.name}</h3>
+        <p class="desc">${langData.desc}</p>
+
+        <div class="card-bottom">
+          <div class="price">
+            ${item.isCampaign ? item.campaignPrice + `<span class="oldprice">${item.price}</span>` : item.price}
           </div>
-          <div class="price">${item.price}</div>
+          <div class="tag">${item.isCampaign ? "🔥 % İndirim" : "✨ Taze"}</div>
         </div>
-        ${tagText ? `<span class="tag">${tagText}</span>` : ``}
       </div>
     `;
-
-    card.onclick = () => openDetail(item.id);
 
     grid.appendChild(card);
-  });
-}
-
-function renderDaily(){
-  const dailyGrid = document.getElementById("dailyGrid");
-  dailyGrid.innerHTML = "";
-
-  const daily = products.filter(p => p.daily === "yes");
-
-  daily.forEach(item => {
-    const langData = item[currentLang];
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <img src="${item.img}" alt="${langData.name}">
-      <div class="card-content">
-        <div class="card-top">
-          <div>
-            <h3>${langData.name}</h3>
-            <p class="desc">${langData.desc}</p>
-          </div>
-          <div class="price">${item.price}</div>
-        </div>
-        <span class="tag">⭐ ${currentLang === "tr" ? "Öneri" : "Pick"}</span>
-      </div>
-    `;
-
-    card.onclick = () => openDetail(item.id);
-
-    dailyGrid.appendChild(card);
   });
 }
 
@@ -1148,387 +1120,440 @@ function renderCampaignSlider(){
   const slider = document.getElementById("campaignSlider");
   slider.innerHTML = "";
 
-  const camp = products.filter(p => p.campaign === "yes");
+  const campaigns = menuItems.filter(i=> i.isCampaign);
 
-  camp.forEach(item => {
+  campaigns.forEach(item=>{
     const langData = item[currentLang];
 
-    const div = document.createElement("div");
-    div.className = "slide";
+    const slide = document.createElement("div");
+    slide.className = "slide-card";
+    slide.onclick = ()=> openProductModal(item.id);
 
-    div.innerHTML = `
-      <div class="badge">🔥 ${currentLang === "tr" ? "Kampanya" : "Deal"}</div>
-      <img src="${item.img}" alt="${langData.name}">
-      <div class="slide-info">
+    slide.innerHTML = `
+      <div class="slide-img" style="background-image:url('${item.img}')"></div>
+      <div class="slide-content">
         <h3>${langData.name}</h3>
         <p>${langData.desc}</p>
-        <div class="price-row">
-          <span class="old-price">${item.oldPrice || ""}</span>
-          <span class="new-price">${item.price}</span>
+        <div class="slide-bottom">
+          <div class="price">${item.campaignPrice} <span class="oldprice">${item.price}</span></div>
+          <div class="badge">🔥 Kampanya</div>
         </div>
       </div>
     `;
 
-    div.onclick = () => openDetail(item.id);
-
-    slider.appendChild(div);
+    slider.appendChild(slide);
   });
 }
 
-function renderTexts(){
-  document.getElementById("subtitleText").innerText = translations[currentLang].subtitle;
-  document.getElementById("searchInput").placeholder = translations[currentLang].search;
-  document.getElementById("campaignTitle").innerText = translations[currentLang].campaignsTitle;
-  document.getElementById("campaignHint").innerText = translations[currentLang].hint;
-  document.getElementById("dailyTitle").innerText = translations[currentLang].daily;
-  document.getElementById("menuTitle").innerText = translations[currentLang].menu;
-  document.getElementById("footerText").innerText = translations[currentLang].footer;
-  document.getElementById("whatsappBtn").innerText = translations[currentLang].whatsapp;
+function renderTodaySlider(){
+  const slider = document.getElementById("todaySlider");
+  slider.innerHTML = "";
+
+  // Günün önerisi random 2 ürün seç
+  const picks = [...menuItems].sort(()=> 0.5 - Math.random()).slice(0,2);
+
+  picks.forEach(item=>{
+    const langData = item[currentLang];
+
+    const slide = document.createElement("div");
+    slide.className = "slide-card";
+    slide.onclick = ()=> openProductModal(item.id);
+
+    slide.innerHTML = `
+      <div class="slide-img" style="background-image:url('${item.img}')"></div>
+      <div class="slide-content">
+        <h3>${langData.name}</h3>
+        <p>${langData.desc}</p>
+        <div class="slide-bottom">
+          <div class="price">${item.price}</div>
+          <div class="badge">⭐ Öneri</div>
+        </div>
+      </div>
+    `;
+
+    slider.appendChild(slide);
+  });
 }
 
 function renderAll(){
-  renderTexts();
-  renderCategories();
   renderCampaignSlider();
-  renderDaily();
-  renderMenu();
+  renderTodaySlider();
+  renderGrid();
 }
 
-/* ==========================================
-   DETAIL MODAL
-========================================== */
-function openDetail(productId){
-  const item = products.find(x => x.id === productId);
+/* =========================
+   PRODUCT MODAL
+========================= */
+function openProductModal(id){
+  const item = menuItems.find(i=> i.id === id);
   if(!item) return;
 
   const langData = item[currentLang];
 
-  document.getElementById("detailName").innerText = langData.name;
-  document.getElementById("detailDesc").innerText = langData.desc;
-  document.getElementById("detailPrice").innerText = item.price;
-  document.getElementById("detailImg").src = item.img;
+  document.getElementById("modalImg").src = item.img;
+  document.getElementById("modalName").innerText = langData.name;
+  document.getElementById("modalDesc").innerText = langData.desc;
 
-  const tagText = getTagLabel(item.tag);
-  document.getElementById("detailTag").style.display = tagText ? "inline-block" : "none";
-  document.getElementById("detailTag").innerText = tagText;
+  document.getElementById("modalPrep").innerText =
+    `⏱ ${translations[currentLang].prep}: ${item.prep} dk`;
 
-  const meta = document.getElementById("detailMeta");
-  meta.innerHTML = `
-    <div class="pill">🔥 ${getCategoryLabel(item.category)}</div>
-    <div class="pill">⏱ ${item.prep || "-"}</div>
-    <div class="pill">⚡ ${item.calories || "-"} kcal</div>
-  `;
+  document.getElementById("modalCal").innerText =
+    `🔥 ${translations[currentLang].cal}: ${item.cal} kcal`;
 
-  document.getElementById("detailOverlay").classList.add("show");
+  const catObj = categories.find(c=> c.id === item.category);
+  document.getElementById("modalCat").innerText =
+    `📌 ${(catObj ? (currentLang==="tr" ? catObj.tr : catObj.en) : item.category)}`;
+
+  document.getElementById("modalPrice").innerHTML =
+    item.isCampaign
+      ? `${item.campaignPrice} <span class="oldprice">${item.price}</span>`
+      : item.price;
+
+  document.getElementById("productModal").classList.add("show");
+
+  document.getElementById("modalImg").onclick = ()=>{
+    openImgViewer(item.img);
+  };
 }
 
-function closeDetail(){
-  document.getElementById("detailOverlay").classList.remove("show");
+function closeProductModal(){
+  document.getElementById("productModal").classList.remove("show");
 }
 
-document.getElementById("detailOverlay").addEventListener("click", (e) => {
-  if(e.target.id === "detailOverlay") closeDetail();
-});
+function openImgViewer(src){
+  document.getElementById("imgViewerImg").src = src;
+  document.getElementById("imgViewer").classList.add("show");
+}
 
-/* ==========================================
+function closeImgViewer(){
+  document.getElementById("imgViewer").classList.remove("show");
+}
+
+/* =========================
    LANGUAGE
-========================================== */
+========================= */
 function setLanguage(lang){
   currentLang = lang;
-  document.getElementById("btnTR").classList.toggle("active", lang === "tr");
-  document.getElementById("btnEN").classList.toggle("active", lang === "en");
+
+  document.getElementById("btnTR").classList.toggle("active", lang==="tr");
+  document.getElementById("btnEN").classList.toggle("active", lang==="en");
+
+  document.getElementById("subtitleText").innerText = translations[lang].subtitle;
+  document.getElementById("searchInput").placeholder = translations[lang].search;
+
+  document.getElementById("campaignTitle").innerText = translations[lang].campaignsTitle;
+  document.getElementById("todayTitle").innerText = translations[lang].todayTitle;
+  document.getElementById("menuTitle").innerText = translations[lang].menuTitle;
+
+  document.getElementById("whatsappBtn").innerText = translations[lang].whatsapp;
+
+  renderCategories();
   renderAll();
 }
 
-document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
-document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
+/* =========================
+   HEADER HIDE ON SCROLL
+========================= */
+let lastScroll = 0;
+const header = document.getElementById("topFixed");
 
-document.getElementById("searchInput").addEventListener("input", () => renderAll());
+window.addEventListener("scroll", ()=>{
+  const current = window.pageYOffset;
+  if(current > lastScroll && current > 100){
+    header.classList.add("hide");
+  }else{
+    header.classList.remove("hide");
+  }
+  lastScroll = current;
+});
 
-/* ==========================================
-   ADMIN MODAL
-========================================== */
+/* =========================
+   ADMIN PANEL (MODAL)
+========================= */
+let adminLoggedIn = false;
+let editProductId = null;
 const adminPassword = "1234";
-let editingId = null;
 
-document.getElementById("adminOpen").addEventListener("click", () => {
-  document.getElementById("adminOverlay").classList.add("show");
-  document.body.style.overflow = "hidden"; // arkayı kilitle
+document.getElementById("openAdminLink").addEventListener("click", ()=>{
+  document.getElementById("adminModal").classList.add("show");
+  refreshAdminUI();
 });
 
 function closeAdmin(){
-  document.getElementById("adminOverlay").classList.remove("show");
-  document.body.style.overflow = "auto";
+  document.getElementById("adminModal").classList.remove("show");
 }
 
-document.getElementById("adminOverlay").addEventListener("click", (e) => {
-  if(e.target.id === "adminOverlay") closeAdmin();
-});
-
 function adminLogin(){
-  const pass = document.getElementById("adminPass").value.trim();
+  const pass = document.getElementById("adminPassInput").value;
   if(pass === adminPassword){
-    document.getElementById("adminLoginBox").style.display = "none";
-    document.getElementById("adminPanelBox").style.display = "flex";
-    renderAdminPanel();
-  } else {
+    adminLoggedIn = true;
+    refreshAdminUI();
+  }else{
     alert("Şifre yanlış!");
   }
 }
 
 function adminLogout(){
-  document.getElementById("adminLoginBox").style.display = "flex";
-  document.getElementById("adminPanelBox").style.display = "none";
-  document.getElementById("adminPass").value = "";
-  resetForm();
+  adminLoggedIn = false;
+  refreshAdminUI();
 }
 
-/* ==========================================
-   ADMIN CATEGORY
-========================================== */
+function refreshAdminUI(){
+  document.getElementById("adminLoginBox").style.display = adminLoggedIn ? "none" : "block";
+  document.getElementById("adminArea").style.display = adminLoggedIn ? "block" : "none";
+
+  if(adminLoggedIn){
+    fillCategorySelect();
+    renderAdminCategoryList();
+    renderAdminProductList();
+  }
+}
+
+function fillCategorySelect(){
+  const sel = document.getElementById("pCategory");
+  sel.innerHTML = "";
+  categories.forEach(cat=>{
+    const opt = document.createElement("option");
+    opt.value = cat.id;
+    opt.innerText = cat.tr + " / " + cat.en;
+    sel.appendChild(opt);
+  });
+}
+
+document.getElementById("pIsCampaign").addEventListener("change", ()=>{
+  document.getElementById("campaignPriceBox").style.display =
+    document.getElementById("pIsCampaign").value === "yes" ? "block" : "none";
+});
+
+/* =========================
+   CATEGORY CRUD
+========================= */
 function addCategory(){
-  const tr = document.getElementById("newCategoryTR").value.trim();
-  const en = document.getElementById("newCategoryEN").value.trim();
+  const name = document.getElementById("newCategoryName").value.trim();
+  if(!name) return alert("Kategori adı boş olamaz.");
 
-  if(!tr || !en){
-    alert("Kategori TR ve EN doldur!");
-    return;
+  const id = name.toLowerCase()
+    .replaceAll("ı","i")
+    .replaceAll("ğ","g")
+    .replaceAll("ü","u")
+    .replaceAll("ş","s")
+    .replaceAll("ö","o")
+    .replaceAll("ç","c")
+    .replace(/\s+/g,"-");
+
+  if(categories.some(c=> c.id === id)){
+    return alert("Bu kategori zaten var.");
   }
 
-  const id = "cat_" + Date.now();
-
-  categories.push({ id, tr, en });
-
-  document.getElementById("newCategoryTR").value = "";
-  document.getElementById("newCategoryEN").value = "";
+  categories.push({ id, tr: name, en: name });
+  document.getElementById("newCategoryName").value = "";
 
   saveData();
-  renderAdminPanel();
+  renderCategories();
+  refreshAdminUI();
   renderAll();
 }
 
-function deleteCategory(catId){
-  const used = products.some(p => p.category === catId);
+function renderAdminCategoryList(){
+  const list = document.getElementById("categoryList");
+  list.innerHTML = "";
+
+  categories.forEach(cat=>{
+    const div = document.createElement("div");
+    div.className = "admin-item";
+
+    div.innerHTML = `
+      <div>
+        <strong>${cat.tr}</strong>
+        <small>${cat.id}</small>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-danger tiny" onclick="deleteCategory('${cat.id}')">Sil</button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function deleteCategory(id){
+  const used = menuItems.some(i=> i.category === id);
   if(used){
-    alert("Bu kategoriye ait ürün var. Önce ürünleri sil veya değiştir.");
-    return;
+    return alert("Bu kategoriye bağlı ürünler var. Önce ürünleri sil/düzenle.");
   }
 
-  categories = categories.filter(c => c.id !== catId);
+  categories = categories.filter(c=> c.id !== id);
   saveData();
-  renderAdminPanel();
+  renderCategories();
+  refreshAdminUI();
   renderAll();
 }
 
-/* ==========================================
-   ADMIN PRODUCTS
-========================================== */
-function resetForm(){
-  editingId = null;
+/* =========================
+   PRODUCT CRUD
+========================= */
+function resetProductForm(){
+  editProductId = null;
+  document.getElementById("productFormTitle").innerText = "Yeni Ürün Ekle";
 
   document.getElementById("pNameTR").value = "";
   document.getElementById("pNameEN").value = "";
   document.getElementById("pDescTR").value = "";
   document.getElementById("pDescEN").value = "";
   document.getElementById("pPrice").value = "";
-  document.getElementById("pCalories").value = "";
   document.getElementById("pPrep").value = "";
-  document.getElementById("pTag").value = "";
-  document.getElementById("pDaily").value = "no";
-  document.getElementById("pCampaign").value = "no";
-  document.getElementById("pOldPrice").value = "";
-  document.getElementById("pImageFile").value = "";
+  document.getElementById("pCal").value = "";
+  document.getElementById("pImgFile").value = "";
 
-  document.querySelector("#adminTitle").innerText = "Admin Panel";
+  document.getElementById("pIsCampaign").value = "no";
+  document.getElementById("pCampaignPrice").value = "";
+  document.getElementById("campaignPriceBox").style.display = "none";
 }
 
-function editProduct(id){
-  const p = products.find(x => x.id === id);
-  if(!p) return;
-
-  editingId = id;
-
-  document.getElementById("pNameTR").value = p.tr.name;
-  document.getElementById("pNameEN").value = p.en.name;
-  document.getElementById("pDescTR").value = p.tr.desc;
-  document.getElementById("pDescEN").value = p.en.desc;
-  document.getElementById("pPrice").value = p.price;
-  document.getElementById("pCalories").value = p.calories;
-  document.getElementById("pPrep").value = p.prep;
-  document.getElementById("pTag").value = p.tag || "";
-  document.getElementById("pDaily").value = p.daily || "no";
-  document.getElementById("pCampaign").value = p.campaign || "no";
-  document.getElementById("pOldPrice").value = p.oldPrice || "";
-
-  document.querySelector("#adminTitle").innerText = "Ürün Düzenleme";
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function deleteProduct(id){
-  if(!confirm("Ürünü silmek istiyor musun?")) return;
-
-  products = products.filter(x => x.id !== id);
-
-  saveData();
-  renderAdminPanel();
-  renderAll();
-}
-
-function fileToBase64(file){
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-async function saveProduct(){
+function saveProduct(){
   const nameTR = document.getElementById("pNameTR").value.trim();
   const nameEN = document.getElementById("pNameEN").value.trim();
   const descTR = document.getElementById("pDescTR").value.trim();
   const descEN = document.getElementById("pDescEN").value.trim();
-  const price = document.getElementById("pPrice").value.trim();
   const category = document.getElementById("pCategory").value;
-  const calories = document.getElementById("pCalories").value.trim();
-  const prep = document.getElementById("pPrep").value.trim();
-  const tag = document.getElementById("pTag").value;
-  const daily = document.getElementById("pDaily").value;
-  const campaign = document.getElementById("pCampaign").value;
-  const oldPrice = document.getElementById("pOldPrice").value.trim();
+  const price = document.getElementById("pPrice").value.trim();
+  const prep = parseInt(document.getElementById("pPrep").value || "0");
+  const cal = parseInt(document.getElementById("pCal").value || "0");
 
-  const fileInput = document.getElementById("pImageFile");
+  const isCampaign = document.getElementById("pIsCampaign").value === "yes";
+  const campaignPrice = document.getElementById("pCampaignPrice").value.trim();
+
+  if(!nameTR || !descTR || !price){
+    return alert("TR isim, açıklama ve fiyat zorunlu.");
+  }
+
+  if(isCampaign && !campaignPrice){
+    return alert("Kampanya fiyatı gir.");
+  }
+
+  const fileInput = document.getElementById("pImgFile");
   const file = fileInput.files[0];
 
-  if(!nameTR || !nameEN || !descTR || !descEN || !price || !category){
-    alert("Ürün adı/açıklama/fiyat/kategori zorunlu!");
-    return;
-  }
+  const finalizeSave = (imgSrc) => {
+    if(editProductId){
+      const item = menuItems.find(i=> i.id === editProductId);
+      if(!item) return;
 
-  if(campaign === "yes" && !oldPrice){
-    alert("Kampanyalı ürün için eski fiyat gir!");
-    return;
-  }
+      item.tr.name = nameTR;
+      item.en.name = nameEN || nameTR;
+      item.tr.desc = descTR;
+      item.en.desc = descEN || descTR;
+      item.category = category;
+      item.price = price;
+      item.prep = prep || 0;
+      item.cal = cal || 0;
+      item.isCampaign = isCampaign;
+      item.campaignPrice = isCampaign ? campaignPrice : "";
 
-  let imgBase64 = null;
+      if(imgSrc){
+        item.img = imgSrc;
+      }
+
+    }else{
+      menuItems.push({
+        id: crypto.randomUUID(),
+        category,
+        isCampaign,
+        campaignPrice: isCampaign ? campaignPrice : "",
+        tr: { name: nameTR, desc: descTR },
+        en: { name: nameEN || nameTR, desc: descEN || descTR },
+        price,
+        prep: prep || 0,
+        cal: cal || 0,
+        img: imgSrc || "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=70"
+      });
+    }
+
+    saveData();
+    refreshAdminUI();
+    renderAll();
+    resetProductForm();
+    alert("Kaydedildi!");
+  };
+
   if(file){
-    imgBase64 = await fileToBase64(file);
+    const reader = new FileReader();
+    reader.onload = function(e){
+      finalizeSave(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }else{
+    finalizeSave(null);
   }
+}
 
-  if(editingId){
-    const p = products.find(x => x.id === editingId);
+function renderAdminProductList(){
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
 
-    p.tr.name = nameTR;
-    p.en.name = nameEN;
-    p.tr.desc = descTR;
-    p.en.desc = descEN;
-    p.price = price;
-    p.category = category;
-    p.calories = calories ? parseInt(calories) : "";
-    p.prep = prep;
-    p.tag = tag;
-    p.daily = daily;
-    p.campaign = campaign;
-    p.oldPrice = campaign === "yes" ? oldPrice : "";
+  menuItems.forEach(item=>{
+    const div = document.createElement("div");
+    div.className = "admin-item";
 
-    if(imgBase64){
-      p.img = imgBase64;
-    }
+    div.innerHTML = `
+      <div>
+        <strong>${item.tr.name}</strong>
+        <small>${item.category} • ${item.price}</small>
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-secondary tiny" onclick="editProduct('${item.id}')">Düzenle</button>
+        <button class="btn btn-danger tiny" onclick="deleteProduct('${item.id}')">Sil</button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
 
-  } else {
-    if(!imgBase64){
-      alert("Yeni ürün eklerken görsel seçmelisin!");
-      return;
-    }
+function editProduct(id){
+  const item = menuItems.find(i=> i.id === id);
+  if(!item) return;
 
-    products.unshift({
-      id: "p_" + Date.now(),
-      category,
-      price,
-      calories: calories ? parseInt(calories) : "",
-      prep,
-      tag,
-      daily,
-      campaign,
-      oldPrice: campaign === "yes" ? oldPrice : "",
-      img: imgBase64,
-      tr: { name: nameTR, desc: descTR },
-      en: { name: nameEN, desc: descEN }
-    });
-  }
+  editProductId = id;
 
+  document.getElementById("productFormTitle").innerText = "Ürün Düzenle";
+
+  document.getElementById("pNameTR").value = item.tr.name;
+  document.getElementById("pNameEN").value = item.en.name;
+  document.getElementById("pDescTR").value = item.tr.desc;
+  document.getElementById("pDescEN").value = item.en.desc;
+  document.getElementById("pCategory").value = item.category;
+  document.getElementById("pPrice").value = item.price;
+  document.getElementById("pPrep").value = item.prep;
+  document.getElementById("pCal").value = item.cal;
+
+  document.getElementById("pIsCampaign").value = item.isCampaign ? "yes" : "no";
+  document.getElementById("campaignPriceBox").style.display = item.isCampaign ? "block" : "none";
+  document.getElementById("pCampaignPrice").value = item.campaignPrice || "";
+
+  window.alert("Şimdi ürünü düzenleyip Kaydet'e basabilirsin.");
+}
+
+function deleteProduct(id){
+  if(!confirm("Bu ürünü silmek istediğine emin misin?")) return;
+  menuItems = menuItems.filter(i=> i.id !== id);
   saveData();
-  resetForm();
-  renderAdminPanel();
+  refreshAdminUI();
   renderAll();
-
-  alert("Kaydedildi!");
 }
 
-/* ==========================================
-   ADMIN PANEL RENDER
-========================================== */
-function renderAdminPanel(){
-  // category dropdown
-  const catSelect = document.getElementById("pCategory");
-  catSelect.innerHTML = "";
-  categories.forEach(cat => {
-    const opt = document.createElement("option");
-    opt.value = cat.id;
-    opt.innerText = `${cat.tr} / ${cat.en}`;
-    catSelect.appendChild(opt);
-  });
+/* =========================
+   EVENTS
+========================= */
+document.getElementById("btnTR").addEventListener("click", ()=> setLanguage("tr"));
+document.getElementById("btnEN").addEventListener("click", ()=> setLanguage("en"));
+document.getElementById("searchInput").addEventListener("input", renderAll);
 
-  // category list
-  const categoryList = document.getElementById("categoryList");
-  categoryList.innerHTML = "";
-
-  categories.forEach(cat => {
-    const div = document.createElement("div");
-    div.className = "list-item";
-    div.innerHTML = `
-      <div>
-        <strong>${cat.tr}</strong><br>
-        <small>${cat.en}</small>
-      </div>
-      <div class="actions">
-        <button class="btn btn-danger" onclick="deleteCategory('${cat.id}')">Sil</button>
-      </div>
-    `;
-    categoryList.appendChild(div);
-  });
-
-  // product list
-  const productList = document.getElementById("productList");
-  productList.innerHTML = "";
-
-  products.forEach(p => {
-    const name = p[currentLang].name;
-    const cat = getCategoryLabel(p.category);
-
-    const div = document.createElement("div");
-    div.className = "list-item";
-
-    div.innerHTML = `
-      <div>
-        <strong>${name}</strong><br>
-        <small>${cat} • ${p.price} ${p.campaign === "yes" ? "🔥 Kampanya" : ""}</small>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn-secondary" onclick="editProduct('${p.id}')">Düzenle</button>
-        <button class="btn btn-danger" onclick="deleteProduct('${p.id}')">Sil</button>
-      </div>
-    `;
-
-    productList.appendChild(div);
-  });
-}
-
-/* ==========================================
+/* =========================
    INIT
-========================================== */
+========================= */
+setLanguage("tr");
+renderCategories();
 renderAll();
+
 </script>
 
 </body>
