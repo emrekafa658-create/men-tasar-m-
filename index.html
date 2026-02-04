@@ -2,22 +2,25 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DENEME KAFE - QR Menü</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DENEME KAFE | QR Menü</title>
 
   <style>
     :root {
-      --bg1: #07080c;
-      --bg2: #0b0f14;
+      --bg1: #050607;
+      --bg2: #0a0d10;
       --card: rgba(255,255,255,0.06);
-      --border: rgba(255,255,255,0.10);
+      --card2: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
       --text: #f8fafc;
-      --muted: #a5b4fc;
-      --muted2: #94a3b8;
+      --muted: rgba(248,250,252,0.65);
+
       --accent: #ffb703;
-      --accent2: #fb7185;
-      --accent3: #22c55e;
-      --shadow: rgba(0,0,0,0.5);
+      --accent2: #fb5607;
+      --green: #22c55e;
+
+      --shadow: 0 15px 40px rgba(0,0,0,0.6);
+      --radius: 18px;
     }
 
     * {
@@ -28,207 +31,255 @@
     }
 
     body {
-      background: radial-gradient(circle at top, rgba(255,183,3,0.12), transparent 60%),
-                  radial-gradient(circle at bottom, rgba(251,113,133,0.12), transparent 60%),
+      background: radial-gradient(circle at top, rgba(255,183,3,0.10), transparent 55%),
+                  radial-gradient(circle at bottom, rgba(251,86,7,0.12), transparent 55%),
                   linear-gradient(180deg, var(--bg1), var(--bg2));
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
+    /* HEADER */
     header {
-      padding: 18px 16px 10px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
-      z-index: 50;
+      z-index: 99;
+      background: rgba(5,6,7,0.65);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 16px;
+      transition: transform 0.35s ease;
+    }
+
+    header.hide {
+      transform: translateY(-120%);
     }
 
     .topbar {
+      max-width: 1100px;
+      margin: auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
     }
 
     .brand {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .brand h1 {
-      font-size: 18px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: var(--accent);
-      text-transform: uppercase;
+      font-size: 17px;
+      letter-spacing: 0.6px;
+      font-weight: 800;
     }
 
     .brand p {
       font-size: 12px;
-      color: var(--muted2);
+      color: var(--muted);
+      font-weight: 500;
     }
 
+    /* LANGUAGE SWITCH */
     .lang-switch {
       display: flex;
       gap: 6px;
+      padding: 6px;
+      border-radius: 14px;
       background: rgba(255,255,255,0.06);
       border: 1px solid var(--border);
-      padding: 6px;
-      border-radius: 999px;
     }
 
     .lang-switch button {
       border: none;
-      background: transparent;
-      color: var(--muted2);
-      font-size: 12px;
-      padding: 7px 12px;
-      border-radius: 999px;
       cursor: pointer;
-      transition: 0.2s;
+      font-size: 12px;
+      padding: 7px 11px;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      transition: 0.25s;
       font-weight: 700;
     }
 
     .lang-switch button.active {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #111;
+      box-shadow: 0 8px 18px rgba(255,183,3,0.25);
     }
 
+    /* HERO AREA */
     .hero {
-      margin-top: 12px;
+      max-width: 1100px;
+      margin: auto;
+      padding: 28px 18px 10px;
       text-align: center;
-      padding: 18px 10px 10px;
+      position: relative;
     }
 
-    .hero img {
-      width: 88px;
-      height: 88px;
-      border-radius: 22px;
-      object-fit: cover;
-      border: 2px solid rgba(255,183,3,0.4);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      margin-bottom: 10px;
-    }
-
-    .hero h2 {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 4px;
-    }
-
-    .hero span {
-      font-size: 12px;
-      color: var(--muted2);
-    }
-
-    .filters {
-      margin-top: 18px;
+    .hero .logo-area {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 12px;
     }
 
-    .search-area {
-      width: 100%;
+    .hero img {
+      width: 92px;
+      height: 92px;
+      object-fit: contain;
+      border-radius: 22px;
+      padding: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+    }
+
+    .hero h2 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      margin-top: 6px;
+    }
+
+    .hero span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
       max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* SEARCH */
+    .search-area {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      padding: 0 16px;
     }
 
     .search-area input {
       width: 100%;
-      padding: 14px 14px;
+      max-width: 600px;
+      padding: 14px 16px;
       border-radius: 16px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.05);
-      color: var(--text);
       outline: none;
+      color: var(--text);
       font-size: 14px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      transition: 0.25s;
+    }
+
+    .search-area input:focus {
+      border-color: rgba(255,183,3,0.5);
+      box-shadow: 0 12px 35px rgba(255,183,3,0.12);
     }
 
     .search-area input::placeholder {
-      color: rgba(148,163,184,0.7);
+      color: rgba(248,250,252,0.45);
     }
 
+    /* CATEGORY */
     .categories {
       display: flex;
       justify-content: center;
-      gap: 10px;
       flex-wrap: wrap;
-      max-width: 700px;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 0 16px;
     }
 
     .categories button {
-      padding: 10px 14px;
+      padding: 11px 16px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      color: var(--muted2);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
       cursor: pointer;
       font-size: 13px;
       font-weight: 700;
-      transition: 0.2s;
+      transition: 0.25s;
+      backdrop-filter: blur(12px);
     }
 
     .categories button:hover {
       transform: translateY(-2px);
-      border-color: rgba(255,183,3,0.35);
+      border-color: rgba(255,183,3,0.4);
+      color: var(--text);
     }
 
     .categories button.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #111;
       border: none;
-      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(255,183,3,0.18);
     }
 
+    /* GRID */
     .container {
       max-width: 1100px;
       margin: auto;
-      padding: 18px;
+      padding: 22px 18px 60px;
     }
 
     .section-title {
-      margin-top: 22px;
+      margin-top: 20px;
       margin-bottom: 14px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 2px;
+      font-size: 13px;
+      letter-spacing: 1.4px;
       text-transform: uppercase;
-      text-align: center;
+      color: rgba(248,250,252,0.55);
+      font-weight: 800;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
+      gap: 16px;
     }
 
+    /* PRODUCT CARD */
     .card {
-      border-radius: 20px;
-      background: rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
       border: 1px solid var(--border);
       overflow: hidden;
-      transition: 0.25s;
       cursor: pointer;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+      transition: 0.25s;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.45);
       position: relative;
     }
 
     .card:hover {
-      transform: translateY(-4px) scale(1.01);
-      border-color: rgba(255,183,3,0.4);
+      transform: translateY(-5px) scale(1.01);
+      border-color: rgba(255,183,3,0.35);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.7);
     }
 
     .card-img {
-      height: 150px;
+      height: 160px;
       background-size: cover;
       background-position: center;
-      filter: contrast(1.1) saturate(1.2);
+      position: relative;
+    }
+
+    .card-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.65));
     }
 
     .card-content {
@@ -250,38 +301,39 @@
 
     .desc {
       font-size: 12px;
-      color: rgba(255,255,255,0.68);
-      line-height: 1.45;
+      color: rgba(248,250,252,0.65);
+      line-height: 1.4;
       margin-bottom: 10px;
     }
 
     .price {
       font-weight: 900;
-      color: var(--accent);
       font-size: 14px;
+      color: var(--accent);
       white-space: nowrap;
     }
 
     .tag {
       display: inline-block;
       font-size: 11px;
-      padding: 7px 12px;
+      padding: 6px 11px;
       border-radius: 999px;
-      background: rgba(255,183,3,0.14);
-      border: 1px solid rgba(255,183,3,0.20);
+      background: rgba(255,183,3,0.12);
+      border: 1px solid rgba(255,183,3,0.25);
       color: var(--accent);
       font-weight: 800;
     }
 
+    /* MODAL */
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.72);
       display: none;
       justify-content: center;
       align-items: center;
-      padding: 16px;
       z-index: 999;
+      padding: 18px;
       backdrop-filter: blur(10px);
     }
 
@@ -289,131 +341,160 @@
       display: flex;
     }
 
-    .modal-box {
-      max-width: 700px;
+    .modal-content {
       width: 100%;
+      max-width: 720px;
       border-radius: 22px;
+      background: linear-gradient(180deg, rgba(20,20,20,0.96), rgba(8,8,8,0.95));
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.9);
       overflow: hidden;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 25px 70px rgba(0,0,0,0.7);
-      animation: popup 0.2s ease;
+      animation: pop 0.25s ease;
     }
 
-    @keyframes popup {
-      from { transform: scale(0.92); opacity: 0; }
+    @keyframes pop {
+      from { transform: scale(0.95); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
     .modal-img {
-      width: 100%;
       height: 260px;
       background-size: cover;
       background-position: center;
-      filter: contrast(1.1) saturate(1.3);
+      position: relative;
     }
 
-    .modal-content {
-      padding: 16px;
+    .modal-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.75));
     }
 
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: flex-start;
+    .modal-body {
+      padding: 18px;
     }
 
-    .modal-header h2 {
-      font-size: 18px;
+    .modal-body h2 {
+      font-size: 20px;
       font-weight: 900;
       margin-bottom: 6px;
-      color: var(--accent);
     }
 
-    .modal-price {
-      font-size: 16px;
-      font-weight: 900;
-      color: var(--accent2);
-      white-space: nowrap;
-    }
-
-    .modal-desc {
+    .modal-body p {
+      color: rgba(248,250,252,0.75);
       font-size: 13px;
       line-height: 1.6;
-      color: rgba(255,255,255,0.8);
-      margin-top: 8px;
+      margin-bottom: 14px;
     }
 
-    .modal-details {
-      margin-top: 14px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    .modal-info {
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
     }
 
-    .detail-box {
+    .info-box {
+      flex: 1;
+      min-width: 150px;
       padding: 12px;
       border-radius: 16px;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.07);
-    }
-
-    .detail-box b {
-      display: block;
-      margin-bottom: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(248,250,252,0.9);
       font-size: 12px;
-      color: rgba(255,255,255,0.75);
-    }
-
-    .detail-box span {
-      font-size: 12px;
-      color: rgba(255,255,255,0.95);
       font-weight: 700;
     }
 
-    .close-btn {
+    .info-box span {
+      display: block;
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--accent);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 13px 14px;
+      border-radius: 16px;
       border: none;
-      background: rgba(255,255,255,0.10);
-      color: white;
-      padding: 8px 12px;
-      border-radius: 12px;
       cursor: pointer;
       font-weight: 900;
-      transition: 0.2s;
+      font-size: 13px;
+      transition: 0.25s;
     }
 
-    .close-btn:hover {
-      background: rgba(251,113,133,0.3);
+    .btn.close {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(248,250,252,0.8);
     }
 
-    footer {
-      margin-top: 40px;
-      padding: 22px;
-      text-align: center;
-      color: rgba(255,255,255,0.55);
-      font-size: 12px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+    .btn.close:hover {
+      background: rgba(255,255,255,0.12);
+      transform: scale(1.02);
     }
 
+    .btn.order {
+      background: linear-gradient(135deg, var(--green), #16a34a);
+      color: #07100a;
+      box-shadow: 0 12px 35px rgba(34,197,94,0.18);
+    }
+
+    .btn.order:hover {
+      transform: scale(1.02);
+    }
+
+    /* FLOATING WHATSAPP */
     .whatsapp {
       position: fixed;
-      bottom: 16px;
-      right: 16px;
-      background: #25D366;
+      bottom: 18px;
+      right: 18px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
       color: white;
-      padding: 14px 16px;
+      padding: 14px 18px;
       border-radius: 999px;
       font-weight: 900;
       font-size: 13px;
       text-decoration: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.55);
-      transition: 0.2s;
-      z-index: 99;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.65);
+      transition: 0.25s;
+      z-index: 999;
     }
 
     .whatsapp:hover {
-      transform: scale(1.05);
+      transform: scale(1.06);
+    }
+
+    footer {
+      padding: 30px 14px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(248,250,252,0.55);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* MOBILE FIX */
+    @media(max-width: 520px) {
+      .hero h2 {
+        font-size: 22px;
+      }
+      .card-img {
+        height: 150px;
+      }
+      .modal-img {
+        height: 220px;
+      }
     }
   </style>
 </head>
@@ -424,7 +505,7 @@
   <div class="topbar">
     <div class="brand">
       <h1 id="titleText">DENEME KAFE</h1>
-      <p id="subtitleText">Premium QR Menü • Tatlı / Tuzlu / İçecek</p>
+      <p id="subtitleText">QR Menü - Modern & Lezzetli Deneyim</p>
     </div>
 
     <div class="lang-switch">
@@ -432,25 +513,27 @@
       <button id="btnEN">EN</button>
     </div>
   </div>
-
-  <div class="hero">
-    <!-- BURAYA LOGO KOY -->
-    <img src="logo.png" alt="Deneme Kafe Logo">
-    <h2 id="heroTitle">Lezzetli Menü</h2>
-    <span id="heroDesc">Ürünlere tıklayarak detayları görebilirsiniz ✨</span>
-
-    <div class="filters">
-      <div class="search-area">
-        <input type="text" id="searchInput" placeholder="Ürün ara... (örn: latte, burger)" />
-      </div>
-
-      <div class="categories" id="categoryButtons"></div>
-    </div>
-  </div>
 </header>
 
+<div class="hero">
+  <div class="logo-area">
+    <img src="logo.png" alt="Deneme Kafe Logo" onerror="this.style.display='none';">
+    <h2><span id="heroTitle">DENEME KAFE</span></h2>
+    <p id="heroDesc">
+      En özel tatlılar, sıcak tuzlu lezzetler ve ferah içecekler tek menüde. 
+      Ürüne tıklayarak detayları görebilirsiniz.
+    </p>
+  </div>
+
+  <div class="search-area">
+    <input type="text" id="searchInput" placeholder="Ürün ara... (örn: latte, burger)" />
+  </div>
+
+  <div class="categories" id="categoryButtons"></div>
+</div>
+
 <div class="container">
-  <div class="section-title" id="sectionTitle">MENÜ</div>
+  <div class="section-title" id="sectionTitle">Menü</div>
   <div class="grid" id="menuGrid"></div>
 </div>
 
@@ -462,41 +545,33 @@
   <span id="footerText">© 2026 DENEME KAFE | QR Menü</span>
 </footer>
 
+
 <!-- MODAL -->
-<div class="modal" id="productModal">
-  <div class="modal-box">
+<div class="modal" id="modal">
+  <div class="modal-content">
     <div class="modal-img" id="modalImg"></div>
-    <div class="modal-content">
-      <div class="modal-header">
-        <div>
-          <h2 id="modalTitle">Ürün</h2>
-          <div class="tag" id="modalTag">Popüler</div>
+    <div class="modal-body">
+      <h2 id="modalTitle">Ürün</h2>
+      <p id="modalDesc">Açıklama</p>
+
+      <div class="modal-info">
+        <div class="info-box">
+          Fiyat
+          <span id="modalPrice">0₺</span>
         </div>
-        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
-          <div class="modal-price" id="modalPrice">0₺</div>
-          <button class="close-btn" onclick="closeModal()">X</button>
+        <div class="info-box">
+          Hazırlanma Süresi
+          <span id="modalTime">5-10 dk</span>
+        </div>
+        <div class="info-box">
+          Kalori
+          <span id="modalCal">250 kcal</span>
         </div>
       </div>
 
-      <p class="modal-desc" id="modalDesc"></p>
-
-      <div class="modal-details">
-        <div class="detail-box">
-          <b id="detail1Title">İçerik</b>
-          <span id="detail1Text"></span>
-        </div>
-        <div class="detail-box">
-          <b id="detail2Title">Kalori</b>
-          <span id="detail2Text"></span>
-        </div>
-        <div class="detail-box">
-          <b id="detail3Title">Alerjen</b>
-          <span id="detail3Text"></span>
-        </div>
-        <div class="detail-box">
-          <b id="detail4Title">Öneri</b>
-          <span id="detail4Text"></span>
-        </div>
+      <div class="modal-actions">
+        <button class="btn close" onclick="closeModal()" id="closeBtn">Kapat</button>
+        <button class="btn order" onclick="orderWhatsApp()" id="orderBtn">WhatsApp'tan Sipariş Ver</button>
       </div>
     </div>
   </div>
@@ -505,32 +580,32 @@
 <script>
   let currentLang = "tr";
   let currentCategory = "all";
+  let selectedItem = null;
 
   const translations = {
     tr: {
       title: "DENEME KAFE",
-      subtitle: "Premium QR Menü • Tatlı / Tuzlu / İçecek",
-      heroTitle: "Lezzetli Menü",
-      heroDesc: "Ürünlere tıklayarak detayları görebilirsiniz ✨",
-      menuTitle: "MENÜ",
+      subtitle: "QR Menü - Modern & Lezzetli Deneyim",
+      heroDesc: "En özel tatlılar, sıcak tuzlu lezzetler ve ferah içecekler tek menüde. Ürüne tıklayarak detayları görebilirsiniz.",
+      menuTitle: "Menü",
       searchPlaceholder: "Ürün ara... (örn: latte, burger)",
       all: "Tümü",
       salty: "Tuzlu",
       sweet: "Tatlı",
-      drinks: "İçecek",
+      drinks: "İçecekler",
       whatsapp: "WhatsApp Sipariş",
       footer: "© 2026 DENEME KAFE | QR Menü",
-      content: "İçerik",
-      calories: "Kalori",
-      allergen: "Alerjen",
-      suggest: "Öneri"
+      close: "Kapat",
+      order: "WhatsApp'tan Sipariş Ver",
+      price: "Fiyat",
+      time: "Hazırlanma Süresi",
+      cal: "Kalori"
     },
     en: {
       title: "DENEME CAFE",
-      subtitle: "Premium QR Menu • Sweet / Savory / Drinks",
-      heroTitle: "Delicious Menu",
-      heroDesc: "Tap on products to see details ✨",
-      menuTitle: "MENU",
+      subtitle: "QR Menu - Premium Taste Experience",
+      heroDesc: "Delicious desserts, savory meals and refreshing drinks all in one menu. Tap any product to see full details.",
+      menuTitle: "Menu",
       searchPlaceholder: "Search item... (ex: latte, burger)",
       all: "All",
       salty: "Savory",
@@ -538,151 +613,124 @@
       drinks: "Drinks",
       whatsapp: "Order via WhatsApp",
       footer: "© 2026 DENEME CAFE | QR Menu",
-      content: "Ingredients",
-      calories: "Calories",
-      allergen: "Allergens",
-      suggest: "Suggestion"
+      close: "Close",
+      order: "Order via WhatsApp",
+      price: "Price",
+      time: "Preparation Time",
+      cal: "Calories"
     }
   };
 
   const menuItems = [
     {
       category: "salty",
+      tr: { name: "Cheddar Burger", desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
+      en: { name: "Cheddar Burger", desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce." },
       price: "220₺",
-      img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=70",
-      tagTR: "Popüler",
-      tagEN: "Popular",
-      tr: {
-        name: "Cheddar Burger",
-        desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos.",
-        content: "Dana eti, cheddar, soğan, marul, özel sos",
-        calories: "720 kcal",
-        allergen: "Gluten, Süt",
-        suggest: "Patates kızartması ile mükemmel gider."
-      },
-      en: {
-        name: "Cheddar Burger",
-        desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce.",
-        content: "Beef, cheddar, onion, lettuce, special sauce",
-        calories: "720 kcal",
-        allergen: "Gluten, Dairy",
-        suggest: "Perfect with fries."
-      }
+      timeTR: "10-15 dk",
+      timeEN: "10-15 min",
+      cal: "650 kcal",
+      tagTR: "En Çok Satan",
+      tagEN: "Best Seller",
+      img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1000&q=80"
     },
     {
       category: "salty",
+      tr: { name: "Tavuklu Wrap", desc: "Izgara tavuk, taze yeşillik ve özel sos ile." },
+      en: { name: "Chicken Wrap", desc: "Grilled chicken, fresh greens and signature sauce." },
+      price: "170₺",
+      timeTR: "8-12 dk",
+      timeEN: "8-12 min",
+      cal: "520 kcal",
+      tagTR: "Şef Önerisi",
+      tagEN: "Chef Choice",
+      img: "https://images.unsplash.com/photo-1604908177522-429cd0a9f5b2?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      category: "salty",
+      tr: { name: "Köri Soslu Makarna", desc: "Kremalı köri sos, tavuk parçaları ve parmesan." },
+      en: { name: "Curry Chicken Pasta", desc: "Creamy curry sauce, chicken bites and parmesan." },
       price: "190₺",
-      img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1200&q=70",
+      timeTR: "12-18 dk",
+      timeEN: "12-18 min",
+      cal: "700 kcal",
       tagTR: "Yeni",
       tagEN: "New",
-      tr: {
-        name: "Köri Soslu Makarna",
-        desc: "Kremalı köri sos, tavuk parçaları ve parmesan.",
-        content: "Penne makarna, tavuk, köri, krema, parmesan",
-        calories: "640 kcal",
-        allergen: "Gluten, Süt",
-        suggest: "Yanına buzlu limonata önerilir."
-      },
-      en: {
-        name: "Curry Chicken Pasta",
-        desc: "Creamy curry sauce, chicken bites and parmesan.",
-        content: "Penne pasta, chicken, curry, cream, parmesan",
-        calories: "640 kcal",
-        allergen: "Gluten, Dairy",
-        suggest: "Try with iced lemonade."
-      }
+      img: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=1000&q=80"
     },
+
     {
       category: "sweet",
+      tr: { name: "San Sebastian Cheesecake", desc: "Karamelize üst katman, kremsi iç doku." },
+      en: { name: "San Sebastian Cheesecake", desc: "Caramelized top layer with creamy center." },
       price: "150₺",
-      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=70",
-      tagTR: "En Çok Satan",
-      tagEN: "Best Seller",
-      tr: {
-        name: "San Sebastian Cheesecake",
-        desc: "Karamelize üst katman, kremsi iç doku.",
-        content: "Krema peynir, yumurta, un, vanilya",
-        calories: "510 kcal",
-        allergen: "Süt, Yumurta, Gluten",
-        suggest: "Yanına espresso alırsan efsane olur."
-      },
-      en: {
-        name: "San Sebastian Cheesecake",
-        desc: "Caramelized top layer with creamy center.",
-        content: "Cream cheese, egg, flour, vanilla",
-        calories: "510 kcal",
-        allergen: "Dairy, Egg, Gluten",
-        suggest: "Perfect with espresso."
-      }
+      timeTR: "Hazır",
+      timeEN: "Ready",
+      cal: "480 kcal",
+      tagTR: "Popüler",
+      tagEN: "Popular",
+      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1000&q=80"
     },
     {
       category: "sweet",
+      tr: { name: "Çikolatalı Brownie", desc: "Sıcak brownie, vanilyalı dondurma ile servis edilir." },
+      en: { name: "Chocolate Brownie", desc: "Warm brownie served with vanilla ice cream." },
       price: "140₺",
-      img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=1200&q=70",
+      timeTR: "5-7 dk",
+      timeEN: "5-7 min",
+      cal: "560 kcal",
       tagTR: "Tatlı",
       tagEN: "Dessert",
-      tr: {
-        name: "Çikolatalı Brownie",
-        desc: "Sıcak brownie, vanilyalı dondurma ile servis edilir.",
-        content: "Kakao, bitter çikolata, un, dondurma",
-        calories: "580 kcal",
-        allergen: "Gluten, Süt",
-        suggest: "Sıcakken yemelisin 😍"
-      },
-      en: {
-        name: "Chocolate Brownie",
-        desc: "Warm brownie served with vanilla ice cream.",
-        content: "Cocoa, dark chocolate, flour, ice cream",
-        calories: "580 kcal",
-        allergen: "Gluten, Dairy",
-        suggest: "Best served warm 😍"
-      }
+      img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=1000&q=80"
     },
     {
+      category: "sweet",
+      tr: { name: "Tiramisu", desc: "Mascarpone kreması ve kahve aroması ile." },
+      en: { name: "Tiramisu", desc: "Mascarpone cream with rich coffee flavor." },
+      price: "155₺",
+      timeTR: "Hazır",
+      timeEN: "Ready",
+      cal: "430 kcal",
+      tagTR: "Klasik",
+      tagEN: "Classic",
+      img: "https://images.unsplash.com/photo-1608219959308-7b1d12f954ed?auto=format&fit=crop&w=1000&q=80"
+    },
+
+    {
       category: "drinks",
+      tr: { name: "Iced Latte", desc: "Espresso, süt ve buz ile ferahlatıcı lezzet." },
+      en: { name: "Iced Latte", desc: "Espresso, milk and ice - refreshing taste." },
       price: "120₺",
-      img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1200&q=70",
+      timeTR: "2-3 dk",
+      timeEN: "2-3 min",
+      cal: "190 kcal",
       tagTR: "Soğuk",
       tagEN: "Cold",
-      tr: {
-        name: "Iced Latte",
-        desc: "Espresso, süt ve buz ile ferahlatıcı lezzet.",
-        content: "Espresso, süt, buz",
-        calories: "190 kcal",
-        allergen: "Süt",
-        suggest: "Tatlılarla çok iyi gider."
-      },
-      en: {
-        name: "Iced Latte",
-        desc: "Espresso, milk and ice - refreshing taste.",
-        content: "Espresso, milk, ice",
-        calories: "190 kcal",
-        allergen: "Dairy",
-        suggest: "Perfect with desserts."
-      }
+      img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1000&q=80"
     },
     {
       category: "drinks",
+      tr: { name: "Matcha Latte", desc: "Japon matcha çayı, süt ve hafif tatlı aroma." },
+      en: { name: "Matcha Latte", desc: "Japanese matcha tea, milk and soft sweet aroma." },
+      price: "135₺",
+      timeTR: "3-5 dk",
+      timeEN: "3-5 min",
+      cal: "210 kcal",
+      tagTR: "Premium",
+      tagEN: "Premium",
+      img: "https://images.unsplash.com/photo-1542444459-db63c2f8a7c3?auto=format&fit=crop&w=1000&q=80"
+    },
+    {
+      category: "drinks",
+      tr: { name: "Fresh Lemonade", desc: "Taze limon, nane ve doğal şeker." },
+      en: { name: "Fresh Lemonade", desc: "Fresh lemon, mint and natural sugar." },
       price: "95₺",
-      img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=1200&q=70",
+      timeTR: "2 dk",
+      timeEN: "2 min",
+      cal: "120 kcal",
       tagTR: "Serinletici",
       tagEN: "Refreshing",
-      tr: {
-        name: "Fresh Lemonade",
-        desc: "Taze limon, nane ve doğal şeker.",
-        content: "Limon, nane, şeker, buz",
-        calories: "140 kcal",
-        allergen: "Yok",
-        suggest: "Sıcak günlerde efsane!"
-      },
-      en: {
-        name: "Fresh Lemonade",
-        desc: "Fresh lemon, mint and natural sugar.",
-        content: "Lemon, mint, sugar, ice",
-        calories: "140 kcal",
-        allergen: "None",
-        suggest: "Amazing for hot days!"
-      }
+      img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=1000&q=80"
     }
   ];
 
@@ -754,36 +802,6 @@
     });
   }
 
-  function openModal(item) {
-    const langData = item[currentLang];
-
-    document.getElementById("modalImg").style.backgroundImage = `url('${item.img}')`;
-    document.getElementById("modalTitle").innerText = langData.name;
-    document.getElementById("modalPrice").innerText = item.price;
-    document.getElementById("modalDesc").innerText = langData.desc;
-    document.getElementById("modalTag").innerText = currentLang === "tr" ? item.tagTR : item.tagEN;
-
-    document.getElementById("detail1Title").innerText = translations[currentLang].content;
-    document.getElementById("detail2Title").innerText = translations[currentLang].calories;
-    document.getElementById("detail3Title").innerText = translations[currentLang].allergen;
-    document.getElementById("detail4Title").innerText = translations[currentLang].suggest;
-
-    document.getElementById("detail1Text").innerText = langData.content;
-    document.getElementById("detail2Text").innerText = langData.calories;
-    document.getElementById("detail3Text").innerText = langData.allergen;
-    document.getElementById("detail4Text").innerText = langData.suggest;
-
-    document.getElementById("productModal").classList.add("active");
-  }
-
-  function closeModal() {
-    document.getElementById("productModal").classList.remove("active");
-  }
-
-  document.getElementById("productModal").addEventListener("click", (e) => {
-    if(e.target.id === "productModal") closeModal();
-  });
-
   function setLanguage(lang) {
     currentLang = lang;
 
@@ -792,21 +810,82 @@
 
     document.getElementById("titleText").innerText = translations[lang].title;
     document.getElementById("subtitleText").innerText = translations[lang].subtitle;
-    document.getElementById("heroTitle").innerText = translations[lang].heroTitle;
+    document.getElementById("heroTitle").innerText = translations[lang].title;
     document.getElementById("heroDesc").innerText = translations[lang].heroDesc;
     document.getElementById("sectionTitle").innerText = translations[lang].menuTitle;
     document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
     document.getElementById("whatsappBtn").innerText = translations[lang].whatsapp;
     document.getElementById("footerText").innerText = translations[lang].footer;
 
+    document.getElementById("closeBtn").innerText = translations[lang].close;
+    document.getElementById("orderBtn").innerText = translations[lang].order;
+
     renderCategories();
     renderMenu();
   }
 
-  document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
-  document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
+  function openModal(item) {
+    selectedItem = item;
+    const modal = document.getElementById("modal");
+
+    document.getElementById("modalImg").style.backgroundImage = `url('${item.img}')`;
+    document.getElementById("modalTitle").innerText = item[currentLang].name;
+    document.getElementById("modalDesc").innerText = item[currentLang].desc;
+
+    document.getElementById("modalPrice").innerText = item.price;
+    document.getElementById("modalTime").innerText = currentLang === "tr" ? item.timeTR : item.timeEN;
+    document.getElementById("modalCal").innerText = item.cal;
+
+    modal.classList.add("active");
+  }
+
+  function closeModal() {
+    document.getElementById("modal").classList.remove("active");
+  }
+
+  function orderWhatsApp() {
+    if (!selectedItem) return;
+
+    const phone = "905555555555";
+    const productName = selectedItem[currentLang].name;
+
+    const message =
+      currentLang === "tr"
+        ? `Merhaba, ${productName} sipariş vermek istiyorum.`
+        : `Hello, I would like to order ${productName}.`;
+
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+  }
+
+  // Close modal by clicking outside
+  document.getElementById("modal").addEventListener("click", (e) => {
+    if (e.target.id === "modal") closeModal();
+  });
+
+  // SEARCH
   document.getElementById("searchInput").addEventListener("input", renderMenu);
 
+  // LANG BUTTONS
+  document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
+  document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
+
+  // HEADER HIDE ON SCROLL
+  let lastScroll = 0;
+  const header = document.querySelector("header");
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > lastScroll && currentScroll > 140) {
+      header.classList.add("hide");
+    } else {
+      header.classList.remove("hide");
+    }
+
+    lastScroll = currentScroll;
+  });
+
+  // START
   setLanguage("tr");
 </script>
 
