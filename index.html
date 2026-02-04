@@ -1,777 +1,802 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DENEME KAFE | QR Menü</title>
 
   <style>
     :root {
-      --bg1: #05060a;
-      --bg2: #0b0f16;
-
-      --card: rgba(255,255,255,0.07);
-      --card2: rgba(255,255,255,0.05);
-      --border: rgba(255,255,255,0.12);
+      --bg: #070A10;
+      --bg2: #0B1020;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.09);
+      --border: rgba(255,255,255,0.10);
 
       --text: #f8fafc;
       --muted: rgba(248,250,252,0.72);
 
-      /* Daha canlı */
-      --accent: #ff4d6d;
-      --accent2: #ffd166;
-      --accent3: #00d4ff;
-      --green: #2dd4bf;
+      --primary: #ff2ea6;
+      --primary2: #ff7a00;
+      --accent: #00f5d4;
+      --accent2: #7cff6b;
 
-      --shadow: 0 10px 35px rgba(0,0,0,0.55);
-      --radius: 18px;
+      --shadow: 0 18px 60px rgba(0,0,0,0.55);
+
+      --radius: 22px;
+    }
+
+    body.light {
+      --bg: #f7f7fb;
+      --bg2: #ffffff;
+      --card: rgba(0,0,0,0.04);
+      --card2: rgba(0,0,0,0.06);
+      --border: rgba(0,0,0,0.10);
+
+      --text: #0b0f14;
+      --muted: rgba(11,15,20,0.70);
+
+      --shadow: 0 18px 50px rgba(0,0,0,0.12);
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+      font-family: "Segoe UI", Arial, sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at top left, rgba(255,77,109,0.16), transparent 60%),
-                  radial-gradient(circle at top right, rgba(0,212,255,0.15), transparent 60%),
-                  radial-gradient(circle at bottom, rgba(255,209,102,0.12), transparent 70%),
-                  linear-gradient(180deg, var(--bg1), var(--bg2));
+      background: radial-gradient(circle at 20% 20%, rgba(255,46,166,0.20), transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(0,245,212,0.20), transparent 55%),
+                  radial-gradient(circle at 40% 90%, rgba(255,122,0,0.18), transparent 55%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Top fixed language switch */
-    .top-floating {
-      position: fixed;
-      top: 14px;
-      right: 14px;
-      z-index: 999;
+    /* ---------- HEADER ---------- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: transform 0.35s ease;
+    }
+
+    body.light header {
+      background: rgba(255,255,255,0.75);
+    }
+
+    header.hide {
+      transform: translateY(-120%);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 16px 18px 18px;
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .lang-area {
       display: flex;
       gap: 10px;
       align-items: center;
     }
 
-    .lang-switch {
-      display: flex;
-      gap: 6px;
-      padding: 6px;
-      border-radius: 999px;
+    .lang-btn {
       border: 1px solid var(--border);
-      background: rgba(0,0,0,0.55);
-      backdrop-filter: blur(14px);
-      box-shadow: var(--shadow);
-    }
-
-    .lang-switch button {
-      border: none;
-      cursor: pointer;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: transparent;
+      background: var(--card);
       color: var(--muted);
+      font-weight: 700;
       font-size: 12px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      cursor: pointer;
       transition: 0.2s;
-      font-weight: 800;
     }
 
-    .lang-switch button.active {
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #111;
+    .lang-btn.active {
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
+      color: white;
+      border: none;
+      box-shadow: 0 12px 30px rgba(255,46,166,0.20);
     }
 
-    /* Main container */
-    .container {
-      max-width: 1050px;
-      margin: auto;
-      padding: 22px 16px;
-      padding-top: 75px;
+    .mode-btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 0.2s;
     }
 
-    /* Hero */
-    .hero {
-      margin-top: 18px;
-      border-radius: 28px;
-      padding: 26px 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.14);
-      box-shadow: 0 12px 50px rgba(0,0,0,0.65);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+    .mode-btn:hover {
+      transform: scale(1.05);
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(255,183,3,0.20), transparent 60%),
-                  radial-gradient(circle at bottom right, rgba(255,77,109,0.20), transparent 60%),
-                  radial-gradient(circle at center, rgba(0,212,255,0.12), transparent 70%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
+    .center-brand {
+      margin-top: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
+      text-align: center;
+      gap: 10px;
     }
 
     .logo-wrap {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 10px;
+      justify-content: center;
+      gap: 12px;
     }
 
     .logo-wrap img {
-      width: 92px;
-      height: 92px;
-      object-fit: contain;
-      border-radius: 22px;
-      padding: 10px;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.55);
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      box-shadow: var(--shadow);
     }
 
-    .brand-title {
-      font-size: 28px;
-      font-weight: 1000;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #fff, rgba(255,255,255,0.7));
+    .brand-text h1 {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      background: linear-gradient(90deg, var(--primary), var(--primary2), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .brand-sub {
+    .brand-text p {
       font-size: 13px;
-      color: rgba(248,250,252,0.78);
-      font-weight: 700;
+      font-weight: 600;
+      color: var(--muted);
+      margin-top: 3px;
     }
 
-    /* Search + categories */
     .search-area {
-      width: 100%;
-      margin-top: 12px;
+      margin-top: 18px;
       display: flex;
       justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .search-area input {
-      width: min(720px, 100%);
-      padding: 15px 16px;
+      width: 100%;
+      max-width: 520px;
+      padding: 14px 16px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.38);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
       color: var(--text);
       outline: none;
       font-size: 14px;
-      font-weight: 700;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      transition: 0.2s;
     }
 
-    .search-area input::placeholder {
-      color: rgba(248,250,252,0.55);
-      font-weight: 600;
+    body.light .search-area input {
+      background: rgba(0,0,0,0.04);
     }
 
+    .search-area input:focus {
+      border-color: rgba(255,46,166,0.7);
+      box-shadow: 0 0 0 4px rgba(255,46,166,0.15);
+    }
+
+    .tagline {
+      margin-top: 12px;
+      text-align: center;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+    }
+
+    /* ---------- CATEGORIES ---------- */
     .categories {
       margin-top: 18px;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .categories button {
-      padding: 10px 14px;
+    .cat-btn {
+      padding: 11px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.32);
-      color: rgba(248,250,252,0.80);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
       cursor: pointer;
+      font-weight: 700;
       font-size: 13px;
-      font-weight: 900;
       transition: 0.2s;
     }
 
-    .categories button.active {
-      border: none;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #111;
-      transform: scale(1.04);
-      box-shadow: 0 10px 25px rgba(255, 77, 109, 0.25);
+    .cat-btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.20);
     }
 
-    /* Section titles */
+    .cat-btn.active {
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
+      color: white;
+      border: none;
+      box-shadow: 0 14px 35px rgba(255,46,166,0.18);
+    }
+
+    /* ---------- MAIN ---------- */
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px;
+    }
+
     .section-title {
-      margin-top: 30px;
-      margin-bottom: 12px;
+      margin-top: 20px;
+      margin-bottom: 14px;
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: var(--text);
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 10px;
-    }
-
-    .section-title h2 {
-      font-size: 16px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 1000;
-      color: rgba(248,250,252,0.92);
     }
 
     .section-title span {
-      font-size: 12px;
-      color: var(--muted);
-      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    /* Slider */
+    /* ---------- SLIDER ---------- */
     .slider {
-      display: flex;
-      gap: 14px;
-      overflow-x: auto;
-      padding: 10px 4px;
-      scroll-behavior: smooth;
-    }
-
-    .slider::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    .slider::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.15);
-      border-radius: 999px;
-    }
-
-    .promo-card {
-      min-width: 260px;
-      max-width: 260px;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.35);
-      box-shadow: var(--shadow);
-      cursor: pointer;
-      transition: 0.2s;
       position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
     }
 
-    .promo-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255,209,102,0.65);
-      box-shadow: 0 15px 50px rgba(0,0,0,0.65);
+    .slider-track {
+      display: flex;
+      transition: transform 0.6s ease;
     }
 
-    .promo-card img {
-      width: 100%;
-      height: 160px;
+    .slide {
+      min-width: 100%;
+      padding: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .slide img {
+      width: 140px;
+      height: 140px;
+      border-radius: 18px;
       object-fit: cover;
-      filter: saturate(1.55) contrast(1.20) brightness(1.10);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      filter: saturate(1.25) contrast(1.1);
     }
 
-    .promo-body {
-      padding: 12px;
-    }
-
-    .promo-body h3 {
-      font-size: 14px;
-      font-weight: 1000;
+    .slide-text h3 {
+      font-size: 18px;
+      font-weight: 900;
       margin-bottom: 6px;
     }
 
-    .promo-body p {
-      font-size: 12px;
-      color: rgba(248,250,252,0.78);
-      line-height: 1.4;
+    .slide-text p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
       margin-bottom: 10px;
     }
 
-    .promo-price {
+    .price-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .old-price {
-      font-size: 12px;
-      color: rgba(248,250,252,0.55);
       text-decoration: line-through;
+      opacity: 0.6;
       font-weight: 800;
     }
 
     .new-price {
-      font-size: 14px;
-      font-weight: 1000;
-      background: linear-gradient(90deg, var(--accent2), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--accent2);
     }
 
     .badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      padding: 6px 10px;
+      display: inline-block;
+      padding: 6px 12px;
       border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #111;
+      font-weight: 900;
       font-size: 11px;
-      font-weight: 1000;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      background: rgba(255,46,166,0.16);
+      border: 1px solid rgba(255,46,166,0.30);
+      color: var(--primary);
     }
 
-    /* Grid */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px;
+    .slider-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
     }
 
-    .card {
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.32);
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .dot.active {
+      background: var(--primary);
+      transform: scale(1.2);
+    }
+
+    /* ---------- FAVORITE ---------- */
+    .favorite-card {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
       box-shadow: var(--shadow);
       cursor: pointer;
       transition: 0.2s;
-      position: relative;
     }
 
-    .card:hover {
+    .favorite-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0,245,212,0.35);
+    }
+
+    .favorite-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid var(--border);
+      filter: saturate(1.3) contrast(1.1);
+    }
+
+    .favorite-info h3 {
+      font-size: 16px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .favorite-info p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    /* ---------- GRID ---------- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+    }
+
+    .product-card {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .product-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(0,212,255,0.45);
-      box-shadow: 0 15px 55px rgba(0,0,0,0.65);
+      border-color: rgba(255,46,166,0.45);
     }
 
-    .card img {
+    .product-img {
       width: 100%;
       height: 160px;
       object-fit: cover;
-      filter: saturate(1.65) contrast(1.18) brightness(1.12);
+      filter: saturate(1.35) contrast(1.1);
+      background: rgba(255,255,255,0.06);
     }
 
-    .card-body {
-      padding: 12px;
+    .product-body {
+      padding: 14px;
     }
 
-    .card-top {
+    .product-top {
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      align-items: start;
+      align-items: flex-start;
     }
 
-    .card h3 {
-      font-size: 14px;
-      font-weight: 1000;
+    .product-body h3 {
+      font-size: 15px;
+      font-weight: 900;
       margin-bottom: 6px;
-      line-height: 1.2;
     }
 
-    .card p {
+    .product-body p {
       font-size: 12px;
+      color: var(--muted);
       line-height: 1.4;
-      color: rgba(248,250,252,0.78);
       margin-bottom: 10px;
-      min-height: 34px;
     }
 
     .price {
       font-size: 14px;
-      font-weight: 1000;
-      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--accent), var(--primary2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       white-space: nowrap;
     }
 
+    .mini-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
     .mini-tag {
-      display: inline-block;
       font-size: 11px;
-      font-weight: 900;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: rgba(248,250,252,0.86);
-    }
-
-    /* Detail modal */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.75);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      padding: 16px;
-    }
-
-    .modal.show {
-      display: flex;
-    }
-
-    .modal-box {
-      width: min(650px, 100%);
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.88);
-      box-shadow: 0 15px 60px rgba(0,0,0,0.65);
-      overflow: hidden;
-      position: relative;
-      max-height: 92vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .modal-img {
-      width: 100%;
-      height: auto;
-      max-height: 340px;
-      object-fit: contain;
-      background: rgba(255,255,255,0.04);
-      padding: 12px;
-    }
-
-    .modal-body {
-      padding: 14px;
-      overflow-y: auto;
-    }
-
-    .modal-body h2 {
-      font-size: 18px;
-      font-weight: 1000;
-      margin-bottom: 8px;
-    }
-
-    .modal-body p {
-      font-size: 13px;
-      color: rgba(248,250,252,0.78);
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-
-    .modal-info {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .info-box {
-      flex: 1;
-      min-width: 140px;
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-    }
-
-    .info-box span {
-      font-size: 11px;
-      color: rgba(248,250,252,0.65);
       font-weight: 800;
-      display: block;
-      margin-bottom: 6px;
+      background: rgba(0,245,212,0.14);
+      border: 1px solid rgba(0,245,212,0.25);
+      color: var(--accent);
     }
 
-    .info-box strong {
-      font-size: 13px;
-      font-weight: 1000;
+    .mini-tag.hot {
+      background: rgba(255,122,0,0.16);
+      border: 1px solid rgba(255,122,0,0.25);
+      color: var(--primary2);
     }
 
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 38px;
-      height: 38px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.45);
-      color: white;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 1000;
-    }
-
-    /* WhatsApp button */
+    /* ---------- WHATSAPP ---------- */
     .whatsapp {
       position: fixed;
-      bottom: 18px;
-      right: 18px;
-      background: linear-gradient(90deg, #25D366, #0fd850);
+      bottom: 16px;
+      right: 16px;
+      background: linear-gradient(90deg, #25D366, #18a84c);
       color: white;
       padding: 14px 16px;
       border-radius: 999px;
-      font-weight: 1000;
+      font-weight: 900;
       font-size: 13px;
       text-decoration: none;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.45);
       transition: 0.2s;
-      z-index: 999;
+      z-index: 200;
     }
 
     .whatsapp:hover {
-      transform: scale(1.06);
+      transform: scale(1.07);
     }
 
-    /* Footer */
+    /* ---------- FOOTER ---------- */
     footer {
       margin-top: 40px;
-      padding: 18px 12px;
-      border-top: 1px solid rgba(255,255,255,0.14);
+      padding: 18px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
-      color: rgba(248,250,252,0.72);
-      font-size: 12px;
     }
 
-    .admin-link {
-      cursor: pointer;
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
       font-weight: 900;
-      color: rgba(248,250,252,0.7);
-      text-decoration: underline;
+      cursor: pointer;
     }
 
-    .admin-link:hover {
-      color: white;
-    }
-
-    /* Admin modal (only this scrolls) */
-    .admin-modal {
+    /* ---------- MODALS ---------- */
+    .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.80);
+      background: rgba(0,0,0,0.55);
       backdrop-filter: blur(10px);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 10000;
+      z-index: 999;
       padding: 16px;
     }
 
-    .admin-modal.show {
-      display: flex;
+    body.light .modal-overlay {
+      background: rgba(0,0,0,0.35);
     }
 
-    /* ADMIN THEMES */
-    .admin-box {
-      width: min(860px, 100%);
-      max-height: 92vh;
-      overflow-y: auto;
-      border-radius: 22px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.92);
-      box-shadow: 0 15px 60px rgba(0,0,0,0.75);
-      padding: 16px;
+    .modal {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      background: rgba(15,20,35,0.92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+      animation: pop 0.25s ease;
     }
 
-    .admin-box.light {
-      background: rgba(255,255,255,0.94);
-      color: #111;
-      border-color: rgba(0,0,0,0.15);
+    body.light .modal {
+      background: rgba(255,255,255,0.92);
     }
 
-    .admin-box.light h2,
-    .admin-box.light h3 {
-      color: #111 !important;
+    @keyframes pop {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
-    .admin-box.light p {
-      color: rgba(0,0,0,0.65);
-    }
-
-    .admin-box.light .admin-card {
-      background: rgba(0,0,0,0.04);
-      border-color: rgba(0,0,0,0.12);
-    }
-
-    .admin-box.light input,
-    .admin-box.light textarea,
-    .admin-box.light select {
-      background: rgba(255,255,255,0.85);
-      color: #111;
-      border-color: rgba(0,0,0,0.12);
-    }
-
-    .admin-box.light .btn-mini {
-      background: rgba(0,0,0,0.06);
-      border-color: rgba(0,0,0,0.12);
-      color: #111;
-    }
-
-    .admin-box.light .admin-close {
-      background: rgba(0,0,0,0.06);
-      border-color: rgba(0,0,0,0.14);
-      color: #111;
-    }
-
-    .admin-topbar {
+    .modal-header {
+      padding: 14px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .modal-header h2 {
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+    }
+
+    .close-btn {
+      border: none;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .modal-body {
+      padding: 16px;
+      max-height: 78vh;
+      overflow-y: auto;
+    }
+
+    /* ---------- PRODUCT DETAIL ---------- */
+    .detail-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media(max-width: 820px){
+      .detail-wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-img {
+      width: 100%;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      object-fit: contain;
+      background: rgba(0,0,0,0.25);
+      max-height: 380px;
+    }
+
+    body.light .detail-img {
+      background: rgba(0,0,0,0.04);
+    }
+
+    .detail-info h3 {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .detail-info p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-bottom: 14px;
     }
 
-    .admin-topbar .theme-btn {
-      border: none;
-      cursor: pointer;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-weight: 1000;
-      font-size: 12px;
-      background: linear-gradient(90deg, var(--accent3), var(--accent2));
-      color: #111;
-      transition: 0.2s;
-      white-space: nowrap;
-    }
-
-    .admin-topbar .theme-btn:hover {
-      transform: scale(1.03);
-    }
-
-    .admin-box h2 {
-      font-size: 18px;
-      font-weight: 1000;
-      margin-bottom: 6px;
-    }
-
-    .admin-box p {
-      font-size: 12px;
-      color: rgba(248,250,252,0.70);
-      margin-bottom: 14px;
-      font-weight: 700;
-    }
-
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
-    }
-
-    .admin-card {
-      padding: 14px;
+    .detail-box {
+      padding: 12px;
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--border);
       background: rgba(255,255,255,0.05);
     }
 
-    .admin-card h3 {
-      font-size: 14px;
-      font-weight: 1000;
-      margin-bottom: 10px;
-    }
-
-    .admin-card input,
-    .admin-card textarea,
-    .admin-card select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(0,0,0,0.50);
-      color: white;
-      outline: none;
-      margin-bottom: 10px;
-      font-size: 12px;
+    .detail-box span {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
       font-weight: 800;
     }
 
-    .admin-card textarea {
-      resize: none;
-      height: 90px;
+    .detail-box strong {
+      font-size: 13px;
+      font-weight: 900;
     }
 
-    .admin-card button {
+    .order-btn {
       width: 100%;
+      padding: 14px;
+      border-radius: 18px;
       border: none;
       cursor: pointer;
-      padding: 12px;
-      border-radius: 14px;
-      font-weight: 1000;
-      font-size: 13px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      color: #111;
+      font-weight: 900;
+      font-size: 14px;
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
+      color: white;
+      box-shadow: 0 18px 40px rgba(255,46,166,0.22);
       transition: 0.2s;
     }
 
-    .admin-card button:hover {
-      transform: scale(1.02);
+    .order-btn:hover {
+      transform: scale(1.03);
     }
 
-    .admin-close {
-      width: 100%;
-      margin-top: 14px;
-      border: 1px solid rgba(255,255,255,0.15);
+    /* ---------- ADMIN PANEL ---------- */
+    .admin-section {
+      margin-bottom: 22px;
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
       background: rgba(255,255,255,0.04);
-      color: rgba(248,250,252,0.90);
+    }
+
+    .admin-section h3 {
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .admin-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .admin-row input,
+    .admin-row textarea,
+    .admin-row select {
+      flex: 1;
+      min-width: 220px;
       padding: 12px;
-      border-radius: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      outline: none;
+      font-size: 13px;
+    }
+
+    body.light .admin-row input,
+    body.light .admin-row textarea,
+    body.light .admin-row select {
+      background: rgba(0,0,0,0.04);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .admin-btn {
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: none;
       cursor: pointer;
-      font-weight: 1000;
-    }
-
-    .admin-close:hover {
+      font-weight: 900;
+      background: linear-gradient(90deg, var(--primary), var(--primary2));
       color: white;
+      transition: 0.2s;
     }
 
-    .admin-product-list {
-      margin-top: 12px;
+    .admin-btn:hover {
+      transform: scale(1.03);
+    }
+
+    .admin-btn.gray {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .admin-btn.red {
+      background: linear-gradient(90deg, #ff2e2e, #ff7a00);
+    }
+
+    .admin-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      margin-top: 12px;
     }
 
     .admin-item {
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-    }
-
-    .admin-box.light .admin-item {
-      background: rgba(0,0,0,0.04);
-      border-color: rgba(0,0,0,0.12);
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      flex-wrap: wrap;
     }
 
     .admin-item strong {
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .admin-item span {
       font-size: 12px;
-      font-weight: 1000;
-    }
-
-    .admin-item small {
-      font-size: 11px;
-      color: rgba(248,250,252,0.65);
-      display: block;
-      margin-top: 4px;
-      font-weight: 700;
-    }
-
-    .admin-box.light .admin-item small {
-      color: rgba(0,0,0,0.65);
+      color: var(--muted);
+      font-weight: 800;
     }
 
     .admin-actions {
@@ -780,887 +805,1188 @@
       flex-wrap: wrap;
     }
 
-    .btn-mini {
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.45);
-      color: rgba(248,250,252,0.92);
-      cursor: pointer;
-      font-weight: 1000;
-      font-size: 11px;
-      transition: 0.2s;
-      white-space: nowrap;
+    /* ---------- LOGIN ---------- */
+    .login-box {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
     }
 
-    .btn-mini:hover {
-      transform: scale(1.05);
-      color: white;
+    .login-box input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
 
-    .btn-danger {
-      border-color: rgba(255,77,109,0.35);
-      color: rgba(255,77,109,0.9);
+    .hint {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
     }
 
-    .btn-danger:hover {
-      background: rgba(255,77,109,0.12);
-    }
-
-    .btn-updown {
-      border-color: rgba(0,212,255,0.35);
-      color: rgba(0,212,255,0.9);
-    }
-
-    .btn-updown:hover {
-      background: rgba(0,212,255,0.12);
-    }
-
-    @media (max-width: 480px) {
-      .brand-title { font-size: 22px; }
-      .logo-wrap img { width: 78px; height: 78px; }
-      .promo-card { min-width: 230px; max-width: 230px; }
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- Floating language switch -->
-  <div class="top-floating">
-    <div class="lang-switch">
-      <button id="btnTR" class="active">TR</button>
-      <button id="btnEN">EN</button>
-    </div>
-  </div>
+<header id="mainHeader">
+  <div class="header-inner">
+    <div class="top-row">
+      <div style="opacity:0.8;font-weight:900;font-size:12px;letter-spacing:0.6px;color:var(--muted);">
+        QR MENU
+      </div>
 
-  <div class="container">
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-inner">
-
-        <div class="logo-wrap">
-          <img id="logoImg" src="logo.png" alt="DENEME KAFE Logo" onerror="this.style.display='none'">
-          <div class="brand-title" id="brandTitle">DENEME KAFE</div>
-          <div class="brand-sub" id="brandSubtitle">Tatlı • Tuzlu • Kahve • Mutluluk</div>
-        </div>
-
-        <div class="search-area">
-          <input id="searchInput" type="text" placeholder="Ürün ara... (örn: latte, burger)">
-        </div>
-
-        <div class="categories" id="categoryButtons"></div>
-
+      <div class="lang-area">
+        <button class="lang-btn active" id="btnTR">TR</button>
+        <button class="lang-btn" id="btnEN">EN</button>
+        <button class="mode-btn" id="modeBtn">🌙</button>
       </div>
     </div>
 
-    <!-- PROMO SLIDER (ONLY IN ALL CATEGORY) -->
-    <div id="promoArea">
-      <div class="section-title">
-        <h2 id="promoTitle">🔥 Kampanyalar</h2>
-        <span id="promoSubtitle">Bugün kaçırma</span>
-      </div>
-
-      <div class="slider" id="promoSlider"></div>
-
-      <div class="section-title">
-        <h2 id="favTitle">⭐ Günün Favorisi</h2>
-        <span id="favSubtitle">Denemeden çıkma</span>
-      </div>
-
-      <div class="grid" id="favoriteGrid"></div>
-    </div>
-
-    <!-- MENU GRID -->
-    <div class="section-title">
-      <h2 id="menuTitle">🍽 Menü</h2>
-      <span id="menuSubtitle">Taze hazırlanır</span>
-    </div>
-
-    <div class="grid" id="menuGrid"></div>
-
-    <!-- FOOTER -->
-    <footer>
-      <div id="footerText">© 2026 DENEME KAFE | QR Menü</div>
-      <div class="admin-link" id="adminLink">Admin Panel</div>
-    </footer>
-
-  </div>
-
-  <!-- WHATSAPP BUTTON -->
-  <a class="whatsapp" href="https://wa.me/905555555555" target="_blank" id="whatsappBtn">
-    WhatsApp
-  </a>
-
-  <!-- PRODUCT DETAIL MODAL -->
-  <div class="modal" id="productModal">
-    <div class="modal-box">
-      <button class="close-btn" onclick="closeProductModal()">×</button>
-      <img id="modalImg" class="modal-img" src="" alt="Product Image">
-      <div class="modal-body">
-        <h2 id="modalTitle"></h2>
-        <p id="modalDesc"></p>
-
-        <div class="modal-info">
-          <div class="info-box">
-            <span id="modalPrepLabel">Hazırlama Süresi</span>
-            <strong id="modalPrep"></strong>
-          </div>
-          <div class="info-box">
-            <span id="modalCalLabel">Kalori</span>
-            <strong id="modalCal"></strong>
-          </div>
-          <div class="info-box">
-            <span id="modalPriceLabel">Fiyat</span>
-            <strong id="modalPrice"></strong>
-          </div>
+    <div class="center-brand">
+      <div class="logo-wrap">
+        <img id="cafeLogo" src="logo.png" alt="Logo" onerror="this.style.display='none'">
+        <div class="brand-text">
+          <h1 id="cafeName">DENEME KAFE</h1>
+          <p id="cafeSub">Tatlı • Tuzlu • Kahve • Mutluluk</p>
         </div>
+      </div>
+
+      <div class="search-area">
+        <input type="text" id="searchInput" placeholder="Ürün ara...">
+      </div>
+
+      <div class="categories" id="categoryButtons"></div>
+
+      <div class="tagline" id="subtitleText">
+        Bugün kendini şımartma zamanı ✨
       </div>
     </div>
   </div>
+</header>
 
-  <!-- ADMIN MODAL -->
-  <div class="admin-modal" id="adminModal">
-    <div class="admin-box" id="adminBox">
+<div class="container">
 
-      <div class="admin-topbar">
-        <div>
-          <h2>🔒 Admin Panel</h2>
-          <p>Ürün ekle, düzenle, sil, kategori yönet. (Şifre: 1234)</p>
-        </div>
-        <button class="theme-btn" onclick="toggleAdminTheme()">🌙 / ☀️ Tema</button>
-      </div>
+  <div id="topSections"></div>
 
-      <!-- LOGIN -->
-      <div class="admin-card" id="loginCard">
-        <h3>Giriş</h3>
-        <input type="password" id="adminPass" placeholder="Şifre gir">
-        <button onclick="adminLogin()">Giriş Yap</button>
-      </div>
-
-      <!-- ADMIN CONTENT -->
-      <div id="adminContent" style="display:none;">
-
-        <div class="admin-grid">
-
-          <!-- BRAND SETTINGS -->
-          <div class="admin-card">
-            <h3>🏷️ Kafe Ayarları</h3>
-
-            <input type="text" id="cafeNameInput" placeholder="Kafe adı (örn: DENEME KAFE)">
-            <input type="text" id="cafeSloganInput" placeholder="Slogan (örn: Tatlı • Tuzlu • Kahve • Mutluluk)">
-
-            <label style="font-size:12px;color:rgba(255,255,255,0.75);font-weight:900;display:block;margin-bottom:6px;">
-              Logo Yükle (Dosyadan Seç)
-            </label>
-            <input type="file" id="logoFile" accept="image/*">
-
-            <button onclick="saveCafeSettings()">Kaydet</button>
-          </div>
-
-          <!-- CATEGORY MANAGER -->
-          <div class="admin-card">
-            <h3>📌 Kategori Yönetimi</h3>
-
-            <input type="text" id="newCategoryName" placeholder="Yeni kategori adı (örn: Kahvaltı)">
-            <button onclick="addCategory()">Kategori Ekle</button>
-
-            <div class="admin-product-list" id="categoryList"></div>
-          </div>
-
-          <!-- ADD / EDIT PRODUCT -->
-          <div class="admin-card">
-            <h3>🍔 Ürün Ekle / Düzenle</h3>
-
-            <input type="hidden" id="editingId">
-
-            <select id="productCategory"></select>
-
-            <input type="text" id="nameTR" placeholder="Ürün adı (TR)">
-            <textarea id="descTR" placeholder="Açıklama (TR)"></textarea>
-
-            <input type="text" id="nameEN" placeholder="Ürün adı (EN)">
-            <textarea id="descEN" placeholder="Description (EN)"></textarea>
-
-            <input type="text" id="price" placeholder="Fiyat (örn: 120₺)">
-            <input type="text" id="prep" placeholder="Hazırlama süresi (örn: 10 dk)">
-            <input type="text" id="cal" placeholder="Kalori (örn: 450 kcal)">
-
-            <label style="font-size:12px;color:rgba(255,255,255,0.75);font-weight:900;display:block;margin-bottom:6px;">
-              Ürün Görseli (Dosyadan Seç)
-            </label>
-            <input type="file" id="imgFile" accept="image/*">
-
-            <select id="specialType">
-              <option value="none">Normal Ürün</option>
-              <option value="promo">Kampanya</option>
-              <option value="favorite">Günün Favorisi</option>
-            </select>
-
-            <button onclick="saveProduct()">Kaydet</button>
-          </div>
-
-          <!-- PRODUCT LIST -->
-          <div class="admin-card">
-            <h3>📦 Ürünler</h3>
-            <div class="admin-product-list" id="adminProductList"></div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <button class="admin-close" onclick="closeAdminPanel()">Paneli Kapat</button>
-    </div>
+  <div class="section-title">
+    <span id="menuTitle">Menü</span>
   </div>
+
+  <div class="grid" id="menuGrid"></div>
+
+</div>
+
+<a class="whatsapp" id="whatsappBtn" href="https://wa.me/905555555555" target="_blank">
+  WhatsApp Sipariş
+</a>
+
+<footer>
+  <div>© 2026 <b id="footerCafe">DENEME KAFE</b> | QR Menü</div>
+  <div><a id="adminLink">Admin Panel</a></div>
+</footer>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="productModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="productModalTitle">Ürün Detayı</h2>
+      <button class="close-btn" onclick="closeProductModal()">✕</button>
+    </div>
+    <div class="modal-body" id="productModalBody"></div>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="adminTitle">Admin Panel</h2>
+      <button class="close-btn" onclick="closeAdminModal()">✕</button>
+    </div>
+    <div class="modal-body" id="adminBody"></div>
+  </div>
+</div>
 
 <script>
-  let currentLang = "tr";
-  let currentCategory = "all";
-  const adminPassword = "1234";
+/* ==============================
+   STORAGE HELPERS
+============================== */
+function save(key, val){
+  localStorage.setItem(key, JSON.stringify(val));
+}
+function load(key, fallback){
+  try {
+    const val = JSON.parse(localStorage.getItem(key));
+    return val ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
 
-  // Admin theme
-  let adminTheme = localStorage.getItem("adminTheme") || "dark";
+/* ==============================
+   DEFAULT DATA
+============================== */
+const defaultCategories = [
+  { id: "all", tr: "Tümü", en: "All", fixed: true },
+  { id: "campaign", tr: "Kampanya", en: "Deals", fixed: true },
+  { id: "sweet", tr: "Tatlı", en: "Desserts" },
+  { id: "salty", tr: "Tuzlu", en: "Savory" },
+  { id: "coffee", tr: "Kahve", en: "Coffee" },
+  { id: "drinks", tr: "İçecek", en: "Drinks" }
+];
 
-  // Cafe settings
-  let cafeSettings = JSON.parse(localStorage.getItem("cafeSettings")) || {
-    name: "DENEME KAFE",
-    sloganTR: "Tatlı • Tuzlu • Kahve • Mutluluk",
-    sloganEN: "Sweet • Savory • Coffee • Happiness",
-    logo: null
-  };
+const defaultProducts = [
+  {
+    id: crypto.randomUUID(),
+    category: "salty",
+    isCampaign: false,
+    isFavorite: true,
+    tr: { name: "Cheddar Burger", desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
+    en: { name: "Cheddar Burger", desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce." },
+    price: 220,
+    calories: 780,
+    prepTime: 12,
+    img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: crypto.randomUUID(),
+    category: "sweet",
+    isCampaign: true,
+    campaignPrice: 120,
+    isFavorite: false,
+    tr: { name: "San Sebastian", desc: "Kremamsı iç doku, karamelli üst katman." },
+    en: { name: "San Sebastian", desc: "Creamy texture with caramelized top." },
+    price: 150,
+    calories: 560,
+    prepTime: 8,
+    img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: crypto.randomUUID(),
+    category: "coffee",
+    isCampaign: true,
+    campaignPrice: 95,
+    isFavorite: false,
+    tr: { name: "Iced Latte", desc: "Espresso + süt + buz. Aşırı ferah." },
+    en: { name: "Iced Latte", desc: "Espresso + milk + ice. Super refreshing." },
+    price: 120,
+    calories: 190,
+    prepTime: 5,
+    img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: crypto.randomUUID(),
+    category: "sweet",
+    isCampaign: false,
+    isFavorite: false,
+    tr: { name: "Brownie", desc: "Sıcacık brownie, yanında vanilyalı dondurma." },
+    en: { name: "Brownie", desc: "Warm brownie served with vanilla ice cream." },
+    price: 140,
+    calories: 620,
+    prepTime: 7,
+    img: "https://images.unsplash.com/photo-1614707267537-2b3c4c0b5b2b?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    id: crypto.randomUUID(),
+    category: "drinks",
+    isCampaign: false,
+    isFavorite: false,
+    tr: { name: "Fresh Lemonade", desc: "Taze limon, nane ve doğal şeker." },
+    en: { name: "Fresh Lemonade", desc: "Fresh lemon, mint and natural sugar." },
+    price: 95,
+    calories: 140,
+    prepTime: 4,
+    img: "https://images.unsplash.com/photo-1528823872057-9c018a7d3d26?auto=format&fit=crop&w=1200&q=80"
+  }
+];
 
-  function applyCafeSettings() {
-    document.getElementById("brandTitle").innerText = cafeSettings.name;
-    document.getElementById("footerText").innerText = `© 2026 ${cafeSettings.name} | QR Menü`;
+const defaultSettings = {
+  cafeName: "DENEME KAFE",
+  cafeSub: "Tatlı • Tuzlu • Kahve • Mutluluk",
+  whatsapp: "905555555555",
+  lang: "tr",
+  theme: "dark",
+  adminPassword: "1234",
+  logoData: null
+};
 
-    if (cafeSettings.logo) {
-      document.getElementById("logoImg").src = cafeSettings.logo;
-      document.getElementById("logoImg").style.display = "block";
-    }
+/* ==============================
+   LOAD STATE
+============================== */
+let settings = load("qr_settings", defaultSettings);
+let categories = load("qr_categories", defaultCategories);
+let products = load("qr_products", defaultProducts);
+
+let currentLang = settings.lang || "tr";
+let currentCategory = "all";
+
+/* ==============================
+   TRANSLATIONS
+============================== */
+const translations = {
+  tr: {
+    menu: "Menü",
+    search: "Ürün ara... (örn: latte, burger)",
+    campaignTitle: "🔥 Kampanyalar",
+    favoriteTitle: "⭐ Günün Favorisi",
+    detail: "Ürün Detayı",
+    calories: "Kalori",
+    time: "Hazırlama Süresi",
+    price: "Fiyat",
+    order: "WhatsApp'tan Sipariş Ver",
+    admin: "Admin Panel",
+    login: "Admin Giriş",
+    password: "Şifre",
+    loginBtn: "Giriş Yap",
+    wrongPass: "Şifre yanlış!",
+    addProduct: "Ürün Ekle / Düzenle",
+    save: "Kaydet",
+    reset: "Formu Temizle",
+    delete: "Sil",
+    edit: "Düzenle",
+    category: "Kategori",
+    name: "Ürün Adı",
+    desc: "Açıklama",
+    img: "Ürün Görseli",
+    priceNormal: "Normal Fiyat",
+    priceCampaign: "Kampanya Fiyatı (varsa)",
+    isCampaign: "Kampanya Ürünü mü?",
+    isFavorite: "Günün Favorisi mi?",
+    adminSettings: "Kafe Ayarları",
+    cafeName: "Kafe İsmi",
+    cafeSub: "Slogan",
+    whatsappNum: "WhatsApp Numara",
+    uploadLogo: "Logo Yükle",
+    changePass: "Şifre Değiştir",
+    newPass: "Yeni Şifre",
+    changeBtn: "Şifreyi Güncelle",
+    manageCats: "Kategori Yönetimi",
+    addCat: "Yeni Kategori Ekle",
+    catNameTR: "Kategori TR",
+    catNameEN: "Kategori EN",
+    moveUp: "Yukarı",
+    moveDown: "Aşağı",
+    close: "Kapat"
+  },
+  en: {
+    menu: "Menu",
+    search: "Search item... (ex: latte, burger)",
+    campaignTitle: "🔥 Deals",
+    favoriteTitle: "⭐ Today's Favorite",
+    detail: "Product Detail",
+    calories: "Calories",
+    time: "Prep Time",
+    price: "Price",
+    order: "Order via WhatsApp",
+    admin: "Admin Panel",
+    login: "Admin Login",
+    password: "Password",
+    loginBtn: "Login",
+    wrongPass: "Wrong password!",
+    addProduct: "Add / Edit Product",
+    save: "Save",
+    reset: "Clear Form",
+    delete: "Delete",
+    edit: "Edit",
+    category: "Category",
+    name: "Product Name",
+    desc: "Description",
+    img: "Product Image",
+    priceNormal: "Normal Price",
+    priceCampaign: "Campaign Price (if any)",
+    isCampaign: "Campaign Product?",
+    isFavorite: "Today's Favorite?",
+    adminSettings: "Cafe Settings",
+    cafeName: "Cafe Name",
+    cafeSub: "Slogan",
+    whatsappNum: "WhatsApp Number",
+    uploadLogo: "Upload Logo",
+    changePass: "Change Password",
+    newPass: "New Password",
+    changeBtn: "Update Password",
+    manageCats: "Category Management",
+    addCat: "Add New Category",
+    catNameTR: "Category TR",
+    catNameEN: "Category EN",
+    moveUp: "Up",
+    moveDown: "Down",
+    close: "Close"
+  }
+};
+
+/* ==============================
+   THEME
+============================== */
+function applyTheme(){
+  if(settings.theme === "light"){
+    document.body.classList.add("light");
+    document.getElementById("modeBtn").innerText = "☀️";
+  } else {
+    document.body.classList.remove("light");
+    document.getElementById("modeBtn").innerText = "🌙";
+  }
+}
+
+document.getElementById("modeBtn").addEventListener("click", () => {
+  settings.theme = settings.theme === "dark" ? "light" : "dark";
+  save("qr_settings", settings);
+  applyTheme();
+});
+
+/* ==============================
+   LANGUAGE
+============================== */
+function setLang(lang){
+  currentLang = lang;
+  settings.lang = lang;
+  save("qr_settings", settings);
+
+  document.getElementById("btnTR").classList.toggle("active", lang === "tr");
+  document.getElementById("btnEN").classList.toggle("active", lang === "en");
+
+  document.getElementById("menuTitle").innerText = translations[lang].menu;
+  document.getElementById("searchInput").placeholder = translations[lang].search;
+  document.getElementById("productModalTitle").innerText = translations[lang].detail;
+  document.getElementById("adminTitle").innerText = translations[lang].admin;
+
+  renderCategories();
+  renderTopSections();
+  renderProducts();
+}
+
+document.getElementById("btnTR").addEventListener("click", () => setLang("tr"));
+document.getElementById("btnEN").addEventListener("click", () => setLang("en"));
+
+/* ==============================
+   SETTINGS APPLY
+============================== */
+function applySettings(){
+  document.getElementById("cafeName").innerText = settings.cafeName;
+  document.getElementById("footerCafe").innerText = settings.cafeName;
+  document.getElementById("cafeSub").innerText = settings.cafeSub;
+
+  document.getElementById("whatsappBtn").href = "https://wa.me/" + settings.whatsapp;
+
+  if(settings.logoData){
+    const logo = document.getElementById("cafeLogo");
+    logo.src = settings.logoData;
+    logo.style.display = "block";
+  }
+}
+
+/* ==============================
+   HEADER AUTO HIDE
+============================== */
+let lastScroll = 0;
+window.addEventListener("scroll", () => {
+  const current = window.scrollY;
+  const header = document.getElementById("mainHeader");
+
+  if(current > lastScroll && current > 150){
+    header.classList.add("hide");
+  } else {
+    header.classList.remove("hide");
+  }
+  lastScroll = current;
+});
+
+/* ==============================
+   CATEGORIES
+============================== */
+function renderCategories(){
+  const div = document.getElementById("categoryButtons");
+  div.innerHTML = "";
+
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "cat-btn";
+    btn.innerText = currentLang === "tr" ? cat.tr : cat.en;
+
+    if(currentCategory === cat.id) btn.classList.add("active");
+
+    btn.onclick = () => {
+      currentCategory = cat.id;
+      renderCategories();
+      renderTopSections();
+      renderProducts();
+    };
+
+    div.appendChild(btn);
+  });
+}
+
+/* ==============================
+   TOP SECTIONS (CAMPAIGN + FAVORITE)
+============================== */
+let sliderIndex = 0;
+let sliderTimer = null;
+
+function renderTopSections(){
+  const wrap = document.getElementById("topSections");
+  wrap.innerHTML = "";
+
+  // sadece Tümü seçiliyken üstte gözüksün
+  if(currentCategory !== "all"){
+    return;
   }
 
-  // Categories
-  let categories = JSON.parse(localStorage.getItem("categories")) || [
-    { id: "all", tr: "Tümü", en: "All" },
-    { id: "salty", tr: "Tuzlu", en: "Savory" },
-    { id: "sweet", tr: "Tatlı", en: "Desserts" },
-    { id: "drinks", tr: "İçecek", en: "Drinks" }
-  ];
+  const campaignItems = products.filter(p => p.isCampaign);
+  const favoriteItem = products.find(p => p.isFavorite);
 
-  // Products
-  let products = JSON.parse(localStorage.getItem("products")) || [
-    {
-      id: crypto.randomUUID(),
-      category: "salty",
-      special: "none",
-      tr: { name: "Cheddar Burger", desc: "Dana eti, cheddar peyniri, karamelize soğan ve özel sos." },
-      en: { name: "Cheddar Burger", desc: "Beef patty, cheddar cheese, caramelized onion and signature sauce." },
-      price: "220₺",
-      prep: "12 dk",
-      cal: "650 kcal",
-      img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=60"
-    },
-    {
-      id: crypto.randomUUID(),
-      category: "sweet",
-      special: "promo",
-      tr: { name: "San Sebastian Cheesecake", desc: "Karamelize üst katman, kremsi iç doku." },
-      en: { name: "San Sebastian Cheesecake", desc: "Caramelized top layer with creamy center." },
-      price: "150₺",
-      oldPrice: "190₺",
-      prep: "5 dk",
-      cal: "520 kcal",
-      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=900&q=60"
-    },
-    {
-      id: crypto.randomUUID(),
-      category: "drinks",
-      special: "promo",
-      tr: { name: "Iced Latte", desc: "Espresso, süt ve buz ile ferahlatıcı lezzet." },
-      en: { name: "Iced Latte", desc: "Espresso, milk and ice - refreshing taste." },
-      price: "120₺",
-      oldPrice: "150₺",
-      prep: "3 dk",
-      cal: "210 kcal",
-      img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=900&q=60"
-    },
-    {
-      id: crypto.randomUUID(),
-      category: "drinks",
-      special: "favorite",
-      tr: { name: "Matcha Latte", desc: "Japon matcha çayı, süt ve hafif tatlı aroma." },
-      en: { name: "Matcha Latte", desc: "Japanese matcha tea, milk and a soft sweet aroma." },
-      price: "135₺",
-      prep: "4 dk",
-      cal: "240 kcal",
-      img: "https://images.unsplash.com/photo-1542444459-db63c2f8a7c3?auto=format&fit=crop&w=900&q=60"
-    }
-  ];
+  // Campaign Slider
+  if(campaignItems.length > 0){
+    const secTitle = document.createElement("div");
+    secTitle.className = "section-title";
+    secTitle.innerHTML = `<span>${translations[currentLang].campaignTitle}</span>`;
+    wrap.appendChild(secTitle);
 
-  const translations = {
-    tr: {
-      search: "Ürün ara... (örn: latte, burger)",
-      promoTitle: "🔥 Kampanyalar",
-      promoSub: "Bugün kaçırma",
-      favTitle: "⭐ Günün Favorisi",
-      favSub: "Denemeden çıkma",
-      menuTitle: "🍽 Menü",
-      menuSub: "Taze hazırlanır",
-      prepLabel: "Hazırlama Süresi",
-      calLabel: "Kalori",
-      priceLabel: "Fiyat",
-      whatsapp: "WhatsApp",
-    },
-    en: {
-      search: "Search item... (ex: latte, burger)",
-      promoTitle: "🔥 Promotions",
-      promoSub: "Don't miss today",
-      favTitle: "⭐ Today's Favorite",
-      favSub: "Must try",
-      menuTitle: "🍽 Menu",
-      menuSub: "Freshly prepared",
-      prepLabel: "Preparation",
-      calLabel: "Calories",
-      priceLabel: "Price",
-      whatsapp: "WhatsApp",
-    }
-  };
+    const slider = document.createElement("div");
+    slider.className = "slider";
 
-  function saveToLocal() {
-    localStorage.setItem("products", JSON.stringify(products));
-    localStorage.setItem("categories", JSON.stringify(categories));
-  }
+    const track = document.createElement("div");
+    track.className = "slider-track";
 
-  function renderCategories() {
-    const catDiv = document.getElementById("categoryButtons");
-    catDiv.innerHTML = "";
+    campaignItems.forEach(item => {
+      const slide = document.createElement("div");
+      slide.className = "slide";
 
-    categories.forEach(cat => {
-      const btn = document.createElement("button");
-      btn.innerText = currentLang === "tr" ? cat.tr : cat.en;
-      btn.classList.toggle("active", currentCategory === cat.id);
+      const name = item[currentLang].name;
+      const desc = item[currentLang].desc;
 
-      btn.onclick = () => {
-        currentCategory = cat.id;
-        renderAll();
+      slide.innerHTML = `
+        <img src="${item.img}">
+        <div class="slide-text">
+          <div class="badge">KAMPANYA</div>
+          <h3>${name}</h3>
+          <p>${desc}</p>
+          <div class="price-row">
+            <div class="old-price">${item.price}₺</div>
+            <div class="new-price">${item.campaignPrice || item.price}₺</div>
+          </div>
+        </div>
+      `;
+
+      slide.onclick = () => openProductModal(item.id);
+
+      track.appendChild(slide);
+    });
+
+    slider.appendChild(track);
+
+    // Dots
+    const dots = document.createElement("div");
+    dots.className = "slider-dots";
+
+    campaignItems.forEach((_, i) => {
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      if(i === sliderIndex) dot.classList.add("active");
+
+      dot.onclick = () => {
+        sliderIndex = i;
+        updateSlider();
       };
 
-      catDiv.appendChild(btn);
+      dots.appendChild(dot);
     });
-  }
 
-  function renderPromo() {
-    const promoArea = document.getElementById("promoArea");
-    const promoSlider = document.getElementById("promoSlider");
-    const favoriteGrid = document.getElementById("favoriteGrid");
+    slider.appendChild(dots);
+    wrap.appendChild(slider);
 
-    promoSlider.innerHTML = "";
-    favoriteGrid.innerHTML = "";
-
-    if (currentCategory !== "all") {
-      promoArea.style.display = "none";
-      return;
-    } else {
-      promoArea.style.display = "block";
+    function updateSlider(){
+      track.style.transform = `translateX(-${sliderIndex * 100}%)`;
+      dots.querySelectorAll(".dot").forEach((d, i) => {
+        d.classList.toggle("active", i === sliderIndex);
+      });
     }
 
-    const promos = products.filter(p => p.special === "promo");
-    const favorites = products.filter(p => p.special === "favorite");
+    updateSlider();
 
-    promos.forEach(p => {
-      const lang = p[currentLang];
+    clearInterval(sliderTimer);
+    sliderTimer = setInterval(() => {
+      sliderIndex = (sliderIndex + 1) % campaignItems.length;
+      updateSlider();
+    }, 4000);
+  }
 
-      const card = document.createElement("div");
-      card.className = "promo-card";
+  // Favorite
+  if(favoriteItem){
+    const secTitle = document.createElement("div");
+    secTitle.className = "section-title";
+    secTitle.innerHTML = `<span>${translations[currentLang].favoriteTitle}</span>`;
+    wrap.appendChild(secTitle);
 
-      card.innerHTML = `
-        <div class="badge">${currentLang === "tr" ? "KAMPANYA" : "PROMO"}</div>
-        <img src="${p.img}">
-        <div class="promo-body">
-          <h3>${lang.name}</h3>
-          <p>${lang.desc}</p>
-          <div class="promo-price">
-            <div class="old-price">${p.oldPrice || ""}</div>
-            <div class="new-price">${p.price}</div>
-          </div>
+    const fav = document.createElement("div");
+    fav.className = "favorite-card";
+
+    fav.innerHTML = `
+      <img src="${favoriteItem.img}">
+      <div class="favorite-info">
+        <div class="badge">ÖNERİ</div>
+        <h3>${favoriteItem[currentLang].name}</h3>
+        <p>${favoriteItem[currentLang].desc}</p>
+        <div class="price-row">
+          <div class="new-price">${favoriteItem.price}₺</div>
         </div>
-      `;
+      </div>
+    `;
 
-      card.onclick = () => openProductModal(p.id);
-      promoSlider.appendChild(card);
-    });
-
-    favorites.forEach(p => {
-      const lang = p[currentLang];
-
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <img src="${p.img}">
-        <div class="card-body">
-          <div class="card-top">
-            <div>
-              <h3>${lang.name}</h3>
-              <p>${lang.desc}</p>
-            </div>
-            <div class="price">${p.price}</div>
-          </div>
-          <span class="mini-tag">⭐ ${currentLang === "tr" ? "Favori" : "Favorite"}</span>
-        </div>
-      `;
-      card.onclick = () => openProductModal(p.id);
-      favoriteGrid.appendChild(card);
-    });
+    fav.onclick = () => openProductModal(favoriteItem.id);
+    wrap.appendChild(fav);
   }
+}
 
-  function renderMenu() {
-    const grid = document.getElementById("menuGrid");
-    grid.innerHTML = "";
+/* ==============================
+   PRODUCTS RENDER
+============================== */
+function renderProducts(){
+  const grid = document.getElementById("menuGrid");
+  grid.innerHTML = "";
 
-    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+  const searchVal = document.getElementById("searchInput").value.toLowerCase();
 
-    const filtered = products.filter(p => {
-      const lang = p[currentLang];
-      const matchSearch =
-        lang.name.toLowerCase().includes(searchValue) ||
-        lang.desc.toLowerCase().includes(searchValue);
+  let filtered = products.filter(p => {
+    const name = p[currentLang].name.toLowerCase();
+    const desc = p[currentLang].desc.toLowerCase();
+    const matchesSearch = name.includes(searchVal) || desc.includes(searchVal);
 
-      if (currentCategory === "all") return matchSearch;
-
-      return p.category === currentCategory && p.special === "none" && matchSearch;
-    });
-
-    filtered.forEach(p => {
-      const lang = p[currentLang];
-
-      const card = document.createElement("div");
-      card.className = "card";
-
-      card.innerHTML = `
-        <img src="${p.img}">
-        <div class="card-body">
-          <div class="card-top">
-            <div>
-              <h3>${lang.name}</h3>
-              <p>${lang.desc}</p>
-            </div>
-            <div class="price">${p.price}</div>
-          </div>
-          <span class="mini-tag">🍽 ${currentLang === "tr" ? "Menü" : "Menu"}</span>
-        </div>
-      `;
-
-      card.onclick = () => openProductModal(p.id);
-      grid.appendChild(card);
-    });
-  }
-
-  function openProductModal(id) {
-    const p = products.find(x => x.id === id);
-    if (!p) return;
-
-    const lang = p[currentLang];
-
-    document.getElementById("modalImg").src = p.img;
-    document.getElementById("modalTitle").innerText = lang.name;
-    document.getElementById("modalDesc").innerText = lang.desc;
-
-    document.getElementById("modalPrepLabel").innerText = translations[currentLang].prepLabel;
-    document.getElementById("modalCalLabel").innerText = translations[currentLang].calLabel;
-    document.getElementById("modalPriceLabel").innerText = translations[currentLang].priceLabel;
-
-    document.getElementById("modalPrep").innerText = p.prep || "-";
-    document.getElementById("modalCal").innerText = p.cal || "-";
-    document.getElementById("modalPrice").innerText = p.price || "-";
-
-    document.getElementById("productModal").classList.add("show");
-  }
-
-  function closeProductModal() {
-    document.getElementById("productModal").classList.remove("show");
-  }
-
-  function setLanguage(lang) {
-    currentLang = lang;
-
-    document.getElementById("btnTR").classList.toggle("active", lang === "tr");
-    document.getElementById("btnEN").classList.toggle("active", lang === "en");
-
-    document.getElementById("searchInput").placeholder = translations[lang].search;
-
-    document.getElementById("promoTitle").innerText = translations[lang].promoTitle;
-    document.getElementById("promoSubtitle").innerText = translations[lang].promoSub;
-
-    document.getElementById("favTitle").innerText = translations[lang].favTitle;
-    document.getElementById("favSubtitle").innerText = translations[lang].favSub;
-
-    document.getElementById("menuTitle").innerText = translations[lang].menuTitle;
-    document.getElementById("menuSubtitle").innerText = translations[lang].menuSub;
-
-    document.getElementById("whatsappBtn").innerText = translations[lang].whatsapp;
-
-    if (lang === "tr") {
-      document.getElementById("brandSubtitle").innerText = cafeSettings.sloganTR;
-      document.getElementById("footerText").innerText = `© 2026 ${cafeSettings.name} | QR Menü`;
-    } else {
-      document.getElementById("brandSubtitle").innerText = cafeSettings.sloganEN;
-      document.getElementById("footerText").innerText = `© 2026 ${cafeSettings.name} | QR Menu`;
+    if(currentCategory === "all"){
+      return matchesSearch;
     }
 
-    renderAll();
-  }
+    if(currentCategory === "campaign"){
+      return p.isCampaign && matchesSearch;
+    }
 
-  function renderAll() {
-    renderCategories();
-    renderPromo();
-    renderMenu();
-  }
+    // kampanya ürünleri sadece kampanya ve tümünde gözüksün
+    if(p.isCampaign) return false;
 
-  // ADMIN PANEL OPEN/CLOSE
-  document.getElementById("adminLink").addEventListener("click", () => {
-    document.getElementById("adminModal").classList.add("show");
+    return p.category === currentCategory && matchesSearch;
   });
 
-  function closeAdminPanel() {
-    document.getElementById("adminModal").classList.remove("show");
-  }
+  filtered.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "product-card";
 
-  function adminLogin() {
-    const pass = document.getElementById("adminPass").value;
-    if (pass === adminPassword) {
-      document.getElementById("loginCard").style.display = "none";
-      document.getElementById("adminContent").style.display = "block";
-      renderAdmin();
-    } else {
-      alert("Şifre yanlış!");
+    const name = item[currentLang].name;
+    const desc = item[currentLang].desc;
+
+    let priceHTML = `<div class="price">${item.price}₺</div>`;
+    if(item.isCampaign){
+      priceHTML = `
+        <div class="price">
+          <span style="text-decoration:line-through;opacity:0.6;font-weight:800;">${item.price}₺</span>
+          <span style="margin-left:8px;">${item.campaignPrice || item.price}₺</span>
+        </div>
+      `;
     }
+
+    card.innerHTML = `
+      <img class="product-img" src="${item.img}" alt="">
+      <div class="product-body">
+        <div class="product-top">
+          <div>
+            <h3>${name}</h3>
+            <p>${desc}</p>
+          </div>
+          ${priceHTML}
+        </div>
+
+        <div class="mini-row">
+          <span class="mini-tag">${item.prepTime} dk</span>
+          <span class="mini-tag hot">${item.calories} kcal</span>
+        </div>
+      </div>
+    `;
+
+    card.onclick = () => openProductModal(item.id);
+    grid.appendChild(card);
+  });
+}
+
+document.getElementById("searchInput").addEventListener("input", () => {
+  renderTopSections();
+  renderProducts();
+});
+
+/* ==============================
+   PRODUCT MODAL
+============================== */
+function openProductModal(id){
+  const item = products.find(p => p.id === id);
+  if(!item) return;
+
+  const overlay = document.getElementById("productModalOverlay");
+  overlay.style.display = "flex";
+
+  const body = document.getElementById("productModalBody");
+
+  const name = item[currentLang].name;
+  const desc = item[currentLang].desc;
+
+  let price = `${item.price}₺`;
+  if(item.isCampaign){
+    price = `${item.campaignPrice || item.price}₺ (Kampanya)`;
   }
 
-  function renderAdmin() {
-    renderAdminCategories();
-    renderAdminProducts();
-    fillCategoryDropdown();
+  const msg = encodeURIComponent(`Merhaba! ${settings.cafeName} menüsünden "${name}" sipariş vermek istiyorum 😊`);
+  const waLink = `https://wa.me/${settings.whatsapp}?text=${msg}`;
 
-    document.getElementById("cafeNameInput").value = cafeSettings.name;
-    document.getElementById("cafeSloganInput").value =
-      currentLang === "tr" ? cafeSettings.sloganTR : cafeSettings.sloganEN;
+  body.innerHTML = `
+    <div class="detail-wrap">
+      <div>
+        <img class="detail-img" src="${item.img}">
+      </div>
+      <div class="detail-info">
+        <h3>${name}</h3>
+        <p>${desc}</p>
 
-    applyAdminTheme();
+        <div class="detail-grid">
+          <div class="detail-box">
+            <span>${translations[currentLang].price}</span>
+            <strong>${price}</strong>
+          </div>
+          <div class="detail-box">
+            <span>${translations[currentLang].time}</span>
+            <strong>${item.prepTime} dk</strong>
+          </div>
+          <div class="detail-box">
+            <span>${translations[currentLang].calories}</span>
+            <strong>${item.calories} kcal</strong>
+          </div>
+          <div class="detail-box">
+            <span>${translations[currentLang].category}</span>
+            <strong>${getCategoryName(item.category)}</strong>
+          </div>
+        </div>
+
+        <button class="order-btn" onclick="window.open('${waLink}','_blank')">
+          ${translations[currentLang].order}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function closeProductModal(){
+  document.getElementById("productModalOverlay").style.display = "none";
+}
+
+/* ==============================
+   CATEGORY NAME
+============================== */
+function getCategoryName(catId){
+  const cat = categories.find(c => c.id === catId);
+  if(!cat) return catId;
+  return currentLang === "tr" ? cat.tr : cat.en;
+}
+
+/* ==============================
+   ADMIN PANEL
+============================== */
+document.getElementById("adminLink").addEventListener("click", () => {
+  openAdminModal();
+});
+
+function openAdminModal(){
+  document.getElementById("adminModalOverlay").style.display = "flex";
+  renderAdminLogin();
+}
+
+function closeAdminModal(){
+  document.getElementById("adminModalOverlay").style.display = "none";
+}
+
+function renderAdminLogin(){
+  const adminBody = document.getElementById("adminBody");
+
+  adminBody.innerHTML = `
+    <div class="login-box">
+      <h3 style="font-size:16px;font-weight:900;margin-bottom:12px;">${translations[currentLang].login}</h3>
+      <input id="adminPassInput" type="password" placeholder="${translations[currentLang].password}">
+      <button class="admin-btn" style="width:100%;" onclick="adminLogin()">${translations[currentLang].loginBtn}</button>
+      <div class="hint">Varsayılan şifre: 1234 (Admin panelden değiştirebilirsin)</div>
+    </div>
+  `;
+
+  document.getElementById("adminPassInput").value = "";
+}
+
+function adminLogin(){
+  const val = document.getElementById("adminPassInput").value;
+
+  if(val !== settings.adminPassword){
+    alert(translations[currentLang].wrongPass);
+    return;
   }
 
-  function fillCategoryDropdown() {
-    const sel = document.getElementById("productCategory");
-    sel.innerHTML = "";
+  renderAdminPanel();
+}
 
-    categories.forEach(cat => {
-      if (cat.id === "all") return;
+let editingId = null;
+let editingImageData = null;
 
+function renderAdminPanel(){
+  const adminBody = document.getElementById("adminBody");
+
+  adminBody.innerHTML = `
+    <div class="admin-section">
+      <h3>${translations[currentLang].adminSettings}</h3>
+
+      <div class="admin-row">
+        <input id="setCafeName" placeholder="${translations[currentLang].cafeName}" value="${settings.cafeName}">
+        <input id="setCafeSub" placeholder="${translations[currentLang].cafeSub}" value="${settings.cafeSub}">
+      </div>
+
+      <div class="admin-row">
+        <input id="setWhatsapp" placeholder="${translations[currentLang].whatsappNum}" value="${settings.whatsapp}">
+      </div>
+
+      <div class="admin-row">
+        <label style="font-weight:900;color:var(--muted);font-size:12px;">
+          ${translations[currentLang].uploadLogo}:
+          <input type="file" id="logoUpload" accept="image/*" style="display:block;margin-top:8px;">
+        </label>
+      </div>
+
+      <div class="admin-row">
+        <button class="admin-btn" onclick="saveCafeSettings()">${translations[currentLang].save}</button>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h3>${translations[currentLang].manageCats}</h3>
+
+      <div class="admin-row">
+        <input id="newCatTR" placeholder="${translations[currentLang].catNameTR}">
+        <input id="newCatEN" placeholder="${translations[currentLang].catNameEN}">
+        <button class="admin-btn" onclick="addCategory()">${translations[currentLang].addCat}</button>
+      </div>
+
+      <div class="admin-list" id="catList"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>${translations[currentLang].addProduct}</h3>
+
+      <div class="admin-row">
+        <select id="prodCategory"></select>
+      </div>
+
+      <div class="admin-row">
+        <input id="prodNameTR" placeholder="Ürün Adı (TR)">
+        <input id="prodNameEN" placeholder="Product Name (EN)">
+      </div>
+
+      <div class="admin-row">
+        <textarea id="prodDescTR" placeholder="Açıklama (TR)"></textarea>
+        <textarea id="prodDescEN" placeholder="Description (EN)"></textarea>
+      </div>
+
+      <div class="admin-row">
+        <input id="prodPrice" type="number" placeholder="${translations[currentLang].priceNormal}">
+        <input id="prodCampaignPrice" type="number" placeholder="${translations[currentLang].priceCampaign}">
+      </div>
+
+      <div class="admin-row">
+        <input id="prodCalories" type="number" placeholder="Kalori (kcal)">
+        <input id="prodPrep" type="number" placeholder="Hazırlama Süresi (dk)">
+      </div>
+
+      <div class="admin-row">
+        <label style="font-weight:900;color:var(--muted);font-size:12px;">
+          ${translations[currentLang].img}:
+          <input type="file" id="prodImgUpload" accept="image/*" style="display:block;margin-top:8px;">
+        </label>
+      </div>
+
+      <div class="admin-row">
+        <label style="font-weight:900;color:var(--muted);font-size:12px;">
+          <input type="checkbox" id="prodIsCampaign"> ${translations[currentLang].isCampaign}
+        </label>
+
+        <label style="font-weight:900;color:var(--muted);font-size:12px;">
+          <input type="checkbox" id="prodIsFavorite"> ${translations[currentLang].isFavorite}
+        </label>
+      </div>
+
+      <div class="admin-row">
+        <button class="admin-btn" onclick="saveProduct()">${translations[currentLang].save}</button>
+        <button class="admin-btn gray" onclick="resetProductForm()">${translations[currentLang].reset}</button>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h3>Ürünler</h3>
+      <div class="admin-list" id="productList"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>${translations[currentLang].changePass}</h3>
+      <div class="admin-row">
+        <input id="newPassword" type="password" placeholder="${translations[currentLang].newPass}">
+        <button class="admin-btn" onclick="changePassword()">${translations[currentLang].changeBtn}</button>
+      </div>
+    </div>
+  `;
+
+  fillCategorySelect();
+  renderProductList();
+  renderCategoryList();
+
+  document.getElementById("prodImgUpload").addEventListener("change", handleProductImageUpload);
+  document.getElementById("logoUpload").addEventListener("change", handleLogoUpload);
+}
+
+function handleLogoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(){
+    settings.logoData = reader.result;
+    save("qr_settings", settings);
+    applySettings();
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveCafeSettings(){
+  const name = document.getElementById("setCafeName").value.trim();
+  const sub = document.getElementById("setCafeSub").value.trim();
+  const wa = document.getElementById("setWhatsapp").value.trim();
+
+  if(name) settings.cafeName = name;
+  if(sub) settings.cafeSub = sub;
+  if(wa) settings.whatsapp = wa;
+
+  save("qr_settings", settings);
+  applySettings();
+  alert("Kaydedildi ✅");
+}
+
+function fillCategorySelect(){
+  const select = document.getElementById("prodCategory");
+  select.innerHTML = "";
+
+  categories
+    .filter(c => c.id !== "all" && c.id !== "campaign")
+    .forEach(cat => {
       const opt = document.createElement("option");
       opt.value = cat.id;
-      opt.innerText = cat.tr + " / " + cat.en;
-      sel.appendChild(opt);
+      opt.innerText = `${cat.tr} / ${cat.en}`;
+      select.appendChild(opt);
     });
+}
+
+function handleProductImageUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(){
+    editingImageData = reader.result;
+    alert("Görsel yüklendi ✅");
+  };
+  reader.readAsDataURL(file);
+}
+
+function resetProductForm(){
+  editingId = null;
+  editingImageData = null;
+
+  document.getElementById("prodNameTR").value = "";
+  document.getElementById("prodNameEN").value = "";
+  document.getElementById("prodDescTR").value = "";
+  document.getElementById("prodDescEN").value = "";
+  document.getElementById("prodPrice").value = "";
+  document.getElementById("prodCampaignPrice").value = "";
+  document.getElementById("prodCalories").value = "";
+  document.getElementById("prodPrep").value = "";
+  document.getElementById("prodIsCampaign").checked = false;
+  document.getElementById("prodIsFavorite").checked = false;
+  document.getElementById("prodImgUpload").value = "";
+}
+
+function saveProduct(){
+  const cat = document.getElementById("prodCategory").value;
+
+  const nameTR = document.getElementById("prodNameTR").value.trim();
+  const nameEN = document.getElementById("prodNameEN").value.trim();
+
+  const descTR = document.getElementById("prodDescTR").value.trim();
+  const descEN = document.getElementById("prodDescEN").value.trim();
+
+  const price = Number(document.getElementById("prodPrice").value);
+  const campPrice = Number(document.getElementById("prodCampaignPrice").value);
+
+  const calories = Number(document.getElementById("prodCalories").value);
+  const prep = Number(document.getElementById("prodPrep").value);
+
+  const isCampaign = document.getElementById("prodIsCampaign").checked;
+  const isFavorite = document.getElementById("prodIsFavorite").checked;
+
+  if(!nameTR || !descTR || !price || !calories || !prep){
+    alert("Lütfen TR adı, TR açıklama, fiyat, kalori ve süre doldur.");
+    return;
   }
 
-  function renderAdminCategories() {
-    const list = document.getElementById("categoryList");
-    list.innerHTML = "";
-
-    categories.forEach((cat, index) => {
-      if (cat.id === "all") return;
-
-      const div = document.createElement("div");
-      div.className = "admin-item";
-
-      div.innerHTML = `
-        <div>
-          <strong>${cat.tr} / ${cat.en}</strong>
-          <small>ID: ${cat.id}</small>
-        </div>
-        <div class="admin-actions">
-          <button class="btn-mini btn-updown" onclick="moveCategoryUp('${cat.id}')">⬆️</button>
-          <button class="btn-mini btn-updown" onclick="moveCategoryDown('${cat.id}')">⬇️</button>
-          <button class="btn-mini btn-danger" onclick="deleteCategory('${cat.id}')">Sil</button>
-        </div>
-      `;
-
-      list.appendChild(div);
-    });
+  if(isFavorite){
+    products.forEach(p => p.isFavorite = false);
   }
 
-  function moveCategoryUp(id) {
-    const index = categories.findIndex(c => c.id === id);
-    if (index <= 1) return;
+  const data = {
+    id: editingId || crypto.randomUUID(),
+    category: cat,
+    isCampaign: isCampaign,
+    campaignPrice: isCampaign ? (campPrice || price) : null,
+    isFavorite: isFavorite,
+    tr: { name: nameTR, desc: descTR },
+    en: { name: nameEN || nameTR, desc: descEN || descTR },
+    price: price,
+    calories: calories,
+    prepTime: prep,
+    img: editingImageData || (editingId ? products.find(p => p.id === editingId)?.img : null)
+  };
 
-    const temp = categories[index];
-    categories[index] = categories[index - 1];
-    categories[index - 1] = temp;
-
-    saveToLocal();
-    renderAll();
-    renderAdminCategories();
+  if(!data.img){
+    alert("Lütfen ürün görseli yükle.");
+    return;
   }
 
-  function moveCategoryDown(id) {
-    const index = categories.findIndex(c => c.id === id);
-    if (index === -1 || index === categories.length - 1) return;
-
-    const temp = categories[index];
-    categories[index] = categories[index + 1];
-    categories[index + 1] = temp;
-
-    saveToLocal();
-    renderAll();
-    renderAdminCategories();
+  if(editingId){
+    products = products.map(p => p.id === editingId ? data : p);
+  } else {
+    products.push(data);
   }
 
-  function addCategory() {
-    const name = document.getElementById("newCategoryName").value.trim();
-    if (!name) return alert("Kategori adı boş olamaz.");
+  save("qr_products", products);
 
-    const id = name.toLowerCase()
-      .replaceAll(" ", "-")
-      .replaceAll("ı","i").replaceAll("ş","s").replaceAll("ç","c")
-      .replaceAll("ğ","g").replaceAll("ö","o").replaceAll("ü","u");
+  editingId = null;
+  editingImageData = null;
 
-    if (categories.some(c => c.id === id)) {
-      return alert("Bu kategori zaten var.");
-    }
+  resetProductForm();
+  renderProductList();
 
-    categories.push({ id, tr: name, en: name });
-    document.getElementById("newCategoryName").value = "";
+  renderTopSections();
+  renderProducts();
 
-    saveToLocal();
-    renderAll();
-    renderAdmin();
-  }
+  alert("Ürün kaydedildi ✅");
+}
 
-  function deleteCategory(id) {
-    if (!confirm("Bu kategoriyi silmek istiyor musun?")) return;
+function renderProductList(){
+  const list = document.getElementById("productList");
+  list.innerHTML = "";
 
-    products = products.filter(p => p.category !== id);
-    categories = categories.filter(c => c.id !== id);
+  products.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "admin-item";
 
-    saveToLocal();
-    renderAll();
-    renderAdmin();
-  }
+    div.innerHTML = `
+      <div>
+        <strong>${p.tr.name}</strong><br>
+        <span>${getCategoryName(p.category)} | ${p.price}₺ ${p.isCampaign ? "(Kampanya)" : ""} ${p.isFavorite ? "⭐" : ""}</span>
+      </div>
 
-  function renderAdminProducts() {
-    const list = document.getElementById("adminProductList");
-    list.innerHTML = "";
+      <div class="admin-actions">
+        <button class="admin-btn gray" onclick="editProduct('${p.id}')">${translations[currentLang].edit}</button>
+        <button class="admin-btn red" onclick="deleteProduct('${p.id}')">${translations[currentLang].delete}</button>
+      </div>
+    `;
 
-    products.forEach(p => {
-      const div = document.createElement("div");
-      div.className = "admin-item";
-
-      div.innerHTML = `
-        <div>
-          <strong>${p.tr.name}</strong>
-          <small>${p.category} | ${p.special}</small>
-        </div>
-        <div class="admin-actions">
-          <button class="btn-mini" onclick="editProduct('${p.id}')">Düzenle</button>
-          <button class="btn-mini btn-danger" onclick="deleteProduct('${p.id}')">Sil</button>
-        </div>
-      `;
-
-      list.appendChild(div);
-    });
-  }
-
-  function deleteProduct(id) {
-    if (!confirm("Ürünü silmek istiyor musun?")) return;
-
-    products = products.filter(p => p.id !== id);
-    saveToLocal();
-    renderAll();
-    renderAdminProducts();
-  }
-
-  function editProduct(id) {
-    const p = products.find(x => x.id === id);
-    if (!p) return;
-
-    document.getElementById("editingId").value = p.id;
-    document.getElementById("productCategory").value = p.category;
-    document.getElementById("nameTR").value = p.tr.name;
-    document.getElementById("descTR").value = p.tr.desc;
-    document.getElementById("nameEN").value = p.en.name;
-    document.getElementById("descEN").value = p.en.desc;
-    document.getElementById("price").value = p.price;
-    document.getElementById("prep").value = p.prep;
-    document.getElementById("cal").value = p.cal;
-    document.getElementById("specialType").value = p.special;
-
-    alert("Ürün düzenleme alanı dolduruldu. Değiştirip Kaydet'e bas.");
-  }
-
-  function saveProduct() {
-    const editingId = document.getElementById("editingId").value;
-
-    const category = document.getElementById("productCategory").value;
-    const special = document.getElementById("specialType").value;
-
-    const nameTR = document.getElementById("nameTR").value.trim();
-    const descTR = document.getElementById("descTR").value.trim();
-    const nameEN = document.getElementById("nameEN").value.trim();
-    const descEN = document.getElementById("descEN").value.trim();
-
-    const price = document.getElementById("price").value.trim();
-    const prep = document.getElementById("prep").value.trim();
-    const cal = document.getElementById("cal").value.trim();
-
-    const imgFile = document.getElementById("imgFile").files[0];
-
-    if (!nameTR || !descTR || !price) {
-      return alert("Ürün adı, açıklama ve fiyat zorunlu.");
-    }
-
-    function finalizeSave(imgData) {
-      if (editingId) {
-        const idx = products.findIndex(x => x.id === editingId);
-        if (idx !== -1) {
-          products[idx] = {
-            ...products[idx],
-            category,
-            special,
-            tr: { name: nameTR, desc: descTR },
-            en: { name: nameEN || nameTR, desc: descEN || descTR },
-            price,
-            prep,
-            cal,
-            img: imgData || products[idx].img
-          };
-
-          if (special === "promo" && !products[idx].oldPrice) {
-            products[idx].oldPrice = prompt("Kampanya eski fiyat gir (örn: 180₺)", "180₺") || "";
-          }
-        }
-      } else {
-        const newItem = {
-          id: crypto.randomUUID(),
-          category,
-          special,
-          tr: { name: nameTR, desc: descTR },
-          en: { name: nameEN || nameTR, desc: descEN || descTR },
-          price,
-          prep,
-          cal,
-          img: imgData || "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=60"
-        };
-
-        if (special === "promo") {
-          newItem.oldPrice = prompt("Kampanya eski fiyat gir (örn: 180₺)", "180₺") || "";
-        }
-
-        products.push(newItem);
-      }
-
-      document.getElementById("editingId").value = "";
-      document.getElementById("nameTR").value = "";
-      document.getElementById("descTR").value = "";
-      document.getElementById("nameEN").value = "";
-      document.getElementById("descEN").value = "";
-      document.getElementById("price").value = "";
-      document.getElementById("prep").value = "";
-      document.getElementById("cal").value = "";
-      document.getElementById("imgFile").value = "";
-      document.getElementById("specialType").value = "none";
-
-      saveToLocal();
-      renderAll();
-      renderAdminProducts();
-
-      alert("Kaydedildi!");
-    }
-
-    if (imgFile) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        finalizeSave(e.target.result);
-      };
-      reader.readAsDataURL(imgFile);
-    } else {
-      finalizeSave(null);
-    }
-  }
-
-  // Cafe settings save
-  function saveCafeSettings() {
-    const name = document.getElementById("cafeNameInput").value.trim();
-    const slogan = document.getElementById("cafeSloganInput").value.trim();
-    const logoFile = document.getElementById("logoFile").files[0];
-
-    if (!name) return alert("Kafe adı boş olamaz!");
-    if (!slogan) return alert("Slogan boş olamaz!");
-
-    cafeSettings.name = name;
-
-    if (currentLang === "tr") {
-      cafeSettings.sloganTR = slogan;
-    } else {
-      cafeSettings.sloganEN = slogan;
-    }
-
-    function finalizeLogo(logoData) {
-      if (logoData) cafeSettings.logo = logoData;
-
-      localStorage.setItem("cafeSettings", JSON.stringify(cafeSettings));
-
-      applyCafeSettings();
-      setLanguage(currentLang);
-
-      document.getElementById("logoFile").value = "";
-
-      alert("Kafe ayarları kaydedildi!");
-    }
-
-    if (logoFile) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        finalizeLogo(e.target.result);
-      };
-      reader.readAsDataURL(logoFile);
-    } else {
-      finalizeLogo(null);
-    }
-  }
-
-  // Admin theme toggle
-  function applyAdminTheme() {
-    const box = document.getElementById("adminBox");
-    if (adminTheme === "light") box.classList.add("light");
-    else box.classList.remove("light");
-  }
-
-  function toggleAdminTheme() {
-    adminTheme = adminTheme === "dark" ? "light" : "dark";
-    localStorage.setItem("adminTheme", adminTheme);
-    applyAdminTheme();
-  }
-
-  // Events
-  document.getElementById("btnTR").addEventListener("click", () => setLanguage("tr"));
-  document.getElementById("btnEN").addEventListener("click", () => setLanguage("en"));
-  document.getElementById("searchInput").addEventListener("input", renderAll);
-
-  // Close modals when clicking outside
-  document.getElementById("productModal").addEventListener("click", (e) => {
-    if (e.target.id === "productModal") closeProductModal();
+    list.appendChild(div);
   });
+}
 
-  document.getElementById("adminModal").addEventListener("click", (e) => {
-    if (e.target.id === "adminModal") closeAdminPanel();
+function editProduct(id){
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+
+  editingId = id;
+  editingImageData = p.img;
+
+  document.getElementById("prodCategory").value = p.category;
+  document.getElementById("prodNameTR").value = p.tr.name;
+  document.getElementById("prodNameEN").value = p.en.name;
+  document.getElementById("prodDescTR").value = p.tr.desc;
+  document.getElementById("prodDescEN").value = p.en.desc;
+  document.getElementById("prodPrice").value = p.price;
+  document.getElementById("prodCampaignPrice").value = p.campaignPrice || "";
+  document.getElementById("prodCalories").value = p.calories;
+  document.getElementById("prodPrep").value = p.prepTime;
+  document.getElementById("prodIsCampaign").checked = p.isCampaign;
+  document.getElementById("prodIsFavorite").checked = p.isFavorite;
+
+  alert("Düzenleme modu açıldı ✨");
+}
+
+function deleteProduct(id){
+  if(!confirm("Silmek istediğine emin misin?")) return;
+
+  products = products.filter(p => p.id !== id);
+  save("qr_products", products);
+
+  renderProductList();
+  renderTopSections();
+  renderProducts();
+}
+
+function changePassword(){
+  const val = document.getElementById("newPassword").value.trim();
+  if(val.length < 3){
+    alert("Şifre en az 3 karakter olmalı.");
+    return;
+  }
+
+  settings.adminPassword = val;
+  save("qr_settings", settings);
+
+  document.getElementById("newPassword").value = "";
+  alert("Şifre güncellendi ✅");
+}
+
+/* ==============================
+   CATEGORY MANAGEMENT
+============================== */
+function addCategory(){
+  const tr = document.getElementById("newCatTR").value.trim();
+  const en = document.getElementById("newCatEN").value.trim();
+
+  if(!tr || !en){
+    alert("TR ve EN kategori gir.");
+    return;
+  }
+
+  const id = tr.toLowerCase()
+    .replaceAll("ı","i")
+    .replaceAll("ş","s")
+    .replaceAll("ğ","g")
+    .replaceAll("ü","u")
+    .replaceAll("ö","o")
+    .replaceAll("ç","c")
+    .replace(/\s+/g,"-");
+
+  if(categories.some(c => c.id === id)){
+    alert("Bu kategori zaten var.");
+    return;
+  }
+
+  categories.push({ id, tr, en });
+  save("qr_categories", categories);
+
+  document.getElementById("newCatTR").value = "";
+  document.getElementById("newCatEN").value = "";
+
+  fillCategorySelect();
+  renderCategoryList();
+  renderCategories();
+}
+
+function renderCategoryList(){
+  const list = document.getElementById("catList");
+  list.innerHTML = "";
+
+  categories.forEach((c, index) => {
+    if(c.fixed) return;
+
+    const div = document.createElement("div");
+    div.className = "admin-item";
+
+    div.innerHTML = `
+      <div>
+        <strong>${c.tr}</strong><br>
+        <span>${c.en}</span>
+      </div>
+
+      <div class="admin-actions">
+        <button class="admin-btn gray" onclick="moveCategoryUp(${index})">${translations[currentLang].moveUp}</button>
+        <button class="admin-btn gray" onclick="moveCategoryDown(${index})">${translations[currentLang].moveDown}</button>
+        <button class="admin-btn red" onclick="deleteCategory('${c.id}')">${translations[currentLang].delete}</button>
+      </div>
+    `;
+
+    list.appendChild(div);
   });
+}
 
-  // INIT
-  applyCafeSettings();
-  applyAdminTheme();
-  setLanguage("tr");
-  renderAll();
+function moveCategoryUp(index){
+  if(index <= 0) return;
+  const item = categories[index];
+  const prev = categories[index - 1];
+
+  if(prev.fixed) return;
+
+  categories[index] = prev;
+  categories[index - 1] = item;
+
+  save("qr_categories", categories);
+  renderCategoryList();
+  renderCategories();
+  fillCategorySelect();
+}
+
+function moveCategoryDown(index){
+  if(index >= categories.length - 1) return;
+
+  const item = categories[index];
+  const next = categories[index + 1];
+
+  categories[index] = next;
+  categories[index + 1] = item;
+
+  save("qr_categories", categories);
+  renderCategoryList();
+  renderCategories();
+  fillCategorySelect();
+}
+
+function deleteCategory(id){
+  if(!confirm("Kategori silinsin mi? Bu kategoriye ait ürünler de görünmez olur.")) return;
+
+  categories = categories.filter(c => c.id !== id);
+  save("qr_categories", categories);
+
+  // o kategoriye ait ürünleri de silelim
+  products = products.filter(p => p.category !== id);
+  save("qr_products", products);
+
+  renderCategoryList();
+  renderCategories();
+  fillCategorySelect();
+  renderProductList();
+  renderTopSections();
+  renderProducts();
+}
+
+/* ==============================
+   CLOSE MODAL ON CLICK OUTSIDE
+============================== */
+document.getElementById("productModalOverlay").addEventListener("click", (e) => {
+  if(e.target.id === "productModalOverlay") closeProductModal();
+});
+
+document.getElementById("adminModalOverlay").addEventListener("click", (e) => {
+  if(e.target.id === "adminModalOverlay") closeAdminModal();
+});
+
+/* ==============================
+   INIT
+============================== */
+applyTheme();
+applySettings();
+renderCategories();
+renderTopSections();
+renderProducts();
+setLang(currentLang);
 </script>
 
 </body>
