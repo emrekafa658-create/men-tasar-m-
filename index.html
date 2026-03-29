@@ -3,266 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gardaşlar Büfe & Cafe | QR Menü</title>
+    <title>Demo Cafe | Profesyonel QR Menü</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ana-renk: #ff4757; /* Acıkma hissi veren kırmızı */
-            --arka-plan: #121212;
-            --kart-bg: #1e1e1e;
-            --yazi: #ffffff;
-            --muted: #a0a0a0;
-            --altin: #ffa502;
+            --primary: #f59e0b;
+            --dark: #0f172a;
+            --card: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --danger: #ef4444;
+            --success: #22c55e;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--arka-plan); color: var(--yazi); line-height: 1.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--dark); color: var(--text); min-height: 100vh; padding-bottom: 50px; }
 
         /* Header & Logo */
         header {
-            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(18,18,18,1) 100%);
-            padding: 30px 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--ana-renk);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo-box {
-            width: 90px;
-            height: 90px;
-            background: white;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid var(--ana-renk);
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
-        }
-
-        .logo-box img { width: 80%; object-fit: contain; }
-
-        .brand-name { font-size: 24px; font-weight: 800; color: var(--ana-renk); letter-spacing: 1px; }
-        .slogan { font-size: 13px; color: var(--muted); margin-bottom: 15px; }
-
-        /* Kampanya Bandı */
-        .promo-strip {
-            background: var(--ana-renk);
-            color: white;
-            padding: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 8px;
-            margin: 10px 0;
-            display: block;
-        }
-
-        /* Dil Seçimi */
-        .lang-select { margin-bottom: 15px; }
-        .lang-select button {
-            background: #333; border: none; color: white; padding: 5px 15px;
-            border-radius: 20px; cursor: pointer; font-size: 12px;
-        }
-        .lang-select button.active { background: var(--ana-renk); font-weight: bold; }
-
-        /* Arama ve Kategoriler */
-        .nav-container { padding: 10px 20px; max-width: 800px; margin: 0 auto; }
-        input#searchInput {
-            width: 100%; padding: 12px; border-radius: 10px; border: none;
-            background: #2a2a2a; color: white; margin-bottom: 15px;
-        }
-
-        .cats { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .cats::-webkit-scrollbar { display: none; }
-        .cats button {
-            background: #2a2a2a; border: 1px solid #444; color: white;
-            padding: 8px 18px; border-radius: 20px; white-space: nowrap; cursor: pointer;
-        }
-        .cats button.active { background: var(--altin); color: black; border-color: var(--altin); font-weight: bold; }
-
-        /* Menü Grid */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
             padding: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky; top: 0; z-index: 100;
+        }
+        #mainLogo {
+            width: 80px; height: 80px;
+            border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--primary);
+            margin-bottom: 10px;
+        }
+        h1 { font-size: 22px; color: var(--primary); }
+        .promo-banner {
+            background: linear-gradient(90deg, var(--danger), var(--primary));
+            margin: 15px auto; padding: 10px; border-radius: 12px;
+            font-size: 14px; font-weight: bold; max-width: 500px;
         }
 
-        .menu-card {
-            background: var(--kart-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: 0.3s;
-            position: relative;
+        /* Nav & Search */
+        .controls { padding: 0 20px; max-width: 800px; margin: 0 auto; }
+        #searchInput {
+            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #334155;
+            background: var(--card); color: white; margin: 15px 0; outline: none;
         }
-
-        .card-img { width: 100%; height: 120px; background-size: cover; background-position: center; }
-        
-        .card-body { padding: 12px; }
-        .card-body h3 { font-size: 16px; margin-bottom: 5px; }
-        .card-body p { font-size: 12px; color: var(--muted); height: 36px; overflow: hidden; }
-
-        .price-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
+        .categories::-webkit-scrollbar { display: none; }
+        .categories button {
+            padding: 8px 20px; border-radius: 20px; border: 1px solid #334155;
+            background: var(--card); color: white; cursor: pointer; white-space: nowrap;
         }
+        .categories button.active { background: var(--primary); color: var(--dark); font-weight: bold; }
 
-        .old-price { text-decoration: line-through; color: #ff4757; font-size: 11px; display: block; }
-        .price { color: #2ecc71; font-weight: bold; font-size: 16px; }
-
-        .badge {
-            position: absolute; top: 8px; left: 8px;
-            background: var(--ana-renk); color: white;
-            padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: bold;
+        /* Menu Grid */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto;
         }
-
-        /* Admin/Yönetim Paneli Butonu (Gizli gibi) */
-        .admin-trigger {
-            text-align: center; padding: 40px; color: #333; font-size: 10px; cursor: pointer;
+        .item-card {
+            background: var(--card); border-radius: 20px; overflow: hidden;
+            transition: 0.3s; border: 1px solid rgba(255,255,255,0.05);
         }
+        .item-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .item-img { width: 100%; height: 180px; object-fit: cover; }
+        .item-content { padding: 15px; }
+        .item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+        .item-title { font-size: 18px; font-weight: bold; }
+        .item-price { color: var(--success); font-weight: 800; font-size: 18px; }
+        .item-desc { color: var(--muted); font-size: 13px; line-height: 1.4; }
 
-        /* WhatsApp */
-        .wa-float {
-            position: fixed; bottom: 20px; right: 20px;
-            background: #25d366; width: 50px; height: 50px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1000;
+        /* Admin Panel Modal */
+        #adminModal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            z-index: 999; padding: 20px; overflow-y: auto;
         }
+        .admin-content { background: #1e293b; max-width: 600px; margin: 0 auto; padding: 25px; border-radius: 20px; }
+        .admin-content h2 { margin-bottom: 20px; color: var(--primary); border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--muted); }
+        input, select, textarea {
+            width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #475569;
+            background: #0f172a; color: white;
+        }
+        .btn-box { display: flex; gap: 10px; margin-top: 20px; }
+        button.save { background: var(--success); color: white; flex: 1; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button.close { background: var(--danger); color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; }
 
-        @media (max-width: 480px) {
-            .menu-grid { grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
-            .card-img { height: 100px; }
+        /* Footer */
+        footer { text-align: center; padding: 40px; color: var(--muted); font-size: 12px; border-top: 1px solid #334155; margin-top: 30px; }
+        .copyright { cursor: pointer; user-select: none; }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-box">
-        <!-- Buraya logonuzu koyun. Yoksa bu ikon kalır -->
-        <img src="https://cdn-icons-png.flaticon.com/512/1996/1996055.png" alt="Logo">
-    </div>
-    <div class="brand-name" id="b-name">GARDAŞLAR BÜFE</div>
-    <div class="slogan" id="b-slogan">Fatsa'nın En Kral Lezzet Durağı</div>
-
-    <div class="lang-select">
-        <button onclick="setLang('tr')" id="tr-btn" class="active">TR</button>
-        <button onclick="setLang('en')" id="en-btn">EN</button>
-    </div>
-
-    <div class="nav-container">
-        <div class="promo-strip" id="promo-text">🔥 KAMPANYA: 2 Karışık Tost Alana Ayran Bedava!</div>
-        <input type="text" id="searchInput" placeholder="Yemek ara..." oninput="renderItems()">
-        <div class="cats" id="cat-list"></div>
-    </div>
+    <img id="mainLogo" src="https://via.placeholder.com/150?text=DEMO" alt="Logo">
+    <h1 id="headerName">Demo Cafe</h1>
+    <div class="promo-banner" id="headerPromo">🔥 KAMPANYA: 2 Patso Alana Ayran Bedava!</div>
 </header>
 
-<div class="menu-grid" id="menu-area">
-    <!-- Ürünler JS ile dolacak -->
+<div class="controls">
+    <input type="text" id="searchInput" placeholder="Yemek veya içecek ara..." oninput="renderItems()">
+    <div class="categories" id="catBar">
+        <!-- Kategoriler dinamik gelecek -->
+    </div>
 </div>
 
-<a href="https://wa.me/905554443322" class="wa-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30" alt="WP">
-</a>
+<div class="grid" id="menuGrid"></div>
 
-<div class="admin-trigger" onclick="adminModu()">Yönetici Girişi (Gizli)</div>
+<footer onclick="countClick()">
+    <p class="copyright">© 2026 <span id="footerBrand">Demo Cafe</span> | Tüm Hakları Saklıdır.</p>
+    <p style="margin-top: 5px;">MMC OZM tarafından profesyonelce hazırlanmıştır.</p>
+</footer>
+
+<!-- ADMIN PANEL MODAL -->
+<div id="adminModal">
+    <div class="admin-content">
+        <h2>Yönetim Paneli</h2>
+        
+        <div class="form-group">
+            <label>Kafe İsmi</label>
+            <input type="text" id="editBrand" placeholder="Kafe Adı">
+        </div>
+        <div class="form-group">
+            <label>Kampanya Yazısı</label>
+            <input type="text" id="editPromo" placeholder="Kampanya mesajı">
+        </div>
+        <div class="form-group">
+            <label>Logo URL</label>
+            <input type="text" id="editLogo" placeholder="https://...">
+        </div>
+
+        <hr style="margin: 20px 0; border: 0; border-top: 1px solid #334155;">
+        <h3>Yeni Ürün Ekle</h3>
+        <div class="form-group">
+            <input type="text" id="newItemTitle" placeholder="Ürün Adı">
+        </div>
+        <div class="form-group">
+            <input type="text" id="newItemPrice" placeholder="Fiyat (örn: 120₺)">
+        </div>
+        <div class="form-group">
+            <select id="newItemCat">
+                <option value="yemek">Yemek</option>
+                <option value="atistirma">Atıştırmalık</option>
+                <option value="icecek">İçecek</option>
+                <option value="tatli">Tatlı</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="text" id="newItemImg" placeholder="Görsel URL">
+        </div>
+        <div class="form-group">
+            <textarea id="newItemDesc" placeholder="Ürün açıklaması..."></textarea>
+        </div>
+        
+        <div class="btn-box">
+            <button class="save" onclick="saveAdminData()">DEĞİŞİKLİKLERİ KAYDET</button>
+            <button class="close" onclick="document.getElementById('adminModal').style.display='none'">KAPAT</button>
+        </div>
+
+        <div id="adminItemList" style="margin-top:20px; max-height: 200px; overflow: auto;">
+            <!-- Mevcut ürünleri silme listesi buraya gelecek -->
+        </div>
+    </div>
+</div>
 
 <script>
-    let lang = 'tr';
-    let cat = 'all';
-
-    // ÜRÜN LİSTESİ (ABİN BURAYI DEĞİŞTİREBİLİR)
-    const items = [
-        { id:1, cat:'tost', tr:'Karışık Tost', en:'Mixed Toast', desc_tr:'Sucuk, kaşar, salam ve turşu.', desc_en:'Sausage, cheese and pickles.', price:'120₺', old:'150₺', img:'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400', badge:'Çok Satan' },
-        { id:2, cat:'tost', tr:'Ayvalık Tostu', en:'Ayvalik Toast', desc_tr:'Özel ekmeğinde bol malzeme.', desc_en:'Authentic Ayvalik style toast.', price:'140₺', img:'https://images.unsplash.com/photo-1539252554454-31d626304629?w=400', badge:'' },
-        { id:3, cat:'atistirma', tr:'Patates Tabağı', en:'French Fries', desc_tr:'Büyük boy çıtır patates.', desc_en:'Large crispy fries.', price:'80₺', img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400', badge:'' },
-        { id:4, cat:'atistirma', tr:'Çıtır Tavuk (6lı)', en:'Crispy Chicken', desc_tr:'Özel soslu tavuk parçaları.', desc_en:'Special fried chicken bites.', price:'150₺', old:'180₺', img:'https://images.unsplash.com/photo-1562967914-608f82629710?w=400', badge:'Fırsat' },
-        { id:5, cat:'sandvic', tr:'Kumru', en:'Kumru Sandwich', desc_tr:'İzmir usulü bol sucuk ve peynir.', desc_en:'Sausage and melted cheese.', price:'160₺', img:'https://images.unsplash.com/photo-1550507992-04d74509439b?w=400', badge:'' },
-        { id:6, cat:'sandvic', tr:'Patso', en:'Patso', desc_tr:'Ekmek arası patates ve sosis.', desc_en:'Fries and sausage in bread.', price:'110₺', img:'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400', badge:'' },
-        { id:7, cat:'icecek', tr:'Açık Ayran', en:'Fresh Ayran', desc_tr:'Bol köpüklü ev yapımı.', desc_en:'Traditional salty yogurt drink.', price:'35₺', img:'https://images.unsplash.com/photo-1571153103767-19eb71e44c21?w=400', badge:'' },
-        { id:8, cat:'icecek', tr:'Kola', en:'Cola', desc_tr:'330ml Kutu.', desc_en:'330ml Can.', price:'50₺', img:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400', badge:'' }
-    ];
-
-    const cats = {
-        tr: { all:'Hepsi', tost:'Tostlar', atistirma:'Atıştırmalık', sandvic:'Sandviç/Patso', icecek:'İçecekler' },
-        en: { all:'All', tost:'Toasts', atistirma:'Snacks', sandvic:'Sandwiches', icecek:'Drinks' }
+    // VARSAYILAN VERİLER
+    const defaultData = {
+        brand: "Demo Cafe",
+        promo: "🔥 KAMPANYA: 2 Patso Alana Ayran Bedava!",
+        logo: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=150",
+        items: [
+            { id: 1, cat: 'atistirma', title: 'Karışık Tost', price: '120₺', desc: 'Kasap sucuk, tam yağlı kaşar ve turşu.', img: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400' },
+            { id: 2, cat: 'yemek', title: 'Özel Patso', en:'Mixed Toast', price: '100₺', desc: 'Çıtır patates, sosis ve özel soslu ekmek.', img: 'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400' },
+            { id: 3, cat: 'atistirma', title: 'Çıtır Tavuk Kovası', price: '180₺', desc: '8 adet kemiksiz çıtır tavuk ve parmak patates.', img: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=400' },
+            { id: 4, cat: 'icecek', title: 'Büyük Ayran', price: '40₺', desc: 'Bol köpüklü, yayık tadında.', img: 'https://images.unsplash.com/photo-1571153103767-19eb71e44c21?w=400' }
+        ]
     };
 
+    let appData = JSON.parse(localStorage.getItem('cafeData')) || defaultData;
+    let activeCat = 'all';
+    let clickCount = 0;
+
+    // BAŞLANGIÇ
+    function init() {
+        document.getElementById('headerName').innerText = appData.brand;
+        document.getElementById('footerBrand').innerText = appData.brand;
+        document.getElementById('headerPromo').innerText = appData.promo;
+        document.getElementById('mainLogo').src = appData.logo;
+        renderCats();
+        renderItems();
+    }
+
     function renderCats() {
-        const div = document.getElementById('cat-list');
-        div.innerHTML = '';
-        Object.keys(cats[lang]).forEach(k => {
+        const cats = { all: 'Hepsi', yemek: 'Yemekler', atistirma: 'Atıştırmalık', icecek: 'İçecekler', tatli: 'Tatlılar' };
+        const bar = document.getElementById('catBar');
+        bar.innerHTML = '';
+        Object.keys(cats).forEach(k => {
             const btn = document.createElement('button');
-            btn.innerText = cats[lang][k];
-            btn.className = (cat === k) ? 'active' : '';
-            btn.onclick = () => { cat = k; renderCats(); renderItems(); };
-            div.appendChild(btn);
+            btn.innerText = cats[k];
+            btn.className = activeCat === k ? 'active' : '';
+            btn.onclick = () => { activeCat = k; renderCats(); renderItems(); };
+            bar.appendChild(btn);
         });
     }
 
     function renderItems() {
-        const area = document.getElementById('menu-area');
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        area.innerHTML = '';
+        const grid = document.getElementById('menuGrid');
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        grid.innerHTML = '';
 
-        const filtered = items.filter(i => {
-            const matchCat = (cat === 'all' || i.cat === cat);
-            const matchSearch = i[lang].toLowerCase().includes(search);
-            return matchCat && matchSearch;
+        const filtered = appData.items.filter(i => {
+            return (activeCat === 'all' || i.cat === activeCat) && 
+                   (i.title.toLowerCase().includes(query));
         });
 
-        filtered.forEach(i => {
-            area.innerHTML += `
-                <div class="menu-card">
-                    ${i.badge ? `<div class="badge">${i.badge}</div>` : ''}
-                    <div class="card-img" style="background-image:url('${i.img}')"></div>
-                    <div class="card-body">
-                        <h3>${i[lang]}</h3>
-                        <p>${i['desc_'+lang]}</p>
-                        <div class="price-row">
-                            <div>
-                                ${i.old ? `<span class="old-price">${i.old}</span>` : ''}
-                                <span class="price">${i.price}</span>
-                            </div>
+        filtered.forEach(item => {
+            grid.innerHTML += `
+                <div class="item-card">
+                    <img src="${item.img}" class="item-img" alt="${item.title}">
+                    <div class="item-content">
+                        <div class="item-header">
+                            <span class="item-title">${item.title}</span>
+                            <span class="item-price">${item.price}</span>
                         </div>
+                        <p class="item-desc">${item.desc}</p>
                     </div>
                 </div>
             `;
         });
     }
 
-    function setLang(l) {
-        lang = l;
-        document.getElementById('tr-btn').classList.toggle('active', l==='tr');
-        document.getElementById('en-btn').classList.toggle('active', l==='en');
-        document.getElementById('searchInput').placeholder = (l==='tr' ? 'Yemek ara...' : 'Search food...');
-        renderCats();
-        renderItems();
-    }
-
-    // Basit bir admin simülasyonu
-    function adminModu() {
-        const sifre = prompt("Yönetici Şifresi Girin:");
-        if(sifre === "1234") {
-            const yeniKampanya = prompt("Yeni Kampanya Yazısı:", document.getElementById('promo-text').innerText);
-            if(yeniKampanya) document.getElementById('promo-text').innerText = yeniKampanya;
-            
-            alert("Ürün fiyatlarını değiştirmek için kodun içindeki 'items' listesini güncelleyin.");
-        } else {
-            alert("Hatalı şifre!");
+    // ADMIN FONKSİYONLARI
+    function countClick() {
+        clickCount++;
+        if(clickCount >= 3) {
+            const pw = prompt("Yönetici Şifresi:");
+            if(pw === "1234") {
+                openAdmin();
+            }
+            clickCount = 0;
         }
     }
 
-    // Sayfa Yüklenince
-    renderCats();
-    renderItems();
+    function openAdmin() {
+        document.getElementById('adminModal').style.display = 'block';
+        document.getElementById('editBrand').value = appData.brand;
+        document.getElementById('editPromo').value = appData.promo;
+        document.getElementById('editLogo').value = appData.logo;
+        
+        const list = document.getElementById('adminItemList');
+        list.innerHTML = '<h4>Ürün Sil</h4>';
+        appData.items.forEach((item, index) => {
+            list.innerHTML += `
+                <div style="display:flex; justify-content:space-between; background:#0f172a; padding:5px; margin:5px 0;">
+                    <span>${item.title}</span>
+                    <button onclick="deleteItem(${index})" style="background:red; color:white; border:none; padding:2px 5px; cursor:pointer;">Sil</button>
+                </div>
+            `;
+        });
+    }
+
+    function deleteItem(index) {
+        if(confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+            appData.items.splice(index, 1);
+            openAdmin();
+        }
+    }
+
+    function saveAdminData() {
+        appData.brand = document.getElementById('editBrand').value;
+        appData.promo = document.getElementById('editPromo').value;
+        appData.logo = document.getElementById('editLogo').value;
+
+        // Yeni ürün varsa ekle
+        const newT = document.getElementById('newItemTitle').value;
+        const newP = document.getElementById('newItemPrice').value;
+        if(newT && newP) {
+            appData.items.push({
+                id: Date.now(),
+                title: newT,
+                price: newP,
+                cat: document.getElementById('newItemCat').value,
+                img: document.getElementById('newItemImg').value || 'https://via.placeholder.com/400',
+                desc: document.getElementById('newItemDesc').value
+            });
+            // Formu temizle
+            document.getElementById('newItemTitle').value = '';
+            document.getElementById('newItemPrice').value = '';
+        }
+
+        localStorage.setItem('cafeData', JSON.stringify(appData));
+        init();
+        document.getElementById('adminModal').style.display = 'none';
+        alert("Sistem başarıyla güncellendi!");
+    }
+
+    init();
 </script>
 
 </body>
