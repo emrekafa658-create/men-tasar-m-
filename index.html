@@ -1,476 +1,268 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Luna Café & Brasserie | QR Menu</title>
-  <style>
-    :root {
-      --bg: #05070a;
-      --card: #111827;
-      --accent: #f59e0b; /* Altın/Turuncu */
-      --accent-rgb: 245, 158, 11;
-      --success: #22c55e;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: rgba(255,255,255,0.08);
-      --glass: rgba(17, 24, 39, 0.7);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gardaşlar Büfe & Cafe | QR Menü</title>
+    <style>
+        :root {
+            --ana-renk: #ff4757; /* Acıkma hissi veren kırmızı */
+            --arka-plan: #121212;
+            --kart-bg: #1e1e1e;
+            --yazi: #ffffff;
+            --muted: #a0a0a0;
+            --altin: #ffa502;
+        }
 
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--arka-plan); color: var(--yazi); line-height: 1.6; }
 
-    body {
-      background-color: var(--bg);
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(34, 197, 94, 0.05) 0px, transparent 50%);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
-    }
+        /* Header & Logo */
+        header {
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(18,18,18,1) 100%);
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--ana-renk);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    /* Header & Navigation */
-    header {
-      padding: 24px 18px;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+        .logo-box {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--ana-renk);
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.4);
+        }
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+        .logo-box img { width: 80%; object-fit: contain; }
 
-    .brand h1 {
-      font-size: 22px;
-      background: linear-gradient(90deg, #f59e0b, #fbbf24);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 800;
-    }
+        .brand-name { font-size: 24px; font-weight: 800; color: var(--ana-renk); letter-spacing: 1px; }
+        .slogan { font-size: 13px; color: var(--muted); margin-bottom: 15px; }
 
-    .lang-switch {
-      background: rgba(255,255,255,0.05);
-      padding: 4px;
-      border-radius: 12px;
-      display: flex;
-    }
+        /* Kampanya Bandı */
+        .promo-strip {
+            background: var(--ana-renk);
+            color: white;
+            padding: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: block;
+        }
 
-    .lang-switch button {
-      border: none; background: transparent; color: var(--muted);
-      padding: 6px 12px; border-radius: 8px; cursor: pointer;
-      font-weight: 600; font-size: 12px; transition: 0.3s;
-    }
+        /* Dil Seçimi */
+        .lang-select { margin-bottom: 15px; }
+        .lang-select button {
+            background: #333; border: none; color: white; padding: 5px 15px;
+            border-radius: 20px; cursor: pointer; font-size: 12px;
+        }
+        .lang-select button.active { background: var(--ana-renk); font-weight: bold; }
 
-    .lang-switch button.active {
-      background: var(--accent);
-      color: #000;
-    }
+        /* Arama ve Kategoriler */
+        .nav-container { padding: 10px 20px; max-width: 800px; margin: 0 auto; }
+        input#searchInput {
+            width: 100%; padding: 12px; border-radius: 10px; border: none;
+            background: #2a2a2a; color: white; margin-bottom: 15px;
+        }
 
-    .search-container {
-      max-width: 1000px;
-      margin: 16px auto 0;
-    }
+        .cats { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .cats::-webkit-scrollbar { display: none; }
+        .cats button {
+            background: #2a2a2a; border: 1px solid #444; color: white;
+            padding: 8px 18px; border-radius: 20px; white-space: nowrap; cursor: pointer;
+        }
+        .cats button.active { background: var(--altin); color: black; border-color: var(--altin); font-weight: bold; }
 
-    .search-container input {
-      width: 100%;
-      padding: 14px 20px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      color: #white;
-      outline: none;
-      transition: 0.3s;
-    }
+        /* Menü Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-    .search-container input:focus {
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.06);
-    }
+        .menu-card {
+            background: var(--kart-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: 0.3s;
+            position: relative;
+        }
 
-    /* Categories */
-    .categories {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 15px 0;
-      scrollbar-width: none;
-    }
-    .categories::-webkit-scrollbar { display: none; }
+        .card-img { width: 100%; height: 120px; background-size: cover; background-position: center; }
+        
+        .card-body { padding: 12px; }
+        .card-body h3 { font-size: 16px; margin-bottom: 5px; }
+        .card-body p { font-size: 12px; color: var(--muted); height: 36px; overflow: hidden; }
 
-    .categories button {
-      white-space: nowrap;
-      padding: 10px 20px;
-      border-radius: 99px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.3s;
-    }
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
 
-    .categories button.active {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-      font-weight: 600;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-    }
+        .old-price { text-decoration: line-through; color: #ff4757; font-size: 11px; display: block; }
+        .price { color: #2ecc71; font-weight: bold; font-size: 16px; }
 
-    /* Grid & Cards */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-    }
+        .badge {
+            position: absolute; top: 8px; left: 8px;
+            background: var(--ana-renk); color: white;
+            padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: bold;
+        }
 
-    .section-title {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
+        /* Admin/Yönetim Paneli Butonu (Gizli gibi) */
+        .admin-trigger {
+            text-align: center; padding: 40px; color: #333; font-size: 10px; cursor: pointer;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
+        /* WhatsApp */
+        .wa-float {
+            position: fixed; bottom: 20px; right: 20px;
+            background: #25d366; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 1000;
+        }
 
-    .card {
-      background: var(--card);
-      border-radius: 24px;
-      border: 1px solid var(--border);
-      overflow: hidden;
-      position: relative;
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(245, 158, 11, 0.3);
-    }
-
-    .card-img {
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-
-    /* İndirim Rozeti */
-    .promo-badge {
-      position: absolute;
-      top: 12px; left: 12px;
-      background: #ef4444;
-      color: white;
-      padding: 4px 10px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 800;
-      z-index: 2;
-    }
-
-    .card-content { padding: 18px; }
-
-    .card-info h3 { font-size: 17px; margin-bottom: 6px; color: var(--text); }
-
-    .card-info .desc {
-      font-size: 13px;
-      color: var(--muted);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      margin-bottom: 12px;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    .price-container { display: flex; flex-direction: column; }
-
-    .old-price {
-      font-size: 12px;
-      text-decoration: line-through;
-      color: #ef4444;
-      margin-bottom: -2px;
-    }
-
-    .price {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--success);
-    }
-
-    .item-tag {
-      font-size: 11px;
-      padding: 4px 8px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 6px;
-      color: var(--muted);
-    }
-
-    /* Floating WhatsApp */
-    .whatsapp-btn {
-      position: fixed;
-      bottom: 25px; right: 25px;
-      background: #25D366;
-      width: 60px; height: 60px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-      z-index: 1000;
-      transition: 0.3s;
-    }
-
-    .whatsapp-btn:hover { transform: scale(1.1) rotate(10deg); }
-
-    footer {
-      padding: 40px 20px 100px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
-      .brand h1 { font-size: 18px; }
-    }
-  </style>
+        @media (max-width: 480px) {
+            .menu-grid { grid-template-columns: 1fr 1fr; gap: 10px; padding: 10px; }
+            .card-img { height: 100px; }
+        }
+    </style>
 </head>
 <body>
 
 <header>
-  <div class="topbar">
-    <div class="brand">
-      <h1 id="titleText">Luna Café & Brasserie</h1>
+    <div class="logo-box">
+        <!-- Buraya logonuzu koyun. Yoksa bu ikon kalır -->
+        <img src="https://cdn-icons-png.flaticon.com/512/1996/1996055.png" alt="Logo">
     </div>
-    <div class="lang-switch">
-      <button id="btnTR" class="active">TR</button>
-      <button id="btnEN">EN</button>
-    </div>
-  </div>
+    <div class="brand-name" id="b-name">GARDAŞLAR BÜFE</div>
+    <div class="slogan" id="b-slogan">Fatsa'nın En Kral Lezzet Durağı</div>
 
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Tadına bakmak istediğiniz bir şey..." />
-    <div class="categories" id="categoryButtons"></div>
-  </div>
+    <div class="lang-select">
+        <button onclick="setLang('tr')" id="tr-btn" class="active">TR</button>
+        <button onclick="setLang('en')" id="en-btn">EN</button>
+    </div>
+
+    <div class="nav-container">
+        <div class="promo-strip" id="promo-text">🔥 KAMPANYA: 2 Karışık Tost Alana Ayran Bedava!</div>
+        <input type="text" id="searchInput" placeholder="Yemek ara..." oninput="renderItems()">
+        <div class="cats" id="cat-list"></div>
+    </div>
 </header>
 
-<div class="container">
-  <div class="section-title" id="sectionTitle">Günün Seçimleri</div>
-  <div class="grid" id="menuGrid"></div>
+<div class="menu-grid" id="menu-area">
+    <!-- Ürünler JS ile dolacak -->
 </div>
 
-<a class="whatsapp-btn" href="https://wa.me/905555555555" target="_blank">
-  <svg width="30" height="30" fill="white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.886.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+<a href="https://wa.me/905554443322" class="wa-float" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30" alt="WP">
 </a>
 
-<footer>
-  <p id="footerText">© 2026 Luna Café | Handcrafted Flavors</p>
-</footer>
+<div class="admin-trigger" onclick="adminModu()">Yönetici Girişi (Gizli)</div>
 
 <script>
-  let currentLang = "tr";
-  let currentCategory = "all";
+    let lang = 'tr';
+    let cat = 'all';
 
-  const translations = {
-    tr: {
-      all: "Tümü", breakfast: "Kahvaltı", salty: "Ana Yemek", sweet: "Tatlı", drinks: "İçecekler",
-      menuTitle: "Günün Seçimleri", searchPlaceholder: "Lezzet ara...",
-      popular: "Popüler", new: "Yeni Ürün", promo: "İNDİRİM"
-    },
-    en: {
-      all: "All", breakfast: "Breakfast", salty: "Main Course", sweet: "Desserts", drinks: "Drinks",
-      menuTitle: "Chef's Selection", searchPlaceholder: "Search for flavors...",
-      popular: "Popular", new: "New", promo: "OFFER"
+    // ÜRÜN LİSTESİ (ABİN BURAYI DEĞİŞTİREBİLİR)
+    const items = [
+        { id:1, cat:'tost', tr:'Karışık Tost', en:'Mixed Toast', desc_tr:'Sucuk, kaşar, salam ve turşu.', desc_en:'Sausage, cheese and pickles.', price:'120₺', old:'150₺', img:'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400', badge:'Çok Satan' },
+        { id:2, cat:'tost', tr:'Ayvalık Tostu', en:'Ayvalik Toast', desc_tr:'Özel ekmeğinde bol malzeme.', desc_en:'Authentic Ayvalik style toast.', price:'140₺', img:'https://images.unsplash.com/photo-1539252554454-31d626304629?w=400', badge:'' },
+        { id:3, cat:'atistirma', tr:'Patates Tabağı', en:'French Fries', desc_tr:'Büyük boy çıtır patates.', desc_en:'Large crispy fries.', price:'80₺', img:'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400', badge:'' },
+        { id:4, cat:'atistirma', tr:'Çıtır Tavuk (6lı)', en:'Crispy Chicken', desc_tr:'Özel soslu tavuk parçaları.', desc_en:'Special fried chicken bites.', price:'150₺', old:'180₺', img:'https://images.unsplash.com/photo-1562967914-608f82629710?w=400', badge:'Fırsat' },
+        { id:5, cat:'sandvic', tr:'Kumru', en:'Kumru Sandwich', desc_tr:'İzmir usulü bol sucuk ve peynir.', desc_en:'Sausage and melted cheese.', price:'160₺', img:'https://images.unsplash.com/photo-1550507992-04d74509439b?w=400', badge:'' },
+        { id:6, cat:'sandvic', tr:'Patso', en:'Patso', desc_tr:'Ekmek arası patates ve sosis.', desc_en:'Fries and sausage in bread.', price:'110₺', img:'https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400', badge:'' },
+        { id:7, cat:'icecek', tr:'Açık Ayran', en:'Fresh Ayran', desc_tr:'Bol köpüklü ev yapımı.', desc_en:'Traditional salty yogurt drink.', price:'35₺', img:'https://images.unsplash.com/photo-1571153103767-19eb71e44c21?w=400', badge:'' },
+        { id:8, cat:'icecek', tr:'Kola', en:'Cola', desc_tr:'330ml Kutu.', desc_en:'330ml Can.', price:'50₺', img:'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400', badge:'' }
+    ];
+
+    const cats = {
+        tr: { all:'Hepsi', tost:'Tostlar', atistirma:'Atıştırmalık', sandvic:'Sandviç/Patso', icecek:'İçecekler' },
+        en: { all:'All', tost:'Toasts', atistirma:'Snacks', sandvic:'Sandwiches', icecek:'Drinks' }
+    };
+
+    function renderCats() {
+        const div = document.getElementById('cat-list');
+        div.innerHTML = '';
+        Object.keys(cats[lang]).forEach(k => {
+            const btn = document.createElement('button');
+            btn.innerText = cats[lang][k];
+            btn.className = (cat === k) ? 'active' : '';
+            btn.onclick = () => { cat = k; renderCats(); renderItems(); };
+            div.appendChild(btn);
+        });
     }
-  };
 
-  const menuItems = [
-    // --- KAHVALTI ---
-    {
-      category: "breakfast",
-      tr: { name: "Luna Serpme Kahvaltı", desc: "32 çeşit ürün, sınırsız çay ve ev yapımı reçellerle." },
-      en: { name: "Luna Premium Breakfast", desc: "32 varieties of local flavors, unlimited tea." },
-      price: "450₺", oldPrice: "550₺", tag: "popular",
-      img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "breakfast",
-      tr: { name: "Avokadolu Poşe Yumurta", desc: "Ekşi maya ekmek üzerine avokado püresi ve poşe yumurta." },
-      en: { name: "Avocado Poached Eggs", desc: "Poached eggs on sourdough with smashed avocado." },
-      price: "240₺", tag: "new",
-      img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=600"
-    },
+    function renderItems() {
+        const area = document.getElementById('menu-area');
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        area.innerHTML = '';
 
-    // --- ANA YEMEKLER (SALTY) ---
-    {
-      category: "salty",
-      tr: { name: "Trüflü Mushroom Burger", desc: "180gr dana köfte, trüf mayonez, yabani mantar." },
-      en: { name: "Truffle Mushroom Burger", desc: "180g beef patty, truffle mayo, wild mushrooms." },
-      price: "290₺", tag: "popular",
-      img: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "salty",
-      tr: { name: "Antrikot Izgara", desc: "Karamelize soğanlı patates püresi ve kuşkonmaz ile." },
-      en: { name: "Grilled Ribeye", desc: "Served with caramelized onion mashed potatoes." },
-      price: "580₺", oldPrice: "650₺", tag: "popular",
-      img: "https://images.unsplash.com/photo-1546241072-48010ad28c2c?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "salty",
-      tr: { name: "Fettuccine Alfredo", desc: "Tavuk dilimleri, mantar ve kremsi alfredo sos." },
-      en: { name: "Fettuccine Alfredo", desc: "Chicken slices, mushrooms and creamy alfredo sauce." },
-      price: "260₺", tag: "new",
-      img: "https://images.unsplash.com/photo-1645112481338-35624bfbc17b?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "salty",
-      tr: { name: "Falafel Bowl", desc: "Humus, kinoa, avokado ve tahin soslu sağlıklı kase." },
-      en: { name: "Falafel Bowl", desc: "Healthy bowl with hummus, quinoa, and tahini sauce." },
-      price: "220₺", tag: "new",
-      img: "https://images.unsplash.com/photo-1540420753464-3304b63ff4f4?auto=format&fit=crop&w=600"
-    },
+        const filtered = items.filter(i => {
+            const matchCat = (cat === 'all' || i.cat === cat);
+            const matchSearch = i[lang].toLowerCase().includes(search);
+            return matchCat && matchSearch;
+        });
 
-    // --- TATLILAR ---
-    {
-      category: "sweet",
-      tr: { name: "San Sebastian Cheesecake", desc: "Belçika çikolatası sosu eşliğinde servis edilir." },
-      en: { name: "San Sebastian", desc: "Served with premium Belgian chocolate sauce." },
-      price: "180₺", tag: "popular",
-      img: "https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "sweet",
-      tr: { name: "Pistachio Dream", desc: "Antep fıstıklı sıcak katmer ve dondurma." },
-      en: { name: "Pistachio Dream", desc: "Crispy pistachio pastry with ice cream." },
-      price: "210₺", tag: "new",
-      img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "sweet",
-      tr: { name: "Magnolia Fruit", desc: "Taze çilek, bebe bisküvisi ve özel pastacı kreması." },
-      en: { name: "Magnolia Fruit", desc: "Fresh strawberries, biscuits and vanilla cream." },
-      price: "145₺", oldPrice: "170₺", tag: "popular",
-      img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=600"
-    },
-
-    // --- İÇECEKLER ---
-    {
-      category: "drinks",
-      tr: { name: "Iced Salted Caramel", desc: "Soğuk süt, karamel ve deniz tuzu dokunuşu." },
-      en: { name: "Iced Salted Caramel", desc: "Cold milk, caramel and a touch of sea salt." },
-      price: "135₺", tag: "new",
-      img: "https://images.unsplash.com/photo-1572288641191-7d52917b01b4?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "drinks",
-      tr: { name: "Detox Green Juice", desc: "Salatalık, elma, nane ve taze zencefil." },
-      en: { name: "Detox Green Juice", desc: "Cucumber, apple, mint and fresh ginger." },
-      price: "110₺", tag: "popular",
-      img: "https://images.unsplash.com/photo-1615478503562-ec2e8aa0e24e?auto=format&fit=crop&w=600"
-    },
-    {
-      category: "drinks",
-      tr: { name: "Hibiscus Ice Tea", desc: "Ev yapımı hibiskus ve böğürtlenli soğuk çay." },
-      en: { name: "Hibiscus Ice Tea", desc: "Homemade hibiscus and blackberry cold tea." },
-      price: "95₺", tag: "new",
-      img: "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=600"
+        filtered.forEach(i => {
+            area.innerHTML += `
+                <div class="menu-card">
+                    ${i.badge ? `<div class="badge">${i.badge}</div>` : ''}
+                    <div class="card-img" style="background-image:url('${i.img}')"></div>
+                    <div class="card-body">
+                        <h3>${i[lang]}</h3>
+                        <p>${i['desc_'+lang]}</p>
+                        <div class="price-row">
+                            <div>
+                                ${i.old ? `<span class="old-price">${i.old}</span>` : ''}
+                                <span class="price">${i.price}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
     }
-  ];
 
-  function renderCategories() {
-    const catDiv = document.getElementById("categoryButtons");
-    catDiv.innerHTML = "";
-    const cats = ["all", "breakfast", "salty", "sweet", "drinks"];
+    function setLang(l) {
+        lang = l;
+        document.getElementById('tr-btn').classList.toggle('active', l==='tr');
+        document.getElementById('en-btn').classList.toggle('active', l==='en');
+        document.getElementById('searchInput').placeholder = (l==='tr' ? 'Yemek ara...' : 'Search food...');
+        renderCats();
+        renderItems();
+    }
 
-    cats.forEach(key => {
-      const btn = document.createElement("button");
-      btn.innerText = translations[currentLang][key];
-      btn.classList.toggle("active", currentCategory === key);
-      btn.onclick = () => { currentCategory = key; renderCategories(); renderMenu(); };
-      catDiv.appendChild(btn);
-    });
-  }
+    // Basit bir admin simülasyonu
+    function adminModu() {
+        const sifre = prompt("Yönetici Şifresi Girin:");
+        if(sifre === "1234") {
+            const yeniKampanya = prompt("Yeni Kampanya Yazısı:", document.getElementById('promo-text').innerText);
+            if(yeniKampanya) document.getElementById('promo-text').innerText = yeniKampanya;
+            
+            alert("Ürün fiyatlarını değiştirmek için kodun içindeki 'items' listesini güncelleyin.");
+        } else {
+            alert("Hatalı şifre!");
+        }
+    }
 
-  function renderMenu() {
-    const grid = document.getElementById("menuGrid");
-    const search = document.getElementById("searchInput").value.toLowerCase();
-    grid.innerHTML = "";
-
-    const filtered = menuItems.filter(item => {
-      const matchCat = currentCategory === "all" || item.category === currentCategory;
-      const matchSearch = item[currentLang].name.toLowerCase().includes(search) || 
-                          item[currentLang].desc.toLowerCase().includes(search);
-      return matchCat && matchSearch;
-    });
-
-    filtered.forEach(item => {
-      const lang = item[currentLang];
-      const hasPromo = item.oldPrice ? true : false;
-      
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="card-img" style="background-image:url('${item.img}')">
-          ${hasPromo ? `<div class="promo-badge">${translations[currentLang].promo}</div>` : ""}
-        </div>
-        <div class="card-content">
-          <div class="card-info">
-            <h3>${lang.name}</h3>
-            <p class="desc">${lang.desc}</p>
-          </div>
-          <div class="card-footer">
-            <div class="price-container">
-              ${hasPromo ? `<span class="old-price">${item.oldPrice}</span>` : ""}
-              <span class="price">${item.price}</span>
-            </div>
-            <span class="item-tag">${translations[currentLang][item.tag] || ""}</span>
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
-
-  function setLanguage(lang) {
-    currentLang = lang;
-    document.getElementById("btnTR").classList.toggle("active", lang === 'tr');
-    document.getElementById("btnEN").classList.toggle("active", lang === 'en');
-    document.getElementById("sectionTitle").innerText = translations[lang].menuTitle;
-    document.getElementById("searchInput").placeholder = translations[lang].searchPlaceholder;
-    renderCategories();
-    renderMenu();
-  }
-
-  document.getElementById("btnTR").onclick = () => setLanguage("tr");
-  document.getElementById("btnEN").onclick = () => setLanguage("en");
-  document.getElementById("searchInput").oninput = renderMenu;
-
-  // Başlat
-  setLanguage("tr");
+    // Sayfa Yüklenince
+    renderCats();
+    renderItems();
 </script>
 
 </body>
